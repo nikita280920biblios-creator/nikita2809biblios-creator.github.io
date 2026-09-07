@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Формирующее оценивание</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --parchment:#efe4c9;
+    --parchment-deep:#e6d8b3;
+    --panel:rgba(255,255,255,0.34);
+    --panel-accent:#f3e6c4;
+    --ink:#2a2013;
+    --ink-soft:#4b3c26;
+    --rubric:#8a2a1e;
+    --gold:#9c7a2e;
+    --line:#c9b787;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--parchment);
+    background-image:
+      radial-gradient(ellipse at 15% 0%, rgba(255,255,255,0.25), transparent 60%),
+      radial-gradient(ellipse at 90% 100%, rgba(0,0,0,0.05), transparent 60%);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, serif;
+    line-height:1.72;
+    font-size:19px;
+  }
+  .page{max-width:760px;margin:0 auto;padding:64px 28px 120px;}
+  .kicker{text-align:center;font-family:'Old Standard TT', serif;color:var(--gold);font-size:15px;letter-spacing:.14em;margin-bottom:6px;}
+  h1{font-family:'Old Standard TT', serif;font-weight:700;text-align:center;font-size:36px;margin:0 0 8px;}
+  .rule{width:220px;height:14px;margin:18px auto 40px;opacity:.75;display:block;}
+  p{margin:0 0 22px;}
+
+  .section-card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:32px 32px;
+    margin-bottom:30px;
+  }
+  .section-card h2{
+    font-family:'Old Standard TT', serif;
+    font-weight:700;
+    font-size:22px;
+    color:var(--rubric);
+    margin:0 0 18px;
+  }
+  .section-card p:last-child{margin-bottom:0;}
+
+  .genres{
+    display:flex;
+    gap:20px;
+    margin:0 0 6px;
+    flex-wrap:wrap;
+  }
+  .genre-card{
+    flex:1;
+    min-width:200px;
+    border:1px solid var(--gold);
+    background:var(--parchment-deep);
+    padding:24px 22px;
+    text-align:center;
+    cursor:pointer;
+    transition:background .18s, transform .12s, box-shadow .18s;
+    user-select:none;
+  }
+  .genre-card:hover{transform:translateY(-2px); box-shadow:0 6px 18px rgba(0,0,0,0.15);}
+  .genre-card.selected{
+    background:var(--rubric);
+    border-color:var(--rubric);
+  }
+  .genre-card .name{
+    font-family:'Old Standard TT', serif;
+    font-weight:700;
+    font-size:23px;
+    color:var(--rubric);
+    letter-spacing:.02em;
+  }
+  .genre-card.selected .name{color:#fff8ea;}
+  .genre-card .mark{
+    display:block;
+    margin-top:10px;
+    font-family:'Old Standard TT', serif;
+    font-size:13px;
+    color:var(--ink-soft);
+    letter-spacing:.08em;
+  }
+  .genre-card.selected .mark{color:#f3e6c4;}
+  .genre-hint{
+    text-align:center;
+    font-family:'Old Standard TT', serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:15px;
+    margin:14px 0 0;
+  }
+
+  .task-goal{
+    font-family:'Old Standard TT', serif;
+    font-style:italic;
+    color:var(--rubric);
+    text-align:center;
+    font-size:19px;
+    max-width:600px;
+    margin:0 auto 8px;
+    line-height:1.55;
+  }
+
+  .questions{
+    list-style:none;
+    padding:0;
+    margin:0;
+  }
+  .questions li{
+    position:relative;
+    padding:10px 0 10px 24px;
+    border-bottom:1px dashed var(--line);
+    font-size:19px;
+  }
+  .questions li:last-child{border-bottom:none;}
+  .questions li::before{
+    content:'—';
+    position:absolute;
+    left:0;
+    color:var(--gold);
+  }
+
+  .video-reqs{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .req-row{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+  }
+  .req-icon{
+    font-family:'Old Standard TT', serif;
+    color:var(--rubric);
+    font-size:22px;
+    line-height:1;
+    min-width:26px;
+    text-align:center;
+  }
+  .req-text{font-size:19px;}
+
+  .timer-box{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    margin-top:6px;
+    padding:20px;
+    background:var(--parchment-deep);
+    border:1px solid var(--line);
+  }
+  .timer-num{
+    font-family:'Old Standard TT', serif;
+    font-weight:700;
+    font-size:42px;
+    color:var(--rubric);
+  }
+  .timer-label{
+    font-family:'Old Standard TT', serif;
+    font-size:16px;
+    color:var(--ink-soft);
+    max-width:220px;
+    line-height:1.4;
+  }
+
+  .section-card.accent{
+    background:var(--panel-accent);
+    border:1px solid var(--gold);
+    box-shadow:0 0 0 1px var(--parchment) inset, 0 3px 0 var(--gold);
+  }
+  .submit-steps{
+    list-style:none;
+    padding:0;
+    margin:0;
+    counter-reset:sub;
+  }
+  .submit-steps li{
+    counter-increment:sub;
+    position:relative;
+    padding:8px 0 8px 34px;
+    font-size:19px;
+  }
+  .submit-steps li::before{
+    content:counter(sub);
+    font-family:'Old Standard TT', serif;
+    color:#fff8ea;
+    background:var(--rubric);
+    width:24px;height:24px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:13px;
+    position:absolute;
+    left:0;top:9px;
+  }
+
+  .footer-mark{text-align:center;margin-top:20px;color:var(--gold);font-size:22px;letter-spacing:.3em;}
+
+  @media (max-width:600px){
+    body{font-size:17.5px;}
+    h1{font-size:28px;}
+    .page{padding:44px 16px 90px;}
+    .section-card{padding:22px 18px;}
+    .genres{flex-direction:column;}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="kicker">Раздел IX</div>
+  <h1>Формирующее оценивание</h1>
+  <svg class="rule" viewBox="0 0 220 14"><line x1="0" y1="7" x2="90" y2="7" stroke="#9c7a2e" stroke-width="1"/><circle cx="110" cy="7" r="4" fill="#8a2a1e"/><line x1="130" y1="7" x2="220" y2="7" stroke="#9c7a2e" stroke-width="1"/></svg>
+
+  <div class="section-card">
+    <h2>Выберите один из предлагаемых жанров древнерусской литературы</h2>
+    <div class="genres" id="genreCards">
+      <div class="genre-card" data-genre="letopis">
+        <span class="name">Летопись</span>
+        <span class="mark">не выбрано</span>
+      </div>
+      <div class="genre-card" data-genre="pouchenie">
+        <span class="name">Поучение</span>
+        <span class="mark">не выбрано</span>
+      </div>
+    </div>
+    <div class="genre-hint" id="genreHint">нажмите на жанр, чтобы отметить свой выбор</div>
+  </div>
+
+  <div class="section-card">
+    <p class="task-goal">Соберите материал и организуйте его так, чтобы максимально кратко и в то же время полно определить основные особенности выбранного вами жанра.</p>
+    <p class="task-goal" style="margin-top:0;">Снимите reels.</p>
+  </div>
+
+  <div class="section-card">
+    <h2>Имеет смысл остановиться на следующих вопросах</h2>
+    <ul class="questions">
+      <li>Происхождение жанра</li>
+      <li>Цели жанра</li>
+      <li>Кто является адресатом / целевой аудиторией жанра?</li>
+      <li>Как в произведениях этого жанра отражается картина мира и система ценностей древнерусского человека?</li>
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <h2>На что обратить внимание при съёмке</h2>
+    <div class="video-reqs">
+      <div class="req-row">
+        <span class="req-icon">❦</span>
+        <span class="req-text">Достоверность и структурированность информации</span>
+      </div>
+      <div class="req-row">
+        <span class="req-icon">❦</span>
+        <span class="req-text">Коммуникация: речь и невербальный язык</span>
+      </div>
+    </div>
+
+    <div class="timer-box">
+      <span class="timer-num">2 мин</span>
+      <span class="timer-label">максимальная длительность ролика</span>
+    </div>
+  </div>
+
+  <div class="section-card accent">
+    <h2>Как сдать работу</h2>
+    <ol class="submit-steps">
+      <li>Отправьте готовый ролик в Летово.Чат учителю</li>
+      <li>Продублируйте сообщением в Canvas</li>
+    </ol>
+  </div>
+
+  <div class="footer-mark">☙ ❦ ❧</div>
+</div>
+
+<script>
+document.querySelectorAll('.genre-card').forEach(card=>{
+  card.addEventListener('click', ()=>{
+    const wasSelected = card.classList.contains('selected');
+    document.querySelectorAll('.genre-card').forEach(c=>{
+      c.classList.remove('selected');
+      c.querySelector('.mark').textContent = 'не выбрано';
+    });
+    if(!wasSelected){
+      card.classList.add('selected');
+      card.querySelector('.mark').textContent = 'выбрано';
+    }
+    const hint = document.getElementById('genreHint');
+    const chosen = document.querySelector('.genre-card.selected .name');
+    hint.textContent = chosen ? 'ваш жанр: ' + chosen.textContent : 'нажмите на жанр, чтобы отметить свой выбор';
+  });
+});
+</script>
+
+</body>
+</html>
