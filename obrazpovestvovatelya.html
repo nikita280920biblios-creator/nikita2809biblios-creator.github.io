@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Образ повествователя и авторская позиция в романе</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --ink:#221f1c;
+    --ink-soft:#5c564e;
+    --wine:#7c2d3b;
+    --gold:#a3823f;
+    --hair:#e7e2d8;
+    --hair-strong:#d8d1c2;
+    --max:660px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:100px 28px 140px;
+  }
+  .frontispiece{
+    text-align:center;
+    margin-bottom:96px;
+    animation:rise .9s ease both;
+  }
+  .frontispiece .kicker{
+    font-family:'PT Serif', serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:15px;
+    letter-spacing:.04em;
+    margin:22px 0 0;
+  }
+  .frontispiece .kicker.above{margin:0 0 22px;}
+  .frontispiece h1{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:clamp(28px, 4.6vw, 42px);
+    line-height:1.25;
+    margin:0;
+    letter-spacing:.005em;
+  }
+  .frontispiece .rule{
+    width:64px;
+    height:1px;
+    background:var(--gold);
+    margin:26px auto 0;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .outline{margin:0;padding:0;}
+
+  .item{
+    display:grid;
+    grid-template-columns:38px 1fr;
+    gap:6px 16px;
+    margin:0 0 30px;
+  }
+  .item .num{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    color:var(--wine);
+    font-size:19px;
+    line-height:1.6;
+    text-align:right;
+  }
+  .item .body{
+    font-size:17px;
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .item .body > p{margin:0 0 14px;}
+  .item .body > p:last-child{margin-bottom:0;}
+
+  .sub{
+    margin:14px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:20px;
+  }
+  .sub > li{
+    display:grid;
+    grid-template-columns:26px 1fr;
+    gap:12px;
+  }
+  .sub > li > .n{
+    color:var(--ink-soft);
+    font-style:italic;
+    font-family:'Playfair Display', serif;
+    font-size:17px;
+    text-align:right;
+    line-height:1.75;
+  }
+  .sub > li > .s{
+    font-size:17px;
+    line-height:1.75;
+  }
+  .sub > li > .s > p{margin:0 0 10px;}
+  .sub > li > .s > p:last-child{margin-bottom:0;}
+
+  .plain-sub{
+    margin:14px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:8px;
+  }
+  .plain-sub li{
+    font-size:17px;
+    line-height:1.75;
+  }
+
+  .compare{
+    margin-top:10px;
+    padding-top:12px;
+    border-top:1px solid var(--hair);
+    display:grid;
+    gap:10px;
+  }
+  .compare:first-of-type{border-top:none; padding-top:0;}
+  .compare p{
+    margin:0;
+    font-size:16.5px;
+    line-height:1.7;
+    color:var(--ink-soft);
+  }
+  .compare p strong{
+    color:var(--wine);
+    font-style:italic;
+    font-weight:400;
+    font-family:'Playfair Display', serif;
+  }
+
+  .lettered{
+    margin:10px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:12px;
+  }
+  .lettered > li{
+    display:grid;
+    grid-template-columns:24px 1fr;
+    gap:10px;
+    font-size:16.5px;
+    line-height:1.7;
+    color:var(--ink-soft);
+  }
+  .lettered > li > .l{
+    font-style:italic;
+    font-family:'Playfair Display', serif;
+    color:var(--gold);
+    text-align:right;
+  }
+
+  .prose{
+    font-size:17px;
+    line-height:1.85;
+  }
+  .prose p{margin:0 0 26px;}
+  .prose p:last-child{margin-bottom:0;}
+  .prose p:first-of-type::first-letter{
+    font-family:'Playfair Display', serif;
+    font-size:52px;
+    font-weight:600;
+    color:var(--wine);
+    float:left;
+    line-height:0.85;
+    padding:6px 10px 0 0;
+  }
+
+  .lede{
+    margin:0 0 26px;
+    font-size:17px;
+    line-height:1.85;
+  }
+
+  h3.sub-head{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:18px;
+    color:var(--ink);
+    margin:44px 0 4px;
+  }
+
+  .divider-thin{
+    width:36px;
+    height:1px;
+    background:var(--gold);
+    margin:44px 0 36px;
+  }
+
+  @media (max-width:640px){
+    main{padding:70px 20px 100px;}
+    .item{grid-template-columns:28px 1fr;gap:4px 10px;}
+    .sub > li{grid-template-columns:22px 1fr;}
+    .lettered > li{grid-template-columns:20px 1fr;}
+    .frontispiece{margin-bottom:70px;}
+    .prose p:first-of-type::first-letter{font-size:44px;}
+  }
+</style>
+</head>
+<body>
+<main>
+
+<div class="frontispiece">
+  <h1>Образ повествователя и авторская позиция в романе</h1>
+  <div class="rule"></div>
+</div>
+
+<div class="prose">
+  <p>По взглядам на историю Пушкин очень отличался от своих современников. Так, он начал переоценивать программу декабристов еще до их восстания. Это видно из трагедии «Борис Годунов», написанной им осенью 1825 года, в которой акцент поставлен на народ как на активную, решающую силу истории. Пристальное внимание писателя привлекали фигуры вождей, предводителей народа (реальная основа сюжета романа «Дубровский»), изучение прошлого его страны («История Петра»). Как историк, он создает труд под названием «История Пугачева». Но Пушкин был прежде всего художник, и его не удовлетворило сухое и точное изложение фактов. История бунта требовала творческого переосмысления. В 1833–1836 годах создается роман «Капитанская дочка», в котором не только художественно отражена эпоха крестьянского восстания конца XVIII века, но затронуты самые важные вопросы века XIX: возможность новых народных волнений, проблема государственной власти в империи, крепостное право — воссоединение нации на единой нравственной основе (честь, долг и человеческое достоинство).</p>
+
+  <p>Чтобы роман мог увидеть свет в условиях жесткой цензуры, Пушкин перепоручил рассказ о восстании участнику его подавления, обычному мелкопоместному дворянину Гриневу. Образ повествователя очень сложен. Если Лермонтов — в романе «Герой нашего времени» — создает записки, сделанные 25-летним человеком по горячим следам, то Пушкин — в «Капитанской дочке» — ведет рассказ от лица постаревшего, 50-летнего Гринева, который, к тому же, не чужд литературного труда (известно, что его опыты похвалил сам Сумароков). Такой сложный композиционный ход дает возможность показать становление, взросление человека, а также описывать давнишние события с известной долей иронии. Молодой человек никогда не писал бы так о себе. Постаревший Гринев вспоминает свою молодость и старается непосредственно передать мысли, впечатления и чувства своих 17-ти лет. В результате возникает образ юноши, волей истории оказавшегося перед необходимостью решать сложные общественные и личные проблемы.</p>
+
+  <p>Голос юного Петруши нередко перекрывается голосом Петра Андреевича (например, ироничное описание детства), юношеские впечатления соседствуют с рассуждениями взрослого человека. Оценить движение Пугачева так, как это сделано в романе, — охарактеризовать бунт как бессмысленный и беспощадный — Петруша был бы не в состоянии. Рассуждение об улучшении нравов без насильственных потрясений отражает взгляд умудренного опытом человека.</p>
+</div>
+
+<h3 class="sub-head">Для Пушкина были важны общие черты характера повествователя, такие как</h3>
+<ol class="plain-sub" style="margin-top:16px;">
+  <li>1. Ограниченность;</li>
+  <li>2. Монархические взгляды;</li>
+  <li>3. Воспитание в духе «старинного дворянства»;</li>
+  <li>4. Верность дворянской идеологии.</li>
+</ol>
+
+<div class="prose" style="margin-top:32px;">
+  <p>Такое политическое лицо было необходимо, чтобы создать образ выдающейся личности, харизматичного человека, способного повлиять на ход исторических событий. Гринев — безоговорочный противник «пугачевщины». Именно от него читатель узнает о массовости восстания, перерастающего в крестьянскую войну, о великодушии и щедрости Пугачева, о понимании и одобрении народом его жестокости.</p>
+
+  <p>При этом Пушкин доводит до сведения читателя собственную позицию — свой взгляд на события. Для этого используется целый ряд приемов (способы выражения авторской позиции):</p>
+</div>
+
+<div class="outline" style="margin-top:8px;">
+
+  <div class="item">
+    <span class="num">1.</span>
+    <div class="body">
+      <p>Сюжетные:</p>
+      <ol class="lettered">
+        <li><span class="l">А.</span><span>отбор материала для романа;</span></li>
+        <li><span class="l">Б.</span><span>философское осмысление проблемы чести и долга;</span></li>
+        <li><span class="l">В.</span><span>недопонимание событий рассказчиком;</span></li>
+        <li><span class="l">Г.</span><span>включение в повествование фактов, которые не могли быть известны ни повествователю, ни его окружению.</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">2.</span>
+    <div class="body">
+      <p>Композиционные:</p>
+      <ol class="lettered">
+        <li><span class="l">А.</span><span>эпиграфы, данные издателем (то есть это «голос автора»);</span></li>
+        <li><span class="l">Б.</span><span>последовательность эпизодов;</span></li>
+        <li><span class="l">В.</span><span>контраст как принцип построения романа;</span></li>
+        <li><span class="l">Г.</span><span>философские и символические вставки (встреча с «вожатым» в буран, символический сон, калмыцкая сказка).</span></li>
+      </ol>
+    </div>
+  </div>
+
+</div>
+
+</main>
+</body>
+</html>
