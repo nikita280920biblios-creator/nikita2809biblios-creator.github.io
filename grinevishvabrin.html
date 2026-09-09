@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Гринев и Швабрин</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --ink:#221f1c;
+    --ink-soft:#5c564e;
+    --wine:#7c2d3b;
+    --gold:#a3823f;
+    --hair:#e7e2d8;
+    --hair-strong:#d8d1c2;
+    --max:660px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:100px 28px 140px;
+  }
+  .frontispiece{
+    text-align:center;
+    margin-bottom:96px;
+    animation:rise .9s ease both;
+  }
+  .frontispiece .kicker{
+    font-family:'PT Serif', serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:15px;
+    letter-spacing:.04em;
+    margin:22px 0 0;
+  }
+  .frontispiece .kicker.above{margin:0 0 22px;}
+  .frontispiece h1{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:clamp(28px, 4.6vw, 42px);
+    line-height:1.25;
+    margin:0;
+    letter-spacing:.005em;
+  }
+  .frontispiece .rule{
+    width:64px;
+    height:1px;
+    background:var(--gold);
+    margin:26px auto 0;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  .outline{margin:0;padding:0;}
+
+  .item{
+    display:grid;
+    grid-template-columns:38px 1fr;
+    gap:6px 16px;
+    margin:0 0 30px;
+  }
+  .item .num{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    color:var(--wine);
+    font-size:19px;
+    line-height:1.6;
+    text-align:right;
+  }
+  .item .body{
+    font-size:17px;
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .item .body > p{margin:0 0 14px;}
+  .item .body > p:last-child{margin-bottom:0;}
+
+  .sub{
+    margin:14px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:20px;
+  }
+  .sub > li{
+    display:grid;
+    grid-template-columns:26px 1fr;
+    gap:12px;
+  }
+  .sub > li > .n{
+    color:var(--ink-soft);
+    font-style:italic;
+    font-family:'Playfair Display', serif;
+    font-size:17px;
+    text-align:right;
+    line-height:1.75;
+  }
+  .sub > li > .s{
+    font-size:17px;
+    line-height:1.75;
+  }
+  .sub > li > .s > p{margin:0 0 10px;}
+  .sub > li > .s > p:last-child{margin-bottom:0;}
+
+  .plain-sub{
+    margin:14px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:8px;
+  }
+  .plain-sub li{
+    font-size:17px;
+    line-height:1.75;
+  }
+
+  .compare{
+    margin-top:10px;
+    padding-top:12px;
+    border-top:1px solid var(--hair);
+    display:grid;
+    gap:10px;
+  }
+  .compare:first-of-type{border-top:none; padding-top:0;}
+  .compare p{
+    margin:0;
+    font-size:16.5px;
+    line-height:1.7;
+    color:var(--ink-soft);
+  }
+  .compare p strong{
+    color:var(--wine);
+    font-style:italic;
+    font-weight:400;
+    font-family:'Playfair Display', serif;
+  }
+
+  .lettered{
+    margin:10px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:12px;
+  }
+  .lettered > li{
+    display:grid;
+    grid-template-columns:24px 1fr;
+    gap:10px;
+    font-size:16.5px;
+    line-height:1.7;
+    color:var(--ink-soft);
+  }
+  .lettered > li > .l{
+    font-style:italic;
+    font-family:'Playfair Display', serif;
+    color:var(--gold);
+    text-align:right;
+  }
+
+  .prose{
+    font-size:17px;
+    line-height:1.85;
+  }
+  .prose p{margin:0 0 26px;}
+  .prose p:last-child{margin-bottom:0;}
+  .prose p:first-of-type::first-letter{
+    font-family:'Playfair Display', serif;
+    font-size:52px;
+    font-weight:600;
+    color:var(--wine);
+    float:left;
+    line-height:0.85;
+    padding:6px 10px 0 0;
+  }
+
+  .lede{
+    margin:0 0 26px;
+    font-size:17px;
+    line-height:1.85;
+  }
+
+  h3.sub-head{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:18px;
+    color:var(--ink);
+    margin:44px 0 4px;
+  }
+
+  .divider-thin{
+    width:36px;
+    height:1px;
+    background:var(--gold);
+    margin:44px 0 36px;
+  }
+
+  @media (max-width:640px){
+    main{padding:70px 20px 100px;}
+    .item{grid-template-columns:28px 1fr;gap:4px 10px;}
+    .sub > li{grid-template-columns:22px 1fr;}
+    .lettered > li{grid-template-columns:20px 1fr;}
+    .frontispiece{margin-bottom:70px;}
+    .prose p:first-of-type::first-letter{font-size:44px;}
+  }
+</style>
+</head>
+<body>
+<main>
+
+<div class="frontispiece">
+  <h1>Гринев и Швабрин</h1>
+  <p class="kicker">План</p>
+  <div class="rule"></div>
+</div>
+
+<div class="outline">
+
+  <div class="item">
+    <span class="num">I.</span>
+    <div class="body">
+      <p>На каком основании можно сравнивать Гринева и Швабрина — двух представителей дворянской молодежи второй половины XVIII века?</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">II.</span>
+    <div class="body">
+      <p>Сходство:</p>
+      <ol class="plain-sub">
+        <li>1. Оба офицеры;</li>
+        <li>2. Оба молоды;</li>
+        <li>3. Оба любят Машу Миронову.</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">III.</span>
+    <div class="body">
+      <p>Различие:</p>
+      <ol class="sub">
+
+        <li>
+          <span class="n">1.</span>
+          <div class="s">
+            <p>Воспитание и образование:</p>
+            <div class="compare">
+              <p><strong>Гринев</strong> — из провинциальной дворянской семьи, получил скромное образование, вырос под влиянием человека из народа (Савельич).</p>
+              <p><strong>Швабрин</strong> получил петербургское воспитание и образование.</p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <span class="n">2.</span>
+          <div class="s">
+            <p>Отношение к окружающим людям:</p>
+            <div class="compare">
+              <p>Для <strong>Гринева</strong> характерны доброта, правдивость, великодушие.</p>
+              <p><strong>Швабрину</strong> свойственны озлобленность, способность на клевету, презрительность, мстительность.</p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <span class="n">3.</span>
+          <div class="s">
+            <p>Отношение к любви:</p>
+            <div class="compare">
+              <p><strong>Гринева</strong> отличают глубина и искренность чувств, готовность пострадать во имя любви, уважительное отношение к женщине.</p>
+              <p><strong>Швабрина</strong> — низменный характер чувств, способность совершить насилие, неуважение к женщине.</p>
+            </div>
+          </div>
+        </li>
+
+        <li>
+          <span class="n">4.</span>
+          <div class="s">
+            <p>Понимание воинского долга:</p>
+            <div class="compare">
+              <p><strong>Гринев</strong> верен присяге, готов пожертвовать во имя нее жизнью.</p>
+              <p><strong>Швабрин</strong> изменяет присяге — причем даже не из идейных соображений, а по самым низменным мотивам.</p>
+            </div>
+          </div>
+        </li>
+
+      </ol>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">IV.</span>
+    <div class="body">
+      <p>Зачем рядом показаны Гринев и Швабрин? Зачем их сравнить? (отношение читателя, отношение автора).</p>
+    </div>
+  </div>
+
+</div>
+
+</main>
+</body>
+</html>
