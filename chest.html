@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Проблема чести и человеческого достоинства</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --ink:#221f1c;
+    --ink-soft:#5c564e;
+    --wine:#7c2d3b;
+    --gold:#a3823f;
+    --hair:#e7e2d8;
+    --hair-strong:#d8d1c2;
+    --max:660px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:100px 28px 140px;
+  }
+  .frontispiece{
+    text-align:center;
+    margin-bottom:110px;
+    animation:rise .9s ease both;
+  }
+  .frontispiece .kicker{
+    font-family:'PT Serif', serif;
+    font-style:italic;
+    color:var(--ink-soft);
+    font-size:16px;
+    letter-spacing:.02em;
+    margin:0 0 22px;
+  }
+  .frontispiece h1{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:clamp(28px, 4.6vw, 42px);
+    line-height:1.28;
+    margin:0 0 26px;
+    letter-spacing:.005em;
+  }
+  .frontispiece .rule{
+    width:64px;
+    height:1px;
+    background:var(--gold);
+    margin:0 auto;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+  .doc-mark{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--gold);
+    margin:0 0 14px;
+    text-align:center;
+  }
+  .outline{margin:0;padding:0;}
+  .item{
+    display:grid;
+    grid-template-columns:38px 1fr;
+    gap:6px 16px;
+    margin:0 0 26px;
+  }
+  .item .num{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    color:var(--wine);
+    font-size:19px;
+    line-height:1.6;
+    text-align:right;
+  }
+  .item .body{
+    font-size:17px;
+    line-height:1.75;
+    color:var(--ink);
+  }
+  .item .body p{margin:0 0 12px;}
+  .item .body p:last-child{margin-bottom:0;}
+  .sub-list{
+    grid-column:2;
+    margin:8px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:14px;
+  }
+  .sub-list li{
+    display:grid;
+    grid-template-columns:28px 1fr;
+    gap:14px;
+    font-size:17px;
+    line-height:1.75;
+  }
+  .sub-list li .n{
+    color:var(--ink-soft);
+    font-style:italic;
+    font-family:'Playfair Display', serif;
+    text-align:right;
+  }
+  .dash-list{
+    grid-column:2;
+    margin:10px 0 0;
+    padding:0;
+    list-style:none;
+    display:grid;
+    gap:10px;
+  }
+  .dash-list li{
+    position:relative;
+    padding-left:20px;
+    font-size:17px;
+    line-height:1.75;
+  }
+  .dash-list li::before{
+    content:"—";
+    position:absolute;
+    left:0;
+    color:var(--gold);
+  }
+  .names{
+    grid-column:2;
+    margin:6px 0 0;
+    font-size:17px;
+    line-height:1.9;
+    font-style:italic;
+    color:var(--ink-soft);
+  }
+  .flow-text{
+    grid-column:2;
+    font-size:17px;
+    line-height:1.8;
+    margin:6px 0 0;
+  }
+  .flow-text p{margin:0 0 14px;}
+  .flow-text p:last-child{margin-bottom:0;}
+  figure{
+    margin:44px 0 46px;
+    text-align:center;
+  }
+  figure img{
+    max-width:100%;
+    height:auto;
+    cursor:zoom-in;
+    filter:sepia(6%);
+    border:1px solid var(--hair);
+    transition:box-shadow .3s ease, transform .3s ease;
+  }
+  figure img:hover{
+    box-shadow:0 12px 34px -18px rgba(34,31,28,.35);
+    transform:translateY(-2px);
+  }
+  figure.manuscript img{max-width:280px;}
+  figure.landscape img{max-width:100%;}
+  .task{
+    margin-top:52px;
+    padding:26px 26px 28px;
+    border:1px solid var(--hair);
+    border-left:3px solid var(--wine);
+  }
+  .task .doc-mark{margin-bottom:10px; text-align:left;}
+  .task p{
+    font-size:17px;
+    line-height:1.8;
+    margin:0;
+  }
+  .lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(20,18,16,.86);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    cursor:zoom-out;
+    padding:40px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:min(92vw, 900px);
+    max-height:88vh;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  @media (max-width:720px){
+    main{padding:70px 20px 100px;}
+    .item{grid-template-columns:28px 1fr;gap:4px 10px;}
+    .frontispiece{margin-bottom:80px;}
+  }
+</style>
+</head>
+<body>
+<main>
+
+<div class="frontispiece">
+  <p class="kicker">Пословица</p>
+  <h1>Береги платье снову,<br>а честь смолоду.</h1>
+  <div class="rule"></div>
+</div>
+
+<p class="doc-mark">Проблема чести и человеческого достоинства в романе</p>
+
+<div class="outline">
+
+  <div class="item">
+    <span class="num">I.</span>
+    <div class="body">
+      <p>Место этой проблемы в романе и в творчестве Пушкина; основной эпиграф.</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">II.</span>
+    <div class="body">
+      <p>Различное понимание чести героями:</p>
+      <ol class="sub-list" style="list-style:none;">
+        <li><span class="n">1.</span><span>Уставное понимание (Миронов, Гриневы): честь — это верность присяге, воинская доблесть (армейское понимание чести).</span></li>
+        <li><span class="n">2.</span><span>Особый сюжетный прием Пушкина: подвергать героев испытаниям. Одни выходят из них с честью, другие — утрачивают человеческое достоинство. Понятие чести неотделимо от понятия достоинства. Так, Швабрин — человек бесчестный (он нарушил присягу), а также у него нет чувства собственного достоинства (валялся в ногах беглого казака). Петруша Гринев в процессе испытаний взрослеет, обогащается жизненным опытом. Его представления о чести меняются под влиянием встреч с Пугачевым. Он превращается из «недоросля» в личность (тому доказательство — суд, когда имя Маши Мироновой не было названо).</span></li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">III.</span>
+    <div class="body">
+      <p>Проблема человеческого достоинства неизменно сопутствует проблеме чести. Потеря чести — это всегда утрата достоинства. Человек, честно выполняющий свой долг, всегда преисполнен достоинства (Савельич).</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">IV.</span>
+    <div class="body">
+      <p>Автор понимает честь как внутреннее нравственное достоинство человека, благородство души, верность морально-этическим принципам.</p>
+      <p>Честь Пушкина-художника безупречна: он создал и художественно отобразил картину восстания, не изменив своим принципам. С одной стороны, Пушкин объясняет жестокость восставших их вековым рабством, с другой — как гуманист, он ужасается зверствам Пугачева.</p>
+      <p>Автору понятен и близок философский смысл сказки, рассказанной Гриневу Пугачевым; в описании пугачевского стана чувствуется некая поэзия борьбы.</p>
+    </div>
+  </div>
+
+  <div class="item">
+    <span class="num">V.</span>
+    <div class="body">
+      <p>Значение постановки этой проблемы для творчества Пушкина.</p>
+      <p>Честь без внутреннего начала немыслима. Это понятие имеет общечеловеческий смысл. Именно на основе таких понятий и искал Пушкин возможность воссоединения нации — некоего мостика между сословиями.</p>
+    </div>
+  </div>
+
+</div>
+
+</main>
+<div class="lightbox" id="lightbox"><img id="lightbox-img" src="" alt=""></div>
+<script>
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  document.querySelectorAll('figure img').forEach(img => {
+    img.addEventListener('click', () => {
+      lbImg.src = img.src;
+      lb.classList.add('open');
+    });
+  });
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+</script>
+</body>
+</html>
