@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Эпиграфы</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --white:#ffffff;
+    --ink:#221f1c;
+    --ink-soft:#5c564e;
+    --wine:#7c2d3b;
+    --gold:#a3823f;
+    --hair:#e7e2d8;
+    --hair-strong:#d8d1c2;
+    --max:720px;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--white);
+    color:var(--ink);
+    font-family:'PT Serif', Georgia, serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  main{
+    max-width:var(--max);
+    margin:0 auto;
+    padding:100px 24px 140px;
+  }
+  .frontispiece{
+    text-align:center;
+    margin-bottom:64px;
+    animation:rise .9s ease both;
+  }
+  .frontispiece h1{
+    font-family:'Playfair Display', serif;
+    font-weight:600;
+    font-size:clamp(26px, 4.4vw, 40px);
+    line-height:1.28;
+    margin:0;
+  }
+  .frontispiece .rule{
+    width:64px;
+    height:1px;
+    background:var(--gold);
+    margin:26px auto 0;
+  }
+  @keyframes rise{
+    from{opacity:0; transform:translateY(14px);}
+    to{opacity:1; transform:translateY(0);}
+  }
+
+  /* main epigraph card */
+  .main-epigraph{
+    text-align:center;
+    margin:0 0 72px;
+    padding:32px 20px 36px;
+    border:1px solid var(--hair);
+    position:relative;
+  }
+  .main-epigraph .tag{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--gold);
+    margin:0 0 14px;
+  }
+  .main-epigraph .txt{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:21px;
+    color:var(--ink);
+    margin:0 0 10px;
+    line-height:1.5;
+  }
+  .main-epigraph cite{
+    font-style:normal;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+
+  /* controls */
+  .controls{
+    display:flex;
+    gap:12px;
+    align-items:center;
+    margin-bottom:8px;
+    flex-wrap:wrap;
+  }
+  .search-wrap{
+    flex:1;
+    position:relative;
+    min-width:180px;
+  }
+  .search-wrap input{
+    width:100%;
+    font-family:'PT Serif', serif;
+    font-size:15px;
+    padding:11px 14px 11px 34px;
+    border:1px solid var(--hair-strong);
+    background:var(--white);
+    color:var(--ink);
+    outline:none;
+    transition:border-color .2s ease;
+  }
+  .search-wrap input:focus{border-color:var(--wine);}
+  .search-wrap svg{
+    position:absolute;
+    left:11px;
+    top:50%;
+    transform:translateY(-50%);
+    width:15px;
+    height:15px;
+    stroke:var(--ink-soft);
+  }
+  .toggle-all{
+    font-family:'PT Serif', serif;
+    font-style:italic;
+    font-size:14px;
+    color:var(--wine);
+    background:none;
+    border:1px solid var(--hair-strong);
+    padding:10px 16px;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:background .2s ease;
+  }
+  .toggle-all:hover{background:#faf8f5;}
+
+  .count{
+    font-size:13px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin:10px 0 34px;
+  }
+
+  /* rows */
+  .rows{margin:0; padding:0;}
+  .row{
+    border-bottom:1px solid var(--hair);
+  }
+  .row:first-child{border-top:1px solid var(--hair);}
+  .row-head{
+    all:unset;
+    display:grid;
+    grid-template-columns:34px 1fr 20px;
+    align-items:center;
+    gap:16px;
+    width:100%;
+    padding:18px 4px;
+    cursor:pointer;
+  }
+  .row-head .rn{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    color:var(--gold);
+    font-size:16px;
+  }
+  .row-head .rc{
+    font-family:'Playfair Display', serif;
+    font-weight:500;
+    font-size:17.5px;
+    color:var(--ink);
+  }
+  .row-head .rt{
+    font-size:18px;
+    color:var(--ink-soft);
+    transition:transform .3s ease;
+    justify-self:end;
+  }
+  .row.open .row-head .rt{transform:rotate(45deg);}
+
+  .row-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .4s ease;
+  }
+  .row.open .row-body{max-height:2000px;}
+  .row-body-inner{
+    padding:0 4px 28px 50px;
+  }
+
+  .ep-text{
+    margin:0 0 18px;
+    padding-left:16px;
+    border-left:2px solid var(--hair-strong);
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    font-size:16.5px;
+    line-height:1.65;
+    color:var(--ink);
+  }
+  .ep-text .ln{display:block;}
+  .ep-text .attribution{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-top:10px;
+  }
+  .ep-text cite{
+    font-style:normal;
+    font-family:'PT Serif', serif;
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .avatar{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    object-fit:cover;
+    cursor:zoom-in;
+    border:1px solid var(--hair-strong);
+    filter:sepia(10%);
+    transition:transform .25s ease;
+    flex-shrink:0;
+  }
+  .avatar:hover{transform:scale(1.12);}
+
+  .ep-comment{
+    font-size:15.5px;
+    line-height:1.75;
+    color:var(--ink-soft);
+  }
+  .ep-comment p{margin:0 0 10px;}
+  .ep-comment p:last-child{margin-bottom:0;}
+
+  .hero-figure{
+    margin:14px 0 20px;
+    text-align:center;
+  }
+  .hero-figure img{
+    max-width:100%;
+    max-height:260px;
+    cursor:zoom-in;
+    filter:sepia(6%);
+    border:1px solid var(--hair);
+    transition:box-shadow .3s ease;
+  }
+  .hero-figure img:hover{box-shadow:0 12px 30px -16px rgba(34,31,28,.35);}
+
+  .row.hidden{display:none;}
+
+  .lightbox{
+    position:fixed;
+    inset:0;
+    background:rgba(20,18,16,.86);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:50;
+    cursor:zoom-out;
+    padding:40px;
+    flex-direction:column;
+    gap:14px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{
+    max-width:min(92vw, 640px);
+    max-height:78vh;
+    box-shadow:0 30px 80px rgba(0,0,0,.5);
+  }
+  .lightbox .lb-cap{
+    font-family:'Playfair Display', serif;
+    font-style:italic;
+    color:#f1ede4;
+    font-size:14px;
+  }
+
+  .no-results{
+    text-align:center;
+    padding:48px 0;
+    color:var(--ink-soft);
+    font-style:italic;
+    display:none;
+  }
+
+  @media (max-width:640px){
+    main{padding:70px 18px 100px;}
+    .row-head{grid-template-columns:24px 1fr 18px; gap:10px;}
+    .row-body-inner{padding:0 4px 24px 34px;}
+    .frontispiece{margin-bottom:48px;}
+  }
+</style>
+</head>
+<body>
+<main>
+
+<div class="frontispiece">
+  <h1>Эпиграфы</h1>
+  <div class="rule"></div>
+</div>
+
+<div class="main-epigraph">
+  <p class="tag">Основной эпиграф</p>
+  <p class="txt">Береги честь смолоду.</p>
+  <cite>— Пословица.</cite>
+</div>
+
+<div class="controls">
+  <div class="search-wrap">
+    <svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+    <input type="text" id="search" placeholder="Поиск по главе или эпиграфу…">
+  </div>
+  <button class="toggle-all" id="toggleAll">Развернуть все</button>
+</div>
+<p class="count" id="count">14 глав</p>
+
+<div class="rows" id="rows">
+  
+    <div class="row" data-search="сержант гвардии — был бы гвардии он завтра ж капитан. — того не надобно; пусть в армии послужит. — изрядно сказано! пускай его потужит… да кто его отец? это отрывок из комедии я. б. княжнина «хвастун» (1784 или 1785 г.), действие iii, явление 6-е. пушкин несколько изменил текст. эпиграф намекает на биографию главного героя: петр гринев с рождения числится в престижном гвардейском полку в петербурге. но строгий отец решает научить сына жизни и отправляет его на службу в обычный полк в глубинке россии.">
+      <button class="row-head">
+        <span class="rn">01</span>
+        <span class="rc">Сержант гвардии</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">— Был бы гвардии он завтра ж капитан.</span>
+<span class="ln">— Того не надобно; пусть в армии послужит.</span>
+<span class="ln">— Изрядно сказано! пускай его потужит…</span>
+<span class="ln">Да кто его отец?</span>
+            <div class="attribution">
+              <img class="avatar" src="https://commons.wikimedia.org/wiki/Special:FilePath/Yakov%20Knyazhnin.jpg" alt="" data-name="Я. Б. Княжнин">
+              <cite>— Княжнин.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Это отрывок из комедии Я. Б. Княжнина «Хвастун» (1784 или 1785 г.), действие III, явление 6-е. Пушкин несколько изменил текст.</p><p>Эпиграф намекает на биографию главного героя: Петр Гринев с рождения числится в престижном гвардейском полку в Петербурге. Но строгий отец решает научить сына жизни и отправляет его на службу в обычный полк в глубинке России.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="вожатый сторона ль моя, сторонушка, сторона незнакомая! что не сам я на тебя зашел, что не добрый ли да меня конь завез: завезла меня, доброго молодца, прыткость, бодрость молодецкая и хмелинушка кабацкая. эпиграф взят из «собрания разных песен» чулкова (ч. iii, № 167). это отрывок из песни о молодом солдате, отправившемся на службу в далекий край. эпиграф намекает на биографию главного героя: 16-летний дворянин петр гринев едет в другой город, чтобы служить в армии, сам того не желая.">
+      <button class="row-head">
+        <span class="rn">02</span>
+        <span class="rc">Вожатый</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Сторона ль моя, сторонушка,</span>
+<span class="ln">Сторона незнакомая!</span>
+<span class="ln">Что не сам я на тебя зашел,</span>
+<span class="ln">Что не добрый ли да меня конь завез:</span>
+<span class="ln">Завезла меня, доброго молодца,</span>
+<span class="ln">Прыткость, бодрость молодецкая</span>
+<span class="ln">И хмелинушка кабацкая.</span>
+            <div class="attribution">
+              
+              <cite>— Старинная песня.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф взят из «Собрания разных песен» Чулкова (ч. III, № 167). Это отрывок из песни о молодом солдате, отправившемся на службу в далекий край.</p><p>Эпиграф намекает на биографию главного героя: 16-летний дворянин Петр Гринев едет в другой город, чтобы служить в армии, сам того не желая.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="крепость мы в фортеции живем, хлеб едим и воду пьем; а как лютые враги придут к нам на пироги, зададим гостям пирушку: зарядим картечью пушку. — солдатская песня.  старинные люди, мой батюшка. это солдатская песня, предположительно написанная самим пушкиным. в эпиграфе как бы говорится о белогорской крепости и ее бесстрашных солдатах, которые готовы бороться с «пугачевцами» до последнего. второй эпиграф намекает на характер мироновых, людей «старинных», для которых важны понятия старинности, чести.">
+      <button class="row-head">
+        <span class="rn">03</span>
+        <span class="rc">Крепость</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Мы в фортеции живем,</span>
+<span class="ln">Хлеб едим и воду пьем;</span>
+<span class="ln">А как лютые враги</span>
+<span class="ln">Придут к нам на пироги,</span>
+<span class="ln">Зададим гостям пирушку:</span>
+<span class="ln">Зарядим картечью пушку.</span>
+<span class="ln">— Солдатская песня.</span>
+<span class="ln"></span>
+<span class="ln">Старинные люди, мой батюшка.</span>
+            <div class="attribution">
+              <img class="avatar" src="https://commons.wikimedia.org/wiki/Special:FilePath/Denis%20Fonvizin.jpg" alt="" data-name="Д. И. Фонвизин">
+              <cite>— Недоросль.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Это солдатская песня, предположительно написанная самим Пушкиным. В эпиграфе как бы говорится о Белогорской крепости и ее бесстрашных солдатах, которые готовы бороться с «пугачевцами» до последнего.</p><p>Второй эпиграф намекает на характер Мироновых, людей «старинных», для которых важны понятия старинности, чести.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="поединок — ин, извольте, и станьте же в позицию. посмотрите, проколю как я твою фигуру! это отрывок из комедии я. б. княжнина (1790) — действие iv, явление 12-е. в этом эпизоде княжнин комически изображает дуэль двух слуг — высоноса и пролаза, дерущихся на кортиках (кинжалах). эпиграф намекает на рассказ о дуэли гринева и швабрина.">
+      <button class="row-head">
+        <span class="rn">04</span>
+        <span class="rc">Поединок</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">— Ин, извольте, и станьте же в позицию.</span>
+<span class="ln">Посмотрите, проколю как я твою фигуру!</span>
+            <div class="attribution">
+              
+              <cite>— Княжнин.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Это отрывок из комедии Я. Б. Княжнина (1790) — действие IV, явление 12-е. В этом эпизоде Княжнин комически изображает дуэль двух слуг — Высоноса и Пролаза, дерущихся на кортиках (кинжалах).</p><p>Эпиграф намекает на рассказ о дуэли Гринева и Швабрина.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="любовь ах ты, девка, девка красная! не ходи, девка, молода замуж; ты спроси, девка, отца, матери, отца, матери, роду-племени; накопи, девка, ума-разума, ума-разума, приданова. — песня народная.  буде лучше меня найдешь, позабудешь; если хуже меня найдешь, воспомянешь. первый эпиграф — фрагмент из народной песни «ах ты, волга, волга матушка» из сборника н. и. новикова «собрание народных русских песен» (ч. 1. м., 1780, № 176). второй эпиграф — отрывок из песни «вещевало мое сердце, вещевало» (тот же сборник, № 135). эпиграфы намекают на историю любви гринева и марьи мироновой. отец гринева выступает против их неравного брака. бедная девушка понимает, что она не пара богатому гриневу, поэтому избегает встреч с ним.">
+      <button class="row-head">
+        <span class="rn">05</span>
+        <span class="rc">Любовь</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Ах ты, девка, девка красная!</span>
+<span class="ln">Не ходи, девка, молода замуж;</span>
+<span class="ln">Ты спроси, девка, отца, матери,</span>
+<span class="ln">Отца, матери, роду-племени;</span>
+<span class="ln">Накопи, девка, ума-разума,</span>
+<span class="ln">Ума-разума, приданова.</span>
+<span class="ln">— Песня народная.</span>
+<span class="ln"></span>
+<span class="ln">Буде лучше меня найдешь, позабудешь;</span>
+<span class="ln">Если хуже меня найдешь, воспомянешь.</span>
+            <div class="attribution">
+              
+              <cite>— То же.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Первый эпиграф — фрагмент из народной песни «Ах ты, Волга, Волга матушка» из сборника Н. И. Новикова «Собрание народных русских песен» (ч. 1. М., 1780, № 176). Второй эпиграф — отрывок из песни «Вещевало мое сердце, вещевало» (тот же сборник, № 135).</p><p>Эпиграфы намекают на историю любви Гринева и Марьи Мироновой. Отец Гринева выступает против их неравного брака. Бедная девушка понимает, что она не пара богатому Гриневу, поэтому избегает встреч с ним.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="пугачевщина вы, молодые ребята, послушайте, что мы, старые старики, будем сказывать. эпиграф представляет собой отрывок из песни о взятии казани иваном грозным («новое и полное собрание российских песен», ч. 1. м., 1780, с. 156, № 125). эпиграф намекает на взятие белогорской крепости пугачевцами.">
+      <button class="row-head">
+        <span class="rn">06</span>
+        <span class="rc">Пугачевщина</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          <div class="hero-figure"><img src="https://commons.wikimedia.org/wiki/Special:FilePath/Capture%20of%20Kazan%2C%20Ivan%20the%20Terrible%20%28Grigoriy%20Ugryumov%29.jpg" alt="" data-name="Г. И. Угрюмов. «Взятие Казани Иваном Грозным»"></div>
+          <div class="ep-text">
+            <span class="ln">Вы, молодые ребята, послушайте,</span>
+<span class="ln">Что мы, старые старики, будем сказывать.</span>
+            <div class="attribution">
+              
+              <cite>— Песня.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф представляет собой отрывок из песни о взятии Казани Иваном Грозным («Новое и полное собрание российских песен», ч. 1. М., 1780, с. 156, № 125).</p><p>Эпиграф намекает на взятие Белогорской крепости пугачевцами.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="приступ голова моя, головушка, голова послуживая! послужила моя головушка ровно тридцать лет и три года. ах, не выслужила головушка ни корысти себе, ни радости, ни ни слова себе доброго, и ни ранту себе высокого; только выслужила головушка два высокие столбика, перекладинку кленовую, еще петельку шелковую. эпиграф представляет собой отрывок из песни о казни стрелецкого атамана: «голова ль ты моя, головушка, послуживала мне...» («новое и полное собрание российских песен», ч. ii. м., 1780, № 130). эпиграф намекает на историю капитана миронова, который служит в белогорской крепости более 20 лет и в конце концов погибает на виселице от рук пугачевцев.">
+      <button class="row-head">
+        <span class="rn">07</span>
+        <span class="rc">Приступ</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Голова моя, головушка,</span>
+<span class="ln">Голова послуживая!</span>
+<span class="ln">Послужила моя головушка</span>
+<span class="ln">Ровно тридцать лет и три года.</span>
+<span class="ln">Ах, не выслужила головушка</span>
+<span class="ln">Ни корысти себе, ни радости,</span>
+<span class="ln">Ни ни слова себе доброго,</span>
+<span class="ln">И ни ранту себе высокого;</span>
+<span class="ln">Только выслужила головушка</span>
+<span class="ln">Два высокие столбика,</span>
+<span class="ln">Перекладинку кленовую,</span>
+<span class="ln">Еще петельку шелковую.</span>
+            <div class="attribution">
+              
+              <cite>— Народная песня.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф представляет собой отрывок из песни о казни стрелецкого атамана: «Голова ль ты моя, головушка, послуживала мне...» («Новое и полное собрание российских песен», ч. II. М., 1780, № 130).</p><p>Эпиграф намекает на историю капитана Миронова, который служит в Белогорской крепости более 20 лет и в конце концов погибает на виселице от рук пугачевцев.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="незваный гость незваный гость хуже татарина. эпиграф намекает на нашествие пугачевцев и захват белогорской крепости. в данном случае незваный гость — это пугачев и его шайка.">
+      <button class="row-head">
+        <span class="rn">08</span>
+        <span class="rc">Незваный гость</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Незваный гость хуже татарина.</span>
+            <div class="attribution">
+              
+              <cite>— Пословица.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф намекает на нашествие пугачевцев и захват Белогорской крепости. В данном случае незваный гость — это Пугачев и его шайка.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="разлука сладко было спознаваться мне, прекрасная, с тобой; грустно, грустно расставаться, грустно, будто бы с душой. эпиграф представляет собой отрывок из стихотворения м. м. хераскова «вид прелестный, милы взоры!..». м. м. херасков — поэт, драматург и романист xviii века. пушкин, судя по всему, считал творчество хераскова безнадежно устаревшим. эпиграф намекает на вынужденную разлуку гринева и маши мироновой.">
+      <button class="row-head">
+        <span class="rn">09</span>
+        <span class="rc">Разлука</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Сладко было спознаваться</span>
+<span class="ln">Мне, прекрасная, с тобой;</span>
+<span class="ln">Грустно, грустно расставаться,</span>
+<span class="ln">Грустно, будто бы с душой.</span>
+            <div class="attribution">
+              <img class="avatar" src="https://commons.wikimedia.org/wiki/Special:FilePath/Mikhail%20Kheraskov.jpg" alt="" data-name="М. М. Херасков">
+              <cite>— Херасков.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф представляет собой отрывок из стихотворения М. М. Хераскова «Вид прелестный, милы взоры!..». М. М. Херасков — поэт, драматург и романист XVIII века. Пушкин, судя по всему, считал творчество Хераскова безнадежно устаревшим.</p><p>Эпиграф намекает на вынужденную разлуку Гринева и Маши Мироновой.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="осада города заняв луга и горы, с вершины, как орел, бросал он взгляд на град; за станом повелел сооружить раскат и, в нем перуны скрыв, в ночи привезть под град. эпиграф представляет собой фрагмент из эпической поэмы м. хераскова «россиада» (песнь xi) о взятии казани войсками ивана iv. этим эпиграфом пушкин как бы уподобляет пугачева царю и намекает на его «царственный» облик.">
+      <button class="row-head">
+        <span class="rn">10</span>
+        <span class="rc">Осада города</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Заняв луга и горы,</span>
+<span class="ln">С вершины, как орел, бросал он взгляд на град;</span>
+<span class="ln">За станом повелел сооружить раскат</span>
+<span class="ln">И, в нем перуны скрыв, в ночи привезть под град.</span>
+            <div class="attribution">
+              
+              <cite>— Херасков.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф представляет собой фрагмент из эпической поэмы М. Хераскова «Россиада» (песнь XI) о взятии Казани войсками Ивана IV.</p><p>Этим эпиграфом Пушкин как бы уподобляет Пугачева царю и намекает на его «царственный» облик.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="мятежная слобода в ту пору лев был сыт, хоть от роду он свиреп. «зачем пожаловать изволил в мой вертеп?» — спросил он ласково. эпиграф сочинен самим пушкиным и представляет собой имитацию стиля сумарокова. эпиграф намекает на сходство пугачева со львом — царем зверей (перифраз).">
+      <button class="row-head">
+        <span class="rn">11</span>
+        <span class="rc">Мятежная слобода</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">В ту пору лев был сыт, хоть от роду он свиреп.</span>
+<span class="ln">«Зачем пожаловать изволил в мой вертеп?» —</span>
+<span class="ln">Спросил он ласково.</span>
+            <div class="attribution">
+              <img class="avatar" src="https://commons.wikimedia.org/wiki/Special:FilePath/Sumarokov%20Aleksandr%20Petrovich.jpg" alt="" data-name="А. П. Сумароков">
+              <cite>— А. Сумароков.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф сочинен самим Пушкиным и представляет собой имитацию стиля Сумарокова.</p><p>Эпиграф намекает на сходство Пугачева со львом — царем зверей (перифраз).</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="сирота как у нашей у яблоньки ни верхушки нет, ни отросточек; как у нашей у княгинюшки ни отца нету, ни матери, снарядить-то ее некому, благословить-то ее некому. эпиграф представляет собой переделанную пушкиным свадебную песню. подобная песня пелась в случае, когда выдавали замуж сироту. в данном случае речь идет о сироте марье мироновой, чьи родители были убиты пугачевцами.">
+      <button class="row-head">
+        <span class="rn">12</span>
+        <span class="rc">Сирота</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Как у нашей у яблоньки</span>
+<span class="ln">Ни верхушки нет, ни отросточек;</span>
+<span class="ln">Как у нашей у княгинюшки</span>
+<span class="ln">Ни отца нету, ни матери,</span>
+<span class="ln">Снарядить-то ее некому,</span>
+<span class="ln">Благословить-то ее некому.</span>
+            <div class="attribution">
+              
+              <cite>— Свадебная песня.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Эпиграф представляет собой переделанную Пушкиным свадебную песню. Подобная песня пелась в случае, когда выдавали замуж сироту.</p><p>В данном случае речь идет о сироте Марье Мироновой, чьи родители были убиты пугачевцами.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="арест не гневайтесь, сударь: по долгу моему я должен сей же час отправить вас в тюрму. — извольте, я готов; но я в такой надежде, что дело объяснить дозволите мне прежде. данное четверостишие написано самим пушкиным и представляет собой имитацию стиля княжнина. эпиграф намекает на событие из этой главы: арест петра гринева за его «дружеские» отношения с пугачевым.">
+      <button class="row-head">
+        <span class="rn">13</span>
+        <span class="rc">Арест</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Не гневайтесь, сударь: по долгу моему</span>
+<span class="ln">Я должен сей же час отправить вас в тюрму.</span>
+<span class="ln">— Извольте, я готов; но я в такой надежде,</span>
+<span class="ln">Что дело объяснить дозволите мне прежде.</span>
+            <div class="attribution">
+              
+              <cite>— Княжнин.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Данное четверостишие написано самим Пушкиным и представляет собой имитацию стиля Княжнина.</p><p>Эпиграф намекает на событие из этой главы: арест Петра Гринева за его «дружеские» отношения с Пугачевым.</p></div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="row" data-search="суд мирская молва — морская волна. пословица говорит о том, что мирская молва, то есть слухи и пересуды людей, — это вещь переменчивая, как морская волна. в этой главе гринева объявляют шпионом пугачева. императрица верит «молве», слухам, и назначает гриневу в наказание ссылку в сибирь. отец гринева также верит «мирской молве», то есть слухам о том, что его сын — сообщник пугачева.">
+      <button class="row-head">
+        <span class="rn">14</span>
+        <span class="rc">Суд</span>
+        <span class="rt">+</span>
+      </button>
+      <div class="row-body">
+        <div class="row-body-inner">
+          
+          <div class="ep-text">
+            <span class="ln">Мирская молва —</span>
+<span class="ln">Морская волна.</span>
+            <div class="attribution">
+              
+              <cite>— Пословица.</cite>
+            </div>
+          </div>
+          <div class="ep-comment"><p>Пословица говорит о том, что мирская молва, то есть слухи и пересуды людей, — это вещь переменчивая, как морская волна.</p><p>В этой главе Гринева объявляют шпионом Пугачева. Императрица верит «молве», слухам, и назначает Гриневу в наказание ссылку в Сибирь. Отец Гринева также верит «мирской молве», то есть слухам о том, что его сын — сообщник Пугачева.</p></div>
+        </div>
+      </div>
+    </div>
+    
+  <p class="no-results" id="noResults">Ничего не найдено</p>
+</div>
+
+</main>
+
+<div class="lightbox" id="lightbox">
+  <img id="lightbox-img" src="" alt="">
+  <p class="lb-cap" id="lightbox-cap"></p>
+</div>
+<script>
+  const rows = document.querySelectorAll('.row');
+
+  rows.forEach(row => {
+    row.querySelector('.row-head').addEventListener('click', () => {
+      row.classList.toggle('open');
+      updateToggleLabel();
+    });
+  });
+
+  const toggleAllBtn = document.getElementById('toggleAll');
+  function updateToggleLabel(){
+    const anyClosed = [...rows].some(r => !r.classList.contains('open') && !r.classList.contains('hidden'));
+    toggleAllBtn.textContent = anyClosed ? 'Развернуть все' : 'Свернуть все';
+  }
+  toggleAllBtn.addEventListener('click', () => {
+    const anyClosed = [...rows].some(r => !r.classList.contains('open') && !r.classList.contains('hidden'));
+    rows.forEach(r => { if(!r.classList.contains('hidden')) r.classList.toggle('open', anyClosed); });
+    updateToggleLabel();
+  });
+
+  const search = document.getElementById('search');
+  const count = document.getElementById('count');
+  const noResults = document.getElementById('noResults');
+  search.addEventListener('input', () => {
+    const q = search.value.trim().toLowerCase();
+    let visible = 0;
+    rows.forEach(r => {
+      const match = !q || r.dataset.search.includes(q);
+      r.classList.toggle('hidden', !match);
+      if(match) visible++;
+    });
+    count.textContent = visible + (visible === 1 ? ' глава' : ' главы');
+    noResults.style.display = visible === 0 ? 'block' : 'none';
+    updateToggleLabel();
+  });
+
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lightbox-img');
+  const lbCap = document.getElementById('lightbox-cap');
+  document.querySelectorAll('.avatar, .hero-figure img').forEach(img => {
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      lbImg.src = img.src;
+      lbCap.textContent = img.dataset.name || '';
+      lb.classList.add('open');
+    });
+  });
+  lb.addEventListener('click', () => lb.classList.remove('open'));
+</script>
+
+</body>
+</html>
