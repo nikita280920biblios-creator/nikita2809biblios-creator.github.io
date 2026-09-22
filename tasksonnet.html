@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Задание. Сонет</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&family=PT+Serif:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --paper:#f7f2e7;
+  --paper-deep:#efe8d8;
+  --ink:#211d16;
+  --ink-soft:#65604f;
+  --ink-faint:#948d78;
+  --rule:#d9d0ba;
+
+  --zone:#8a2e22;
+  --zone-soft:#8a2e221a;
+  --zone-mid:#8a2e2255;
+}
+
+*{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto;}
+  *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+}
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'PT Serif', Georgia, serif;
+  font-size:18px;
+  line-height:1.68;
+  -webkit-font-smoothing:antialiased;
+}
+
+::selection{ background: var(--zone-mid); color:var(--ink); }
+
+/* ---------- top ruler / progress ---------- */
+.ruler{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:5px;
+  z-index:60;
+  background:var(--rule);
+  opacity:0.45;
+}
+.ruler-fill{
+  position:fixed;
+  top:0; left:0;
+  height:5px;
+  width:0%;
+  z-index:61;
+  background:var(--zone);
+  transition:width 60ms linear;
+}
+
+/* ---------- top bar chip ---------- */
+.chip-bar{
+  position:fixed;
+  top:14px; left:50%;
+  transform:translateX(-50%);
+  z-index:58;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  pointer-events:none;
+}
+.chip{
+  pointer-events:auto;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:var(--paper);
+  background:var(--zone);
+  padding:6px 12px;
+  border-radius:2px;
+  white-space:nowrap;
+  max-width:56vw;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  box-shadow:0 2px 10px rgba(0,0,0,0.18);
+}
+.toc-btn{
+  pointer-events:auto;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:var(--ink);
+  background:var(--paper);
+  border:1px solid var(--rule);
+  padding:6px 12px;
+  border-radius:2px;
+  cursor:pointer;
+  box-shadow:0 2px 10px rgba(0,0,0,0.10);
+}
+.toc-btn:hover{ border-color:var(--zone); color:var(--zone); }
+.toc-btn:focus-visible, .chip:focus-visible{ outline:2px solid var(--zone); outline-offset:2px; }
+
+/* ---------- TOC panel ---------- */
+.toc-panel{
+  position:fixed;
+  top:56px; left:50%;
+  transform:translateX(-50%) translateY(-8px);
+  z-index:70;
+  background:var(--paper);
+  border:1px solid var(--rule);
+  box-shadow:0 12px 40px rgba(0,0,0,0.18);
+  padding:18px 20px;
+  min-width:260px;
+  max-width:88vw;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 180ms ease, transform 180ms ease;
+}
+.toc-panel.open{
+  opacity:1;
+  pointer-events:auto;
+  transform:translateX(-50%) translateY(0);
+}
+.toc-panel .toc-title{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10px;
+  letter-spacing:0.12em;
+  color:var(--ink-faint);
+  margin:0 0 12px 0;
+}
+.toc-panel a{
+  display:flex;
+  align-items:baseline;
+  gap:10px;
+  text-decoration:none;
+  color:var(--ink);
+  font-family:'PT Serif', serif;
+  font-size:15px;
+  padding:7px 0;
+  border-top:1px solid var(--rule);
+}
+.toc-panel a:first-of-type{ border-top:none; }
+.toc-panel a .dot{
+  width:7px; height:7px;
+  min-width:7px;
+  border-radius:50%;
+  background:var(--zone);
+}
+.toc-panel a:hover{ color:var(--zone); }
+
+/* ---------- layout ---------- */
+main{
+  max-width:660px;
+  margin:0 auto;
+  padding:104px 28px 140px;
+}
+
+p{ margin:0 0 22px 0; }
+p:last-child{ margin-bottom:0; }
+
+h2{
+  font-family:'Playfair Display', serif;
+  font-weight:600;
+  font-size:25px;
+  color:var(--zone);
+  margin:56px 0 24px 0;
+  padding-top:22px;
+  border-top:1px solid var(--rule);
+}
+main > h2:first-child{ border-top:none; padding-top:0; margin-top:0; }
+
+.small-caps-label{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.1em;
+  color:var(--zone);
+}
+
+/* ---------- numbered questions ---------- */
+.q-list{
+  counter-reset:q;
+  list-style:none;
+  margin:26px 0;
+  padding:0;
+}
+.q-list > li{
+  counter-increment:q;
+  position:relative;
+  padding:0 0 26px 40px;
+  margin:0;
+}
+.q-list > li::before{
+  content:counter(q);
+  position:absolute;
+  left:0; top:1px;
+  width:26px; height:26px;
+  border:1px solid var(--zone);
+  color:var(--zone);
+  border-radius:50%;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+.q-list p{ margin:0; }
+
+.hl-btn{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-top:10px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:10.5px;
+  letter-spacing:0.05em;
+  color:var(--zone);
+  background:transparent;
+  border:1px solid var(--zone-mid);
+  padding:5px 10px;
+  cursor:pointer;
+  border-radius:2px;
+  transition:background-color 150ms ease, color 150ms ease;
+}
+.hl-btn:hover{ background:var(--zone-soft); }
+.hl-btn.active{ background:var(--zone); color:var(--paper); }
+.hl-btn:focus-visible{ outline:2px solid var(--zone); outline-offset:2px; }
+.hl-btn svg{ width:11px; height:11px; }
+
+/* ---------- poem ---------- */
+.poem-wrap{
+  margin:40px 0 44px 0;
+  padding-top:22px;
+  border-top:1px solid var(--rule);
+}
+.poem-heading{
+  font-family:'Playfair Display', serif;
+  font-weight:700;
+  font-style:italic;
+  font-size:20px;
+  margin:0 0 20px 0;
+}
+.poem-status{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:var(--zone);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  margin:0 0 16px 0;
+  min-height:16px;
+}
+.poem-status button{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--ink-faint);
+  background:none;
+  border:none;
+  cursor:pointer;
+  text-decoration:underline;
+  padding:0;
+}
+.poem{
+  font-family:'Playfair Display', serif;
+  font-style:italic;
+  font-size:19px;
+  line-height:1.75;
+  color:var(--ink);
+}
+.stanza{ margin:0 0 22px 0; }
+.poem .line{ display:block; }
+.poem mark{
+  background:transparent;
+  color:inherit;
+  padding:1px 2px;
+  border-radius:2px;
+  transition:background-color 200ms ease, box-shadow 200ms ease;
+}
+.fnref{
+  font-style:normal;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:13px;
+  color:var(--zone);
+  text-decoration:none;
+  padding:0 1px;
+}
+.fnref:hover{ text-decoration:underline; }
+
+/* ---------- footnotes ---------- */
+.notes{
+  margin-top:36px;
+  padding-top:20px;
+  border-top:1px solid var(--rule);
+}
+.note{
+  font-size:15.5px;
+  color:var(--ink-soft);
+  margin:0 0 14px 0;
+  display:flex;
+  gap:8px;
+}
+.note .mark{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:12px;
+  color:var(--zone);
+  flex:0 0 auto;
+}
+.note .back{
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  color:var(--ink-faint);
+  text-decoration:none;
+  margin-left:6px;
+}
+.note .back:hover{ color:var(--zone); }
+.note:target, .note.flash{
+  background:var(--zone-soft);
+}
+
+footer{
+  max-width:660px;
+  margin:0 auto;
+  padding:0 28px 60px;
+  font-family:'IBM Plex Mono', monospace;
+  font-size:11px;
+  letter-spacing:0.04em;
+  color:var(--ink-faint);
+}
+
+@media (max-width:600px){
+  body{ font-size:16.5px; }
+  main{ padding:78px 20px 110px; }
+  h2{ font-size:21px; }
+  .poem{ font-size:17px; }
+  .chip{ max-width:44vw; }
+}
+</style>
+</head>
+<body>
+
+<div class="ruler" aria-hidden="true"></div>
+<div class="ruler-fill" id="rulerFill" aria-hidden="true"></div>
+
+<div class="chip-bar">
+  <div class="chip" id="chip">Задание</div>
+  <button class="toc-btn" id="tocBtn" aria-expanded="false" aria-controls="tocPanel">Оглавление</button>
+</div>
+
+<div class="toc-panel" id="tocPanel">
+  <p class="toc-title">СОДЕРЖАНИЕ</p>
+  <a href="#part1"><span class="dot"></span>I. Письменно ответьте на вопросы</a>
+  <a href="#part2"><span class="dot"></span>II. Самостоятельный анализ текста</a>
+  <a href="#poem-anchor"><span class="dot"></span>Сонет CCCXIX (319)</a>
+  <a href="#notes"><span class="dot"></span>Примечания</a>
+</div>
+
+<main>
+
+<h2 id="part1">I. Письменно ответьте на вопросы</h2>
+
+<ol class="q-list">
+<li><p>Почему жанр сонета называют «твёрдой формой»?</p></li>
+<li><p>Назовите две основные разновидности жанра сонета, определите их структурные особенности.</p></li>
+<li><p>Как развивается мысль в сонете? Укажите четыре термина для каждой строфы.</p></li>
+<li><p>Каким метром должен воспользоваться поэт, если он задумал создать сонет?</p></li>
+</ol>
+
+<h2 id="part2">II. Самостоятельный анализ текста</h2>
+
+<p>Прочитайте сонет номер 319 Франческо Петрарки, вошедший во вторую часть «Канцоньере» — «На смерть мадонны Лауры», и письменно ответьте на вопросы. Не забудьте аргументировать свои утверждения (приводите примеры так, чтобы они подчёркивали тезисы). Ваши ответы должны представлять собой связный текст из законченных предложений.</p>
+
+<ol class="q-list">
+<li>
+<p>Для чего поэт в первой строфе использует сравнения «как бы оленей косящий бег» и «взмах ресницы» и метафору «пепел наслаждений»? Какие смыслы он вкладывает в эти образы? (Не забывайте о том, что тропы, как правило, многослойны — сравнения и метафоры базируются больше, чем на одном сходстве.)</p>
+<button class="hl-btn" data-q="1">показать в сонете</button>
+</li>
+<li>
+<p>В чём смысл антитез «к земле бескостной жмётся — вырвавшись наверх» и «склеп скромной ночи — очаг лазури»?</p>
+<button class="hl-btn" data-q="2">показать в сонете</button>
+</li>
+<li>
+<p>Какой в этом сонете предстаёт Лаура?</p>
+<button class="hl-btn" data-q="3">показать в сонете</button>
+</li>
+<li>
+<p>Почему сонет начинается с размышлений о прошедшей жизни, а заканчивается рядом вопросов о Лауре на небесах?</p>
+<button class="hl-btn" data-q="4">показать в сонете</button>
+</li>
+</ol>
+
+<div class="poem-wrap" id="poem-anchor">
+<p class="poem-heading">Сонет CCCXIX (319)</p>
+<p class="poem-status" id="poemStatus"></p>
+<div class="poem" id="poem">
+
+<p class="stanza" data-q4="1">
+<span class="line">Промчались дни мои — как бы <mark data-q="1">оленей</mark></span>
+<span class="line"><mark data-q="1">Косящий бег</mark>. Срок счастья был короче,</span>
+<span class="line">Чем <mark data-q="1">взмах ресницы</mark>. Из последней мочи</span>
+<span class="line">Я в горсть зажал лишь <mark data-q="1">пепел наслаждений</mark>.</span>
+</p>
+
+<p class="stanza">
+<span class="line">По милости надменных обольщений</span>
+<span class="line">Ночует сердце в <mark data-q="2">склепе скромной ночи</mark>,</span>
+<span class="line"><mark data-q="2">К земле бескостной жмётся</mark>. Средоточий</span>
+<span class="line">Знакомых ищет, сладостных сплетений<a href="#fn1" class="fnref" id="fnref1">*</a>.</span>
+</p>
+
+<p class="stanza">
+<span class="line">Но то, что в <mark data-q="3">ней</mark><a href="#fn2" class="fnref" id="fnref2">**</a> едва существовало,</span>
+<span class="line">Днесь, <mark data-q="2">вырвавшись наверх</mark>, в <mark data-q="2">очаг лазури</mark><a href="#fn3" class="fnref" id="fnref3">***</a>,</span>
+<span class="line">Пленять и ранить может, как бывало.</span>
+</p>
+
+<p class="stanza" data-q4="1">
+<span class="line">И я догадываюсь, брови хмуря:</span>
+<span class="line">Как хороша? К какой толпе пристала?</span>
+<span class="line">Как там клубится лёгких складок буря?</span>
+</p>
+
+</div>
+</div>
+
+<div class="notes" id="notes">
+<p class="note" id="fn1"><span class="mark">*</span><span>Обольщения — то, что прельщает, привлекает человека, но обманывает его ожидания. В данном случае синонимом могут стать слова «иллюзии» и «заблуждения». Знакомые средоточья и сладостные сплетенья — поэт имеет в виду узнаваемые черты возлюбленной, которые его сердце ищет на земле, возможно, в других женщинах или просто вокруг себя в земном мире.<a href="#fnref1" class="back">↑</a></span></p>
+<p class="note" id="fn2"><span class="mark">**</span><span>Она — возлюбленная поэта.<a href="#fnref2" class="back">↑</a></span></p>
+<p class="note" id="fn3"><span class="mark">***</span><span>Вырвавшись наверх, в очаг лазури — возлюбленная поэта умерла, и он верит, что она вознеслась на небеса, в Рай.<a href="#fnref3" class="back">↑</a></span></p>
+</div>
+
+</main>
+
+<footer>Франческо Петрарка, «Канцоньере», сонет CCCXIX</footer>
+
+<script>
+(function(){
+  var headers = Array.prototype.slice.call(document.querySelectorAll('h2[id], .poem-heading, #notes'));
+  var rulerFill = document.getElementById('rulerFill');
+  var chip = document.getElementById('chip');
+
+  function headerLabelAt(y){
+    var label = 'Задание';
+    var nodes = document.querySelectorAll('h2[id]');
+    for (var i=0;i<nodes.length;i++){
+      var r = nodes[i].getBoundingClientRect();
+      var top = r.top + window.scrollY;
+      if (y >= top - 40) label = nodes[i].textContent;
+    }
+    var poemAnchor = document.getElementById('poem-anchor');
+    var pr = poemAnchor.getBoundingClientRect();
+    if (y >= pr.top + window.scrollY - 40) label = 'Сонет CCCXIX (319)';
+    var notes = document.getElementById('notes');
+    var nr = notes.getBoundingClientRect();
+    if (y >= nr.top + window.scrollY - 40) label = 'Примечания';
+    return label;
+  }
+
+  function onScroll(){
+    var scrollTop = window.scrollY;
+    var max = document.documentElement.scrollHeight - window.innerHeight;
+    var pct = max > 0 ? Math.min(100, Math.max(0, (scrollTop/max)*100)) : 0;
+    rulerFill.style.width = pct + '%';
+    chip.textContent = headerLabelAt(scrollTop);
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  window.addEventListener('resize', onScroll);
+  onScroll();
+
+  // TOC panel
+  var tocBtn = document.getElementById('tocBtn');
+  var tocPanel = document.getElementById('tocPanel');
+  tocBtn.addEventListener('click', function(){
+    var open = tocPanel.classList.toggle('open');
+    tocBtn.setAttribute('aria-expanded', open ? 'true':'false');
+  });
+  document.addEventListener('click', function(e){
+    if (!tocPanel.contains(e.target) && !tocBtn.contains(e.target)){
+      tocPanel.classList.remove('open');
+      tocBtn.setAttribute('aria-expanded','false');
+    }
+  });
+  tocPanel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      tocPanel.classList.remove('open');
+      tocBtn.setAttribute('aria-expanded','false');
+    });
+  });
+
+  // Question -> poem highlighting
+  var hlButtons = Array.prototype.slice.call(document.querySelectorAll('.hl-btn'));
+  var marks = Array.prototype.slice.call(document.querySelectorAll('#poem mark'));
+  var q4stanzas = Array.prototype.slice.call(document.querySelectorAll('#poem .stanza[data-q4]'));
+  var statusEl = document.getElementById('poemStatus');
+  var activeQ = null;
+
+  var qColor = 'var(--zone)';
+  function clearHighlights(){
+    marks.forEach(function(m){ m.style.backgroundColor=''; m.style.boxShadow=''; });
+    q4stanzas.forEach(function(s){ s.style.backgroundColor=''; s.style.boxShadow=''; s.style.borderRadius=''; s.style.padding=''; s.style.margin=''; });
+    hlButtons.forEach(function(b){ b.classList.remove('active'); });
+    statusEl.innerHTML = '';
+  }
+
+  function applyHighlight(q){
+    clearHighlights();
+    activeQ = q;
+    hlButtons.forEach(function(b){ if(b.getAttribute('data-q')===q) b.classList.add('active'); });
+    if (q === '4'){
+      q4stanzas.forEach(function(s){
+        s.style.backgroundColor = 'var(--zone-soft)';
+        s.style.borderRadius = '2px';
+        s.style.padding = '8px 12px';
+        s.style.margin = '0 -12px 22px -12px';
+      });
+    } else {
+      marks.forEach(function(m){
+        if (m.getAttribute('data-q') === q){
+          m.style.backgroundColor = 'var(--zone-soft)';
+          m.style.boxShadow = '0 0 0 1px var(--zone-mid)';
+        }
+      });
+    }
+    statusEl.innerHTML = 'подсвечен вопрос ' + q + ' <button id="clearHl">очистить</button>';
+    document.getElementById('clearHl').addEventListener('click', clearHighlights);
+    document.getElementById('poem-anchor').scrollIntoView({behavior:'smooth', block:'start'});
+  }
+
+  hlButtons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var q = btn.getAttribute('data-q');
+      if (activeQ === q){ clearHighlights(); activeQ = null; }
+      else { applyHighlight(q); }
+    });
+  });
+
+  // Footnote flash on jump
+  document.querySelectorAll('.fnref, .note .back').forEach(function(a){
+    a.addEventListener('click', function(){
+      var id = a.getAttribute('href').slice(1);
+      var el = document.getElementById(id);
+      if (el){
+        document.querySelectorAll('.note.flash').forEach(function(n){ n.classList.remove('flash'); });
+        setTimeout(function(){ el.classList.add('flash'); }, 300);
+        setTimeout(function(){ el.classList.remove('flash'); }, 1800);
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
