@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Форматив</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>:root{
+  color-scheme:light;
+  --paper:#ffffff; --ink:#0e1726; --blue:#1647e0; --red:#e5341a;
+  --line:#cfd6e2; --wash:#eef2f9; --muted:#4a566b;
+  --display:"Old Standard TT","Times New Roman",Georgia,serif;
+  --text:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--text)}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* шапка */
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1040px;margin:0 auto;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar a{font-family:var(--display);font-weight:700;font-size:20px;color:var(--ink);text-decoration:none}
+.bar span{font-size:14px;color:var(--muted)}
+.scroll{height:3px;background:var(--blue);width:0}
+
+main{max-width:1040px;margin:0 auto;padding:0 20px 64px}
+.narrow{max-width:700px}
+
+/* первый экран */
+.hero{display:grid;grid-template-columns:1fr;gap:28px;padding:40px 0 8px;align-items:end}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,8vw,76px);line-height:1.02;margin:0 0 18px;letter-spacing:-.01em}
+.hero .num{font-family:var(--display);font-size:22px;color:var(--blue);display:block;margin-bottom:10px}
+.hero p{margin:0;font-size:19px;max-width:34em}
+.hero figure{margin:0}
+.hero img{width:100%;border-left:10px solid var(--blue)}
+@media(min-width:820px){.hero{grid-template-columns:1.15fr .85fr;gap:48px;padding-top:64px}.hero.wide-img{grid-template-columns:1fr 1fr}}
+
+/* текст */
+section{padding-top:44px}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.6vw,38px);line-height:1.12;margin:0 0 18px;padding-top:18px;border-top:2px solid var(--ink)}
+h2 .n{color:var(--blue);margin-right:.35em}
+h3{font-size:19px;font-weight:600;margin:28px 0 8px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:1.2em}
+li{margin-bottom:6px}
+.lead{font-size:19px}
+.src{font-size:14px;color:var(--muted)}
+figure{margin:24px 0}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.two{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:820px){.two{grid-template-columns:1fr 1fr;gap:40px;align-items:start}.two.r{grid-template-columns:1.5fr 1fr}}
+.pic-s{max-width:320px}
+
+blockquote{margin:22px 0;padding:2px 0 2px 22px;position:relative;font-family:var(--display);font-size:20px;line-height:1.45}
+blockquote::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(90deg,var(--blue) 0 2px,transparent 2px 4px)}
+blockquote cite{display:block;font:14px/1.4 var(--text);color:var(--muted);font-style:normal;margin-top:8px}
+
+.verse{font-family:var(--display);font-size:19px;line-height:1.5;margin:20px 0;padding-left:18px;border-left:3px solid var(--red)}
+.verse .l{display:block}
+.verse cite{display:block;font:14px/1.4 var(--text);color:var(--muted);font-style:normal;margin-top:10px}
+
+/* кнопки, вкладки */
+button{font:inherit;color:inherit;cursor:pointer}
+.btn,.tablist button,.chipbtn{background:var(--paper);border:1.5px solid var(--ink);padding:9px 14px;border-radius:0;min-height:44px}
+.btn:hover,.tablist button:hover{background:var(--wash)}
+.btn[aria-pressed=true],.tablist button[aria-selected=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tablist{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* раскрывающиеся блоки */
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{cursor:pointer;padding:14px 34px 14px 0;font-weight:600;list-style:none;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:10px;font:400 26px/1 var(--display);color:var(--blue)}
+details[open] summary::after{content:"–"}
+details>div{padding:0 0 14px}
+
+/* карточки-раскрытия */
+.reveal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:16px 0}
+.reveal button{text-align:left;background:var(--paper);border:1.5px solid var(--ink);padding:14px;min-height:96px;display:block}
+.reveal b{font-family:var(--display);font-weight:400;font-size:21px;display:block;line-height:1.2}
+.reveal small{color:var(--muted);font-size:14px}
+.reveal i{display:none;font-style:normal;font-size:15px;margin-top:6px}
+.reveal button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.reveal button[aria-pressed=true] small{color:#dfe7ff}
+.reveal button[aria-pressed=true] i{display:block}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;padding:0;list-style:none}
+.chips li{border:1.5px solid var(--ink);padding:5px 12px;margin:0;font-size:15px}
+
+/* сортировка */
+.sorter{margin:18px 0;border:1.5px solid var(--ink);padding:16px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;margin-bottom:14px}
+.pool button{background:var(--paper);border:1.5px solid var(--ink);padding:7px 12px;min-height:42px;font-family:var(--display);font-size:19px}
+.pool button[aria-pressed=true]{background:var(--ink);color:#fff}
+.bins{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:720px){.bins{grid-template-columns:repeat(var(--n,3),1fr)}}
+.bin{text-align:left;background:var(--wash);border:1.5px solid var(--wash);padding:12px;min-height:92px;display:block;width:100%}
+.bin:hover{border-color:var(--blue)}
+.bin b{display:block}
+.bin small{display:block;color:var(--muted);font-size:14px;line-height:1.4}
+.bin .got{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.bin .got span{background:var(--blue);color:#fff;padding:2px 9px;font-family:var(--display);font-size:17px}
+.bin.no{border-color:var(--red);background:#fff}
+.msg{margin:12px 0 0;font-size:15px;min-height:1.5em}
+.msg.ok{color:var(--blue);font-weight:600}
+.msg.no{color:var(--red);font-weight:600}
+
+/* таблицы */
+.tw{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:16px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px 12px 0;border-bottom:1px solid var(--line)}
+thead th{border-bottom:2px solid var(--ink);font-weight:600}
+tbody th{font-family:var(--display);font-weight:400;font-size:21px;color:var(--blue);white-space:nowrap}
+tr.sep td{background:var(--ink);color:#fff;padding:6px 12px;font-size:14px}
+
+/* хронология */
+.time{list-style:none;padding:0;margin:18px 0;border-left:2px solid var(--ink)}
+.time li{position:relative;padding:0 0 16px 22px;margin:0}
+.time li::before{content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;background:var(--blue)}
+.time b{font-family:var(--display);font-weight:400;font-size:22px;display:block;line-height:1.2}
+
+/* противопоставление */
+.versus{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;margin:18px 0;border:1.5px solid var(--ink)}
+.versus div{padding:18px 14px;text-align:center}
+.versus div:first-child{background:var(--blue);color:#fff}
+.versus div:last-child{background:var(--red);color:#fff}
+.versus b{font-family:var(--display);font-weight:400;font-size:clamp(22px,5vw,32px);display:block;line-height:1.1}
+.versus span{font-size:14px}
+.versus .mid{display:flex;align-items:center;padding:0 10px;font-family:var(--display);font-size:20px;background:#fff;color:var(--ink)}
+
+/* квадрат норм */
+.square{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink);max-width:420px;margin:18px 0}
+.square a{padding:26px 12px;text-align:center;font-family:var(--display);font-size:26px;color:var(--ink);text-decoration:none;border:1px solid var(--ink)}
+.square a:hover{background:var(--blue);color:#fff}
+
+/* одическая строфа */
+.stanza .l{display:grid;grid-template-columns:2.2em 1fr;align-items:baseline}
+.stanza .l i{font:600 15px var(--text);font-style:normal;color:transparent}
+.stanza.show .l i{color:var(--ink)}
+.stanza.show .l[data-r=A],.stanza.show .l[data-r=b]{color:var(--blue)}
+.stanza.show .l[data-r=C],.stanza.show .l[data-r=d],.stanza.show .l[data-r=E]{color:var(--red)}
+.stanza.show .l:nth-child(5){margin-top:12px;padding-top:12px;border-top:1px dashed var(--ink)}
+.strip{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:16px 0}
+.strip span{border:1.5px solid var(--ink);text-align:center;padding:8px 0;font-size:14px}
+.strip span.hl{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* акростих */
+.acro .ac{font-weight:700}
+.acro.show .ac{background:var(--red);color:#fff;padding:0 4px;margin-right:1px}
+.acro-res{font-family:var(--display);font-size:28px;letter-spacing:.12em;display:none;margin:10px 0}
+.acro.show+.acro-res{display:block}
+
+/* диалог */
+.dialog{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:820px){.dialog{grid-template-columns:1fr 1fr;gap:40px}}
+.dialog h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 2px}
+.dialog .who-a h3{color:var(--red)}
+.dialog .who-l h3{color:var(--blue)}
+.dialog .who-l .verse{border-left-color:var(--blue)}
+
+/* примечания в тексте */
+.poem .l{display:block}
+.poem .gap{display:block;height:14px}
+.poem .mark{display:block;height:0;scroll-margin-top:120px}
+.note{background:none;border:0;border-bottom:2px solid var(--blue);padding:0;font:inherit;color:var(--blue)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);color:#fff;padding:18px 20px calc(18px + env(safe-area-inset-bottom,0px));display:none}
+.sheet.on{display:block}
+.sheet-in{max-width:700px;margin:0 auto;display:flex;gap:16px;align-items:flex-start}
+.sheet p{margin:0;font-size:16px;flex:1}
+.sheet b{display:block;font-family:var(--display);font-weight:400;font-size:20px;margin-bottom:4px}
+.sheet button{background:#fff;color:var(--ink);border:0;min-width:44px;min-height:44px;font-size:22px}
+.jump{position:sticky;top:0;z-index:10;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:8px;overflow-x:auto}
+.jump a{white-space:nowrap;border:1.5px solid var(--ink);padding:6px 12px;font-size:15px;color:var(--ink);text-decoration:none}
+.jump a:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* переход между разделами */
+.next{display:grid;gap:10px;grid-template-columns:1fr;margin-top:56px;padding-top:20px;border-top:2px solid var(--ink)}
+@media(min-width:720px){.next{grid-template-columns:1fr 1fr}}
+.next a{display:block;border:1.5px solid var(--ink);padding:14px 16px;text-decoration:none;color:var(--ink)}
+.next a:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.next a:hover small{color:#dfe7ff}
+.next small{display:block;color:var(--muted);font-size:14px}
+.next b{font-family:var(--display);font-weight:400;font-size:22px}
+.next .fw{text-align:right}
+
+/* главная: колоннада */
+.temple{margin:36px auto 0;max-width:760px}
+.temple svg{display:block;width:100%;height:auto}
+.frieze{border:2px solid var(--ink);border-width:2px 0;padding:8px 0;text-align:center;font-size:14px;color:var(--muted)}
+.colonnade{display:flex;gap:clamp(6px,2vw,22px);padding:0 clamp(4px,2vw,24px)}
+.col{flex:1;height:clamp(230px,44vw,330px);text-decoration:none;color:var(--ink);display:flex;flex-direction:column;align-items:center;border-top:10px solid var(--ink);border-bottom:10px solid var(--ink);
+  background:repeating-linear-gradient(90deg,#fff 0 5px,var(--line) 5px 6px)}
+.col .rn{font-family:var(--display);font-size:18px;background:#fff;padding:4px 2px;margin-top:8px}
+.col .ct{writing-mode:vertical-rl;transform:rotate(180deg);background:#fff;padding:6px 2px;margin:auto 0 10px;font-size:clamp(12px,2.6vw,15px);line-height:1.15;white-space:nowrap}
+.col:hover,.col:focus-visible{background:var(--blue);border-color:var(--blue)}
+.col.done{border-top-color:var(--blue);border-bottom-color:var(--blue)}
+.col.done .rn{color:var(--blue)}
+.base{height:10px;background:var(--ink);margin-top:0}
+.base+.base{margin:4px -10px 0}
+.toc{list-style:none;padding:0;margin:0}
+.toc li{margin:0;border-bottom:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:3em 1fr auto;gap:8px;padding:16px 0;text-decoration:none;color:var(--ink);align-items:baseline}
+.toc a:hover b{color:var(--blue)}
+.toc .rn{font-family:var(--display);font-size:22px;color:var(--blue)}
+.toc b{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.15;display:block}
+.toc small{color:var(--muted);font-size:15px;display:block}
+.toc .st{font-size:14px;color:var(--blue);white-space:nowrap}
+</style></head>
+<body>
+<main>
+<div class="hero" style="grid-template-columns:1fr"><div>
+  <h1>Форматив</h1>
+  <p>Жанровые черты классицистической оды: от М. В. Ломоносова — к Г. Р. Державину.</p>
+</div></div>
+<div class="narrow">
+<section>
+  <h2>Задание</h2>
+  <p class="lead">Прочитайте фрагмент из оды Александра Николаевича Радищева «Вольность» (1790).</p>
+  <p>Письменно ответьте на вопросы:</p>
+  <ul>
+    <li>Какие жанровые черты классицистической оды нашли отражение в приведённом отрывке?</li>
+    <li>В чём состоит своеобразие оды Радищева?</li>
+  </ul>
+  <p>Ответы аргументируйте, приводя примеры из текста.</p>
+</section>
+<section>
+  <h2>А. Н. Радищев. «Вольность». Строфы 45–54</h2>
+  <nav class="jump" aria-label="Строфы"><a href="#s45">45</a><a href="#s46">46</a><a href="#s47">47</a><a href="#s48">48</a><a href="#s49">49</a><a href="#s50">50</a><a href="#s51">51</a><a href="#s52">52</a><a href="#s53">53</a><a href="#s54">54</a></nav>
+  <h3 class="mark" id="s45" style="display:block;height:auto">45</h3><div class="verse poem"><span class="l">О! вы, счастливые народы,</span><span class="l">Где случай вольность даровал!</span><span class="l">Блюдите дар благой природы,</span><span class="l">В сердцах что Вечный начертал.</span><span class="l">Се хлябь разверстая, цветами</span><span class="l">Усыпанная, под ногами</span><span class="l">У вас, готова вас сглотить.</span><span class="l">Не забывай ни на минуту,</span><span class="l">Что крепость сил в немощность люту,</span><span class="l">Что свет во тьму льзя претворить.</span></div><h3 class="mark" id="s46" style="display:block;height:auto">46</h3><div class="verse poem"><span class="l">К тебе душа моя вспаленна,</span><span class="l">К тебе, словутая страна,</span><span class="l">Стремится, гнетом где согбенна</span><span class="l">Лежала вольность попрана;</span><span class="l">Ликуешь ты! а мы здесь страждем!..</span><span class="l">Того ж, того ж и мы все жаждем;</span><span class="l">Пример твой мету обнажил;</span><span class="l">Твоей я славе непричастен –</span><span class="l">Позволь, коль дух мой неподвластен,</span><span class="l">Чтоб брег твой пепл хотя мой скрыл.</span></div><h3 class="mark" id="s47" style="display:block;height:auto">47</h3><div class="verse poem"><span class="l">Но нет! где рок судил родиться,</span><span class="l">Да будет там и дням предел;</span><span class="l">Да хладный прах мой осенится</span><span class="l">Величеством, что днесь я пел;</span><span class="l">Да, юноша, взалкавый славы,</span><span class="l">Пришед на гроб мой обветшалый,</span><span class="l">Дабы со чувствием вещал:</span><span class="l">«Под игом власти, сей, рожденный,</span><span class="l">Нося оковы позлащенны,</span><span class="l">Нам вольность первый прорицал».</span></div><h3 class="mark" id="s48" style="display:block;height:auto">48</h3><div class="verse poem"><span class="l">И будет, вслед гремящей славы</span><span class="l">Направя бодрственно полет,</span><span class="l">На запад, юг и всток державы</span><span class="l">Своей ширить предел, но нет</span><span class="l">Тебе предела ниотколе,</span><span class="l">В счастливой ты ликуя доле,</span><span class="l">Где ты яви́шься, там твой трон;</span><span class="l">Отечество мое, Отечество драгое,</span><span class="l">На чреслах пояс сил, в покое,</span><span class="l">В окрестность ты даешь закон.</span></div><h3 class="mark" id="s49" style="display:block;height:auto">49</h3><div class="verse poem"><span class="l">Но дале чем источник власти,</span><span class="l">Слабее членов тем союз,</span><span class="l">Между собой все чужды части,</span><span class="l">Всяк тяжесть ощущает уз.</span><span class="l">Лучу, истекшу от светила,</span><span class="l">Сопутствует и блеск и сила;</span><span class="l">В пространстве он теряет мощь,</span><span class="l">В ключе хотя не угасает,</span><span class="l">Но бег его ослабевает,</span><span class="l">Ползущего глотает нощь.</span></div><h3 class="mark" id="s50" style="display:block;height:auto">50</h3><div class="verse poem"><span class="l">В тебе, когда союз прервется,</span><span class="l">Стончает мнений крепка власть;</span><span class="l">Когда законна твердь шатнется,</span><span class="l">Блюсти всяк будет свою часть;</span><span class="l">Тогда, растерзанно мгновенно,</span><span class="l">Тогда сложенье твое бренно,</span><span class="l">Сдрогаясь внутренно, падет,</span><span class="l">Но праха вихри не коснутся,</span><span class="l">Животны семена проснутся,</span><span class="l">Затускло солнце нов даст свет.</span></div><h3 class="mark" id="s51" style="display:block;height:auto">51</h3><div class="verse poem"><span class="l">Из недр развалины огромной,</span><span class="l">Среди огней, кровавых рек,</span><span class="l">Средь глада, зверства, язвы томной,</span><span class="l">Что лютый дух властей возжег, –</span><span class="l">Возникнут малые светила;</span><span class="l">Незыблемы свои кормила</span><span class="l">Украсят дружества венцем,</span><span class="l">На пользу всех ладью направят</span><span class="l">И волка хищного задавят,</span><span class="l">Что чтит слепец своим отцем.</span></div><h3 class="mark" id="s52" style="display:block;height:auto">52</h3><div class="verse poem"><span class="l">Но не приспе еще година,</span><span class="l">Не совершилися судьбы;</span><span class="l">Вдали, вдали еще кончина,</span><span class="l">Когда иссякнут все беды!</span><span class="l">Встрещат заклепы тяжкой ночи;</span><span class="l">Упруга власть, собрав все мочи,</span><span class="l">Вскатясь горе, потщится пасть,</span><span class="l">Да грузным махом вся раздавит,</span><span class="l">И стражу к словеси приставит,</span><span class="l">Да будет горшая напасть.</span></div><h3 class="mark" id="s53" style="display:block;height:auto">53</h3><div class="verse poem"><span class="l">Влача оков несносно бремя,</span><span class="l">В вертепе плача возревет.</span><span class="l">Приидет вожделенно время,</span><span class="l">На небо смертность воззовет;</span><span class="l">Направлена в стезю свободой,</span><span class="l">Десную ополча природой,</span><span class="l">Качнется в дол – и страх пред ней;</span><span class="l">Тогда всех сил властей сложенье</span><span class="l">Развеется в одно мгновенье.</span><span class="l">О день! избраннейший всех дней!</span></div><h3 class="mark" id="s54" style="display:block;height:auto">54</h3><div class="verse poem"><span class="l">Мне слышится уж глас природы,</span><span class="l">Начальный глас, глас божества;</span><span class="l">Трясутся вечна мрака своды,</span><span class="l">Се миг рожденью вещества.</span><span class="l">Се медленно и в стройном чине</span><span class="l">Грядет зиждитель наедине –</span><span class="l">Рекл… яркий свет пустил свой луч</span><span class="l">И, ложный плена скиптр поправши,</span><span class="l">Сгущенную мглу разогнавши,</span><span class="l">Блестящий день родил из туч.</span></div>
+</section>
+</div>
+
+</main>
+</body></html>

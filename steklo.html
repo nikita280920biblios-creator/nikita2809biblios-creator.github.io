@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Письмо о пользе Стекла — Классицизм</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>:root{
+  color-scheme:light;
+  --paper:#ffffff; --ink:#0e1726; --blue:#1647e0; --red:#e5341a;
+  --line:#cfd6e2; --wash:#eef2f9; --muted:#4a566b;
+  --display:"Old Standard TT","Times New Roman",Georgia,serif;
+  --text:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--text)}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* шапка */
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1040px;margin:0 auto;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar a{font-family:var(--display);font-weight:700;font-size:20px;color:var(--ink);text-decoration:none}
+.bar span{font-size:14px;color:var(--muted)}
+.scroll{height:3px;background:var(--blue);width:0}
+
+main{max-width:1040px;margin:0 auto;padding:0 20px 64px}
+.narrow{max-width:700px}
+
+/* первый экран */
+.hero{display:grid;grid-template-columns:1fr;gap:28px;padding:40px 0 8px;align-items:end}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,8vw,76px);line-height:1.02;margin:0 0 18px;letter-spacing:-.01em}
+.hero .num{font-family:var(--display);font-size:22px;color:var(--blue);display:block;margin-bottom:10px}
+.hero p{margin:0;font-size:19px;max-width:34em}
+.hero figure{margin:0}
+.hero img{width:100%;border-left:10px solid var(--blue)}
+@media(min-width:820px){.hero{grid-template-columns:1.15fr .85fr;gap:48px;padding-top:64px}.hero.wide-img{grid-template-columns:1fr 1fr}}
+
+/* текст */
+section{padding-top:44px}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.6vw,38px);line-height:1.12;margin:0 0 18px;padding-top:18px;border-top:2px solid var(--ink)}
+h2 .n{color:var(--blue);margin-right:.35em}
+h3{font-size:19px;font-weight:600;margin:28px 0 8px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:1.2em}
+li{margin-bottom:6px}
+.lead{font-size:19px}
+.src{font-size:14px;color:var(--muted)}
+figure{margin:24px 0}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.two{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:820px){.two{grid-template-columns:1fr 1fr;gap:40px;align-items:start}.two.r{grid-template-columns:1.5fr 1fr}}
+.pic-s{max-width:320px}
+
+blockquote{margin:22px 0;padding:2px 0 2px 22px;position:relative;font-family:var(--display);font-size:20px;line-height:1.45}
+blockquote::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(90deg,var(--blue) 0 2px,transparent 2px 4px)}
+blockquote cite{display:block;font:14px/1.4 var(--text);color:var(--muted);font-style:normal;margin-top:8px}
+
+.verse{font-family:var(--display);font-size:19px;line-height:1.5;margin:20px 0;padding-left:18px;border-left:3px solid var(--red)}
+.verse .l{display:block}
+.verse cite{display:block;font:14px/1.4 var(--text);color:var(--muted);font-style:normal;margin-top:10px}
+
+/* кнопки, вкладки */
+button{font:inherit;color:inherit;cursor:pointer}
+.btn,.tablist button,.chipbtn{background:var(--paper);border:1.5px solid var(--ink);padding:9px 14px;border-radius:0;min-height:44px}
+.btn:hover,.tablist button:hover{background:var(--wash)}
+.btn[aria-pressed=true],.tablist button[aria-selected=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tablist{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* раскрывающиеся блоки */
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{cursor:pointer;padding:14px 34px 14px 0;font-weight:600;list-style:none;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:10px;font:400 26px/1 var(--display);color:var(--blue)}
+details[open] summary::after{content:"–"}
+details>div{padding:0 0 14px}
+
+/* карточки-раскрытия */
+.reveal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:16px 0}
+.reveal button{text-align:left;background:var(--paper);border:1.5px solid var(--ink);padding:14px;min-height:96px;display:block}
+.reveal b{font-family:var(--display);font-weight:400;font-size:21px;display:block;line-height:1.2}
+.reveal small{color:var(--muted);font-size:14px}
+.reveal i{display:none;font-style:normal;font-size:15px;margin-top:6px}
+.reveal button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.reveal button[aria-pressed=true] small{color:#dfe7ff}
+.reveal button[aria-pressed=true] i{display:block}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;padding:0;list-style:none}
+.chips li{border:1.5px solid var(--ink);padding:5px 12px;margin:0;font-size:15px}
+
+/* сортировка */
+.sorter{margin:18px 0;border:1.5px solid var(--ink);padding:16px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;margin-bottom:14px}
+.pool button{background:var(--paper);border:1.5px solid var(--ink);padding:7px 12px;min-height:42px;font-family:var(--display);font-size:19px}
+.pool button[aria-pressed=true]{background:var(--ink);color:#fff}
+.bins{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:720px){.bins{grid-template-columns:repeat(var(--n,3),1fr)}}
+.bin{text-align:left;background:var(--wash);border:1.5px solid var(--wash);padding:12px;min-height:92px;display:block;width:100%}
+.bin:hover{border-color:var(--blue)}
+.bin b{display:block}
+.bin small{display:block;color:var(--muted);font-size:14px;line-height:1.4}
+.bin .got{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.bin .got span{background:var(--blue);color:#fff;padding:2px 9px;font-family:var(--display);font-size:17px}
+.bin.no{border-color:var(--red);background:#fff}
+.msg{margin:12px 0 0;font-size:15px;min-height:1.5em}
+.msg.ok{color:var(--blue);font-weight:600}
+.msg.no{color:var(--red);font-weight:600}
+
+/* таблицы */
+.tw{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:16px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px 12px 0;border-bottom:1px solid var(--line)}
+thead th{border-bottom:2px solid var(--ink);font-weight:600}
+tbody th{font-family:var(--display);font-weight:400;font-size:21px;color:var(--blue);white-space:nowrap}
+tr.sep td{background:var(--ink);color:#fff;padding:6px 12px;font-size:14px}
+
+/* хронология */
+.time{list-style:none;padding:0;margin:18px 0;border-left:2px solid var(--ink)}
+.time li{position:relative;padding:0 0 16px 22px;margin:0}
+.time li::before{content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;background:var(--blue)}
+.time b{font-family:var(--display);font-weight:400;font-size:22px;display:block;line-height:1.2}
+
+/* противопоставление */
+.versus{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;margin:18px 0;border:1.5px solid var(--ink)}
+.versus div{padding:18px 14px;text-align:center}
+.versus div:first-child{background:var(--blue);color:#fff}
+.versus div:last-child{background:var(--red);color:#fff}
+.versus b{font-family:var(--display);font-weight:400;font-size:clamp(22px,5vw,32px);display:block;line-height:1.1}
+.versus span{font-size:14px}
+.versus .mid{display:flex;align-items:center;padding:0 10px;font-family:var(--display);font-size:20px;background:#fff;color:var(--ink)}
+
+/* квадрат норм */
+.square{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink);max-width:420px;margin:18px 0}
+.square a{padding:26px 12px;text-align:center;font-family:var(--display);font-size:26px;color:var(--ink);text-decoration:none;border:1px solid var(--ink)}
+.square a:hover{background:var(--blue);color:#fff}
+
+/* одическая строфа */
+.stanza .l{display:grid;grid-template-columns:2.2em 1fr;align-items:baseline}
+.stanza .l i{font:600 15px var(--text);font-style:normal;color:transparent}
+.stanza.show .l i{color:var(--ink)}
+.stanza.show .l[data-r=A],.stanza.show .l[data-r=b]{color:var(--blue)}
+.stanza.show .l[data-r=C],.stanza.show .l[data-r=d],.stanza.show .l[data-r=E]{color:var(--red)}
+.stanza.show .l:nth-child(5){margin-top:12px;padding-top:12px;border-top:1px dashed var(--ink)}
+.strip{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:16px 0}
+.strip span{border:1.5px solid var(--ink);text-align:center;padding:8px 0;font-size:14px}
+.strip span.hl{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* акростих */
+.acro .ac{font-weight:700}
+.acro.show .ac{background:var(--red);color:#fff;padding:0 4px;margin-right:1px}
+.acro-res{font-family:var(--display);font-size:28px;letter-spacing:.12em;display:none;margin:10px 0}
+.acro.show+.acro-res{display:block}
+
+/* диалог */
+.dialog{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:820px){.dialog{grid-template-columns:1fr 1fr;gap:40px}}
+.dialog h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 2px}
+.dialog .who-a h3{color:var(--red)}
+.dialog .who-l h3{color:var(--blue)}
+.dialog .who-l .verse{border-left-color:var(--blue)}
+
+/* примечания в тексте */
+.poem .l{display:block}
+.poem .gap{display:block;height:14px}
+.poem .mark{display:block;height:0;scroll-margin-top:120px}
+.note{background:none;border:0;border-bottom:2px solid var(--blue);padding:0;font:inherit;color:var(--blue)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);color:#fff;padding:18px 20px calc(18px + env(safe-area-inset-bottom,0px));display:none}
+.sheet.on{display:block}
+.sheet-in{max-width:700px;margin:0 auto;display:flex;gap:16px;align-items:flex-start}
+.sheet p{margin:0;font-size:16px;flex:1}
+.sheet b{display:block;font-family:var(--display);font-weight:400;font-size:20px;margin-bottom:4px}
+.sheet button{background:#fff;color:var(--ink);border:0;min-width:44px;min-height:44px;font-size:22px}
+.jump{position:sticky;top:48px;z-index:10;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:8px;overflow-x:auto}
+.jump a{white-space:nowrap;border:1.5px solid var(--ink);padding:6px 12px;font-size:15px;color:var(--ink);text-decoration:none}
+.jump a:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* переход между разделами */
+.next{display:grid;gap:10px;grid-template-columns:1fr;margin-top:56px;padding-top:20px;border-top:2px solid var(--ink)}
+@media(min-width:720px){.next{grid-template-columns:1fr 1fr}}
+.next a{display:block;border:1.5px solid var(--ink);padding:14px 16px;text-decoration:none;color:var(--ink)}
+.next a:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.next a:hover small{color:#dfe7ff}
+.next small{display:block;color:var(--muted);font-size:14px}
+.next b{font-family:var(--display);font-weight:400;font-size:22px}
+.next .fw{text-align:right}
+
+/* главная: колоннада */
+.temple{margin:36px auto 0;max-width:760px}
+.temple svg{display:block;width:100%;height:auto}
+.frieze{border:2px solid var(--ink);border-width:2px 0;padding:8px 0;text-align:center;font-size:14px;color:var(--muted)}
+.colonnade{display:flex;gap:clamp(6px,2vw,22px);padding:0 clamp(4px,2vw,24px)}
+.col{flex:1;height:clamp(230px,44vw,330px);text-decoration:none;color:var(--ink);display:flex;flex-direction:column;align-items:center;border-top:10px solid var(--ink);border-bottom:10px solid var(--ink);
+  background:repeating-linear-gradient(90deg,#fff 0 5px,var(--line) 5px 6px)}
+.col .rn{font-family:var(--display);font-size:18px;background:#fff;padding:4px 2px;margin-top:8px}
+.col .ct{writing-mode:vertical-rl;transform:rotate(180deg);background:#fff;padding:6px 2px;margin:auto 0 10px;font-size:clamp(12px,2.6vw,15px);line-height:1.15;white-space:nowrap}
+.col:hover,.col:focus-visible{background:var(--blue);border-color:var(--blue)}
+.col.done{border-top-color:var(--blue);border-bottom-color:var(--blue)}
+.col.done .rn{color:var(--blue)}
+.base{height:10px;background:var(--ink);margin-top:0}
+.base+.base{margin:4px -10px 0}
+.toc{list-style:none;padding:0;margin:0}
+.toc li{margin:0;border-bottom:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:3em 1fr auto;gap:8px;padding:16px 0;text-decoration:none;color:var(--ink);align-items:baseline}
+.toc a:hover b{color:var(--blue)}
+.toc .rn{font-family:var(--display);font-size:22px;color:var(--blue)}
+.toc b{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.15;display:block}
+.toc small{color:var(--muted);font-size:15px;display:block}
+.toc .st{font-size:14px;color:var(--blue);white-space:nowrap}
+</style></head>
+<body>
+<header class="bar"><div class="bar-in"><a href="index.html">Классицизм</a><span>Раздел VI из VII</span></div><div class="scroll"></div></header>
+<main>
+<div class="hero"><div>
+  <span class="num">Раздел VI</span><h1>Письмо о пользе Стекла</h1>
+  <p>К высокопревосходительному господину генералу‑поручику, действительному Её Императорского Величества камергеру, Московского университета куратору и орденов Белого Орла, Святого Александра и Святыя Анны кавалеру Ивану Ивановичу Шувалову, писанное 1752 года.</p>
+</div></div>
+<div class="narrow">
+<section>
+  <h2>О тексте</h2>
+  <p>Просветительская поэма, написанная в форме дружеского послания к И. И. Шувалову. Отдельное издание — СПб., 1753.</p>
+  <ul>
+    <li>Ломоносов отстаивает право науки истолковывать явления природы независимо от религиозных представлений и традиций.</li>
+    <li>Защищает учение Коперника и Кеплера о солнечной системе.</li>
+    <li>Защищает взгляды Джордано Бруно о множестве населённых миров.</li>
+  </ul>
+  <p>Подчёркнутые слова открывают примечание. Лента под заголовком переносит к нужному месту поэмы.</p>
+</section>
+<section>
+  <h2>Текст</h2>
+  <nav class="jump" aria-label="Места поэмы"><a href="#m0">Рождение Стекла</a><a href="#m1">Сосуды</a><a href="#m2">Лекарства</a><a href="#m3">Фарфор</a><a href="#m4">Финифть и мозаика</a><a href="#m5">Окна</a><a href="#m6">Цветы зимой</a><a href="#m7">Зеркало</a><a href="#m8">Бисер</a><a href="#m9">Америка и золото</a><a href="#m10">Очки</a><a href="#m11">Прометей</a><a href="#m12">Аристарх и Коперник</a><a href="#m13">Зрительные трубы</a><a href="#m14">Микроскоп</a><a href="#m15">Барометры</a><a href="#m16">Гром и молния</a><a href="#m17">Елисавета и Меценат</a></nav>
+  <div class="verse poem"><span class="l">Неправо о вещах те думают, Шувалов,</span><span class="l">Которые Стекло чтут ниже Минералов,</span><span class="l">Приманчивым лучем блистающих в глаза:</span><span class="l">Не меньше польза в нем, не меньше в нем краса</span><span class="l">Нередко я для той с Парнасских гор спускаюсь;</span><span class="l">И ныне от нее на верьх их возвращаюсь,</span><span class="l">Пою перед тобой в восторге похвалу</span><span class="l">Не камням дорогим, ни злату, но Стеклу.</span><span class="l">И как я оное хваля воспоминаю,</span><span class="l">Не ломкость лживого я счастья представляю.</span><span class="l">Не должно тленности примером тое быть,</span><span class="l">Чего и сильный огнь не может разрушить,</span><span class="l">Других вещей земных конечный разделитель:</span><span class="gap"></span><span class="mark" id="m0"></span><span class="l">Стекло им рождено; огонь его родитель.</span><span class="l">С натурой некогда он произвесть хотя</span><span class="l">Достойное себя и оныя дитя,</span><span class="l">Во мрачной глубине, под тягостью земною,</span><span class="l">Где вечно он живет и борется с водою,</span><span class="l">Все силы собрал вдруг и хляби затворил,</span><span class="l">В которы Океан на брань к нему входил.</span><span class="l">Напрягся мышцами и рамена подвинул</span><span class="l">И тяготу земли превыше облак вскинул.</span><span class="l">Внезапно черный дым навел густую тень,</span><span class="l">И в ночь ужасную переменился день.</span><span class="l">Не баснотворного здесь ради Геркулеса</span><span class="l"><button class="note" data-note="Согласно древнегреческому мифу, Зевес, посещая Алкмену, мать Геркулеса, чтобы продлить свидание с ней, слил две ночи в одну.">Две ночи сложены в едину</button> от Зевеса;</span><span class="l">Но Этна правде сей свидетель вечный нам,</span><span class="l"><button class="note" data-note="Имеется в виду образование вулканического «стекла» из остывшей лавы после извержения Этны.">Которая дала путь чудным сим родам</button>.</span><span class="l">Из ней разжженная река текла в пучину,</span><span class="l">И свет, отчаясь, мнил, что зрит свою судьбину!</span><span class="l">Но ужасу тому последовал конец:</span><span class="l"><button class="note" data-note="То есть «натура» (природа) и огонь.">Довольна чадом мать, доволен им отец</button>.</span><span class="l">Прогнали долгу ночь и жар свой погасили</span><span class="l">И Солнцу ясному рождение открыли.</span><span class="l">Но что ж от недр земных родясь произошло?</span><span class="l">Любезное дитя, прекрасное Стекло.</span><span class="l">Увидев, смертные о как ему дивились!</span><span class="l">Подобное тому сыскать искусством тщились.</span><span class="l">И было в деле сем удачно мастерство:</span><span class="l">Превысило своим раченьем естество.</span><span class="gap"></span><span class="mark" id="m1"></span><span class="l">Тем стало житие на свете нам счастливо:</span><span class="l">Из чистого Стекла мы пьем вино и пиво</span><span class="l">И видим в нем пример бесхитростных сердец:</span><span class="l">Кого льзя видеть сквозь, тот подлинно не льстец.</span><span class="l">Стекло в напитках нам не может скрыть примесу;</span><span class="l">И чиста совесть рвет притворств гнилу завесу.</span><span class="l">Но столько ли уже, Стекло, твоих похвал,</span><span class="l">Что нам в тебе вино и мед сам слаще стал?</span><span class="l">Никак! сие твоих достоинств лишь начало,</span><span class="l">Которы мастерство тебе с природой дало.</span><span class="gap"></span><span class="mark" id="m2"></span><span class="l">Исполнен слабостьми наш краткий в мире век:</span><span class="l">Нередко впадает в болезни человек!</span><span class="l">Он ищет помощи, хотя спастись от муки,</span><span class="l">И жизнь свою продлить, врачам дается в руки.</span><span class="l">Нередко нам они отраду могут дать,</span><span class="l">Умев приличные лекарства предписать;</span><span class="l">Лекарства, что в Стекле хранят и составляют;</span><span class="l">В Стекле одном оне безвредны пребывают.</span><span class="l">Мы должны здравия и жизни часть Стеклу:</span><span class="l">Какую надлежит ему принесть хвалу!</span><span class="gap"></span><span class="mark" id="m3"></span><span class="l">Хоть вместо оного замысловаты хины</span><span class="l">Сосуды составлять нашли из чистой глины;</span><span class="l">Огромность тяжкую плода лишенных гор</span><span class="l">Художеством своим преобратив в Фарфор,</span><span class="l">Красой его к себе народы привлекают,</span><span class="l">Что, плавая, морей свирепость презирают.</span><span class="l">Однако был бы он почти простой горшок,</span><span class="l">Когда бы <button class="note" data-note="Имеется в виду глазирование фарфора стекловидной массой.">блеск Стекла</button> дать помощи не мог.</span><span class="l">Оно вход жидких тел от скважин отвращает,</span><span class="l">Вещей прекрасных вид на нем изображает.</span><span class="l">Имеет от Стекла часть крепости Фарфор;</span><span class="l">Но тое, что на нем увеселяет взор,</span><span class="l">Сады, гульбы, пиры и всё, что есть прекрасно,</span><span class="l">Стекло являет нам приятно, чисто, ясно.</span><span class="gap"></span><span class="mark" id="m4"></span><span class="l">Искусство, коим был прославлен Апеллес</span><span class="l">И коим ныне Рим главу свою вознес,</span><span class="l">Коль пользы от Стекла приобрело велики,</span><span class="l">Доказывают то <button class="note" data-note="Финифть — род эмали. Финифтяное дело было распространено на русском Севере (Великий Устюг, Сольвычегодск). Мозаика первоначально составлялась из частиц естественных камней и минералов, заменённых впоследствии непрозрачными цветными стёклами (смальтой).">Финифти, Мозаики</button>,</span><span class="l">Которы ввек хранят геройских бодрость лиц,</span><span class="l">Приятность нежную и красоту девиц;</span><span class="l">Чрез множество веков себе подобны зрятся</span><span class="l">И ветхой древности грызенья не боятся.</span><span class="gap"></span><span class="mark" id="m5"></span><span class="l">Когда неистовой свирепствуя борей</span><span class="l">Стисняет мразом нас в упругости своей,</span><span class="l">Великой не терпя и строгой перемены,</span><span class="l">Скрывает человек себя в толстые стены.</span><span class="l">Он был бы принужден без свету в них сидеть</span><span class="l">Или с дрожанием несносной хлад терпеть.</span><span class="l">Но солнечны лучи он сквозь Стекло впускает</span><span class="l">И лютость холода чрез то же отвращает.</span><span class="l">Отворенному вдруг и запертому быть,</span><span class="l">Не то ли мы зовем, что чудеса творить?</span><span class="gap"></span><span class="mark" id="m6"></span><span class="l">Потом как человек зимой стал безопасен,</span><span class="l">Еще притом желал, чтоб цвел всегда прекрасен</span><span class="l">И в северных странах в снегу зеленой сад;</span><span class="l">Цейлон бы посрамил, пренебрегая хлад.</span><span class="l">И удовольствовал он мысли прихотливы:</span><span class="l">Зимою за Стеклом цветы хранятся живы;</span><span class="l">Дают приятной дух, увеселяют взор</span><span class="l">И вам, красавицы, хранят себя в убор.</span><span class="l">Позволь, любитель муз, я речь свою склоняю</span><span class="l">И к нежным сим сердцам на время обращаю.</span><span class="l">И музы с оными единого сродства;</span><span class="l">Подобна в них краса и нежные слова.</span><span class="l">Счастливой младостью твои цветущи годы</span><span class="l">И склонной похвала и ласковой природы</span><span class="l">Мой стих от оных к сим пренесть не возбранят.</span><span class="gap"></span><span class="mark" id="m7"></span><span class="l">Прекрасной пол, о коль любезен вам наряд!</span><span class="l">Дабы прельстить лицом любовных суеверов,</span><span class="l">Какое множество вы знаете манеров;</span><span class="l">И коль искусны вы убор переменять,</span><span class="l">Чтоб в каждой день себе приятность нову дать.</span><span class="l">Но было б ваше всё старанье без успеху,</span><span class="l">Наряды ваши бы достойны были смеху,</span><span class="l">Когда б вы в зеркале не видели себя.</span><span class="l">Вы вдвое пригожи, Стекло употребя.</span><span class="l">Когда блестят на вас горящие алмазы,</span><span class="l">Двойной кипит в нас жар сугубыя заразы!</span><span class="l">Но больше красоты и больше в них цены,</span><span class="l">Когда круг них Стеклом цветки наведены.</span><span class="l">Вы кажетесь нам в них приятною весною,</span><span class="l">В цветах наряженной, усыпанных росою.</span><span class="l">Во светлых зданиях убранства таковы.</span><span class="l">Но в чем красуетесь, о сельски нимфы, вы?</span><span class="l">Природа в вас любовь подобную вложила,</span><span class="l">Желанья нежны в вас подобна движет сила;</span><span class="l">Вы также украшать желаете себя.</span><span class="l">За тем прохладные поля свои любя,</span><span class="l">Вы рвете розы в них, вы рвете в них лилеи,</span><span class="l">Кладете их на грудь и вяжете круг шеи.</span><span class="l">Таков убор дает вам нежная весна!</span><span class="gap"></span><span class="mark" id="m8"></span><span class="l">Но чем вы краситесь в другие времена,</span><span class="l">Когда, лишась цветов, поля у вас бледнеют</span><span class="l">Или снегами вкруг глубокими белеют,</span><span class="l">Без оных что бы вам в нарядах помогло,</span><span class="l">Когда бы бисеру вам не дало Стекло?</span><span class="l">Любовников он к вам не меньше привлекает,</span><span class="l">Как блещущий алмаз богатых уязвляет.</span><span class="l">Или еще на вас в нем больше красота,</span><span class="l">Когда любезная в вас светит простота!</span><span class="l">Так в бисере Стекло подобяся жемчугу,</span><span class="l">Любимо по всему земному ходит кругу.</span><span class="l">Им красится народ в полунощных степях,</span><span class="l">Им красится арап на южных берегах.</span><span class="gap"></span><span class="mark" id="m9"></span><span class="l"><button class="note" data-note="Речь идёт о древних обитателях Нового Света, которых порабощали европейские завоеватели.">В Америке живут</button>, мы чаем, простаки,</span><span class="l">Что там драгой металл из сребреной реки</span><span class="l">Дают европскому купечеству охотно</span><span class="l">И бисеру берут количество несчетно,</span><span class="l">Но тем, я думаю, они разумне нас,</span><span class="l">Что гонят от своих бедам причину глаз.</span><span class="l">Им оны времена не будут ввек забвенны,</span><span class="l">Как пали их отцы для злата побиенны.</span><span class="l">О коль ужасно зло! на то ли человек</span><span class="l">В незнаемых морях имел опасный бег,</span><span class="l">На то ли, разрушив естественны пределы,</span><span class="l">На утлом дереве обшел кругом свет целый,</span><span class="l">За тем ли он сошел на красны берега,</span><span class="l">Чтоб там себя явить свирепого врага?</span><span class="l">По тягостном труде, снесенном на пучине,</span><span class="l">Где предал он себя на произвол судьбине,</span><span class="l">Едва на твердый путь от бурь избыть успел,</span><span class="l">Военной бурей он внезапно зашумел.</span><span class="l">Уже горят царей там древние жилища;</span><span class="l">Венцы врагам корысть, и плоть их вранам пища&#x27;</span><span class="l">И кости предков их из золотых гробов</span><span class="l">Чрез стены подают к смердящим трупам в ров!</span><span class="l">С перстнями руки прочь и головы с убранством</span><span class="l">Секут несытые и златом и тиранством.</span><span class="l">Иных, свирепствуя, в средину гонят гор</span><span class="l">Драгой металл изрыть из преглубоких нор.</span><span class="l">Смятение и страх, оковы, глад и раны,</span><span class="l">Что наложили им в работе их тираны,</span><span class="l">Препятствовали им подземну хлябь крепить,</span><span class="l">Чтоб тягота над ней могла недвижна быть.</span><span class="l">Обрушилась гора: лежат в ней погребенны</span><span class="l">Бесчастные! или поистине блаженны,</span><span class="l">Что вдруг избегли все бесчеловечных рук,</span><span class="l">Работы тяжкия, ругательства и мук!</span><span class="l">Оставив <button class="note" data-note="Кастилец. Здесь: конкистадор.">кастиллан</button> невинность так попранну,</span><span class="l">С богатством в отчество спешит по Океану,</span><span class="l">Надеясь оным всю Европу вдруг купить.</span><span class="l">Но златом волн морских не можно утолить.</span><span class="l">Подобный их сердцам борей, подняв пучину,</span><span class="l">Навел их животу и варварству кончину,</span><span class="l">Погрязли в глубине, с сокровищем своим,</span><span class="l">На пищу преданы чудовищам морским.</span><span class="l">То бури, то враги толь часто их терзали,</span><span class="l">Что редко до брегов желанных достигали.</span><span class="l">О коль великой вред! от зла рождалось зло!</span><span class="l">Виной толиких бед бывало ли Стекло?</span><span class="l">Никак! оно везде наш дух увеселяет:</span><span class="l">Полезно молодым и старым помогает.</span><span class="gap"></span><span class="mark" id="m10"></span><span class="l">По долговременном теченьи наших дней</span><span class="l">Тупеет зрение ослабленных очей.</span><span class="l">Померкшее того не представляет чувство,</span><span class="l">Что кажет в тонкостях натура и искусство.</span><span class="l">Велика сердцу скорбь лишиться чтенья книг;</span><span class="l">Скучнее вечной тьмы, тяжелее вериг!</span><span class="l">Тогда противен день, веселие досада!</span><span class="l">Одно лишь нам Стекло в сей бедности отрада.</span><span class="l">Оно способствием искусныя руки</span><span class="l">Подать нам зрение умеет чрез очки!</span><span class="l">Не дар ли мы в Стекле божественный имеем,</span><span class="l">Что честь достойную воздать ему коснеем?</span><span class="gap"></span><span class="mark" id="m11"></span><span class="l">Взирая в древности народы изумленны,</span><span class="l">Что греет, топит, льет и светит огнь возжженный,</span><span class="l">Иные божеску ему давали честь;</span><span class="l">Иные, знать хотя, кто с неба мог принесть,</span><span class="l">Представили в своем мечтанье Прометея,</span><span class="l">Что, многи на земли художества умея,</span><span class="l">Различные казал искусством чудеса:</span><span class="l">За то Минервою был взят на небеса;</span><span class="l">Похитил с солнца огнь и смертным отдал в руки.</span><span class="l">Зевес воздвиг свой гнев, воздвиг ужасны звуки.</span><span class="l">Предерзкого к горе великой приковал</span><span class="l">И сильному орлу на растерзанье дал.</span><span class="l">Он сердце завсегда коварное терзает,</span><span class="l">На коем снова плоть на муку вырастает.</span><span class="l">Там слышен страшный стон, там тяжка цепь звучит;</span><span class="l">И кровь, чрез камни вниз текущая, шумит,</span><span class="l">О коль несносна жизнь! позорище ужасно!</span><span class="l">Но в просвещенны дни сей вымысл видим ясно.</span><span class="l">Пииты украшать хотя свои стихи,</span><span class="l">Описывали казнь за мнимые грехи.</span><span class="l">Мы пламень солнечный Стеклом здесь получаем</span><span class="l">И Прометея тем безбедно подражаем.</span><span class="l">Ругаясь подлости нескладных оных врак,</span><span class="l"><button class="note" data-note="Речь идёт о зажигательных стёклах.">Небесным без греха огнем курим табак</button>;</span><span class="l">И только лишь о том мы думаем, жалея,</span><span class="l">Не свергла ль в пагубу наука Прометея?</span><span class="l">Не злясь ли на него, невежд свирепых полк</span><span class="l">На знатны вымыслы сложил неправой толк?</span><span class="l">Не наблюдал ли звезд тогда сквозь Телескопы,</span><span class="l">Что ныне воскресил труд счастливой Европы?</span><span class="l">Не огнь ли он Стеклом умел сводить с небес</span><span class="l">И пагубу себе от варваров нанес,</span><span class="l">Что предали на казнь, обнесши чародеем?</span><span class="l">Коль много таковых примеров мы имеем,</span><span class="l">Что зависть, скрыв себя под святости покров,</span><span class="l">И груба ревность с ней, на правду строя ков,</span><span class="l">От самой древности воюют многократно,</span><span class="l">Чем много знания погибло невозвратно!</span><span class="gap"></span><span class="mark" id="m12"></span><span class="l">Коль точно знали б мы небесные страны,</span><span class="l">Движение планет, течение луны,</span><span class="l">Когда бы <button class="note" data-note="Аристарх из Самоса (III в. до н. э.) — греческий философ и астроном. Он утверждал, что звёздная сфера и Солнце неподвижны, а Земля обращается по окружности, центром которой служит Солнце. По свидетельству Плутарха, стоик Клеант обвинил Аристарха в святотатстве.">Аристарх</button> завистливым Клеантом</span><span class="l">Не назван был в суде неистовым Гигантом,</span><span class="l">Дерзнувшим землю всю от тверди потрясти,</span><span class="l">Круг центра своего, круг солнца обнести;</span><span class="l">Дерзнувшим научать, что все домашни боги</span><span class="l">Терпят великой труд всегдашния дороги;</span><span class="l">Вертится вкруг Нептун, Диана и Плутон</span><span class="l">И страждут ту же казнь, как дерзкой Иксион;</span><span class="l">И неподвижная земли богиня Веста</span><span class="l">К упокоению сыскать не может места.</span><span class="l">Под видом ложным сих почтения богов</span><span class="l">Закрыт был звездный мир чрез множество веков.</span><span class="l">Боясь падения неправой оной веры,</span><span class="l">Вели всегдашню брань с наукой лицемеры,</span><span class="l">Дабы она, открыв величество небес</span><span class="l">И разность дивную неведомых чудес,</span><span class="l">Не показала всем, что непостижна сила</span><span class="l">Единого творца весь мир сей сотворила;</span><span class="l">Что Марс, Нептун, Зевес, всё сонмище богов</span><span class="l">Не стоят тучных жертв, ниже под жертву дров;</span><span class="l">Что агньцов и волов жрецы едят напрасно;</span><span class="l">Сие одно, сие казалось быть опасно.</span><span class="l">Оттоле землю все считали посреде.</span><span class="l">Астроном весь свой век в бесплодном был труде,</span><span class="l"><button class="note" data-note="Чтобы согласовать сложные движения планет с «системой мира» Клавдия Птолемея, было принято, что каждая планета движется по особому кругу — «эпициклу», центр которого движется по другому, большему кругу. Для практических расчётов теорию приходилось всё более усложнять, вводя новые «эпициклы».">Запутан циклами</button>, пока восстал Коперник,</span><span class="l">Презритель зависти и варварству соперник.</span><span class="l">В средине всех планет он солнце положил,</span><span class="l">Сугубое земли движение открыл.</span><span class="l">Однем круг центра путь вседневный совершает,</span><span class="l">Другим круг солнца год теченьем составляет,</span><span class="l">Он циклы истинной Системой растерзал</span><span class="l">И правду точностью явлений доказал.</span><span class="l">Потом <button class="note" data-note="Гугений — латинизированная форма фамилии голландского учёного Христиана Гейгенса (Гюйгенса, 1629–1695), открывшего кольца Сатурна. Его книга «Космотеорос», знакомившая с учением Коперника, появилась в русском переводе в 1717 г.">Гугении</button>, <button class="note" data-note="Иоганн Кеплер (1571–1630) — немецкий астроном, разработавший законы движения планет и завершивший учение Коперника. Коперник сохранил часть «эпициклов», считая, что планеты движутся только по кругу; Кеплер доказал, что движение совершается по эллипсам, и устранил эти противоречия.">Кеплеры</button> и Невтоны,</span><span class="l">Преломленных лучей в Стекле познав законы,</span><span class="l">Разумной подлинно уверили весь свет,</span><span class="l">Коперник что учил, сомнения в том нет.</span><span class="l">Клеантов не боясь, мы пишем все согласно,</span><span class="l">Что истине они противятся напрасно.</span><span class="l">В безмерном углубя пространстве разум свой,</span><span class="l">Из мысли ходим в мысль, из света в свет иной.</span><span class="l">Везде божественну премудрость почитаем,</span><span class="l">В благоговении весь дух свой погружаем.</span><span class="l">Чудимся быстрине, чудимся тишине,</span><span class="l">Что бог устроил нам в безмерной глубине.</span><span class="l">В ужасной скорости и купно быть в покое,</span><span class="l">Кто чудо сотворит кроме его такое?</span><span class="l">Нас больше таковы идеи веселят,</span><span class="l">Как, божий некогда описывая град,</span><span class="l"><button class="note" data-note="Августин (354–430) — западноевропейский («вечерний») богослов, отрицавший в книге «О граде Божием» (кн. 16, гл. 9) существование антиподов — людей, живущих на противоположном полушарии.">Вечерний Августин</button> душею веселился.</span><span class="l">О коль великим он восторгом бы пленился,</span><span class="l">Когда б разумну тварь толь тесно не включал,</span><span class="l">Под нами б жителей как здесь не отрицал,</span><span class="l">Без Математики вселенной бы не мерил!</span><span class="l">Что есть Америка, напрасно он не верил:</span><span class="l">Доказывает то подземной католик,</span><span class="l">Кадя златой его в <button class="note" data-note="То есть построенных в Новом Свете католиками.">костелах новых</button> лик.</span><span class="l">Уже Колумбу вслед, уже за Магелланом</span><span class="l">Круг света ходим мы великим Океаном</span><span class="l">И видим множество божественных там дел,</span><span class="l">Земель и островов, людей, градов и сел,</span><span class="l">Незнаемых пред тем и странных нам животных,</span><span class="l">Зверей, и птиц, и рыб, плодов и трав несчотных.</span><span class="l">Возьмите сей пример, Клеанты, ясно вняв,</span><span class="l">Коль много Августин в сем мнении неправ;</span><span class="l">Он слово божие употреблял напрасно.</span><span class="l">В Системе света вы то ж делаете власно.</span><span class="gap"></span><span class="mark" id="m13"></span><span class="l">Во зрительных трубах Стекло являет нам,</span><span class="l">Колико дал творец пространство небесам.</span><span class="l">Толь много солнцев в них пылающих сияет,</span><span class="l">Недвижных сколько звезд нам ясна ночь являет.</span><span class="l">Круг солнца нашего, среди других планет,</span><span class="l">Земля с ходящею круг ней луной течет,</span><span class="l">Которую хотя весьма пространну знаем,</span><span class="l">Но к свету применив, как точку представляем.</span><span class="l">Коль созданных вещей пространно естество!</span><span class="l">О коль велико их создавше божество!</span><span class="l">О коль велика к нам щедрот его пучина,</span><span class="l">Что на землю послал возлюбленного сына!</span><span class="l">Не погнушался он на малой шар сойти,</span><span class="l">Чтобы погибшего страданием спасти.</span><span class="l">Чем меньше мы его щедрот достойны зримся,</span><span class="l">Тем больше благости и милости чудимся.</span><span class="l">Стекло приводит нас чрез Оптику к сему,</span><span class="l">Прогнав глубокую неведения тьму!</span><span class="l">Преломленных лучей пределы в нем неложны,</span><span class="l">Поставлены творцем; другие невозможны.</span><span class="l">В благословенной наш и просвещенной век</span><span class="l">Чего не мог дойти по оным человек?</span><span class="l">Хоть острым взором нас природа одарила,</span><span class="l">Но близок оного конец имеет сила.</span><span class="l">Кроме, что вдалеке не кажет нам вещей</span><span class="l">И собранных трубой он требует лучей,</span><span class="l">Коль многих тварей он еще не досягает,</span><span class="l">Которых малой рост пред нами сокрывает!</span><span class="gap"></span><span class="mark" id="m14"></span><span class="l">Но в нынешних веках нам Микроскоп открыл,</span><span class="l">Что бог в невидимых животных сотворил!</span><span class="l">Коль тонки члены их, составы, сердце, жилы</span><span class="l">И нервы, что хранят в себе животны силы!</span><span class="l">Не меньше нежели в пучине тяжкий кит,</span><span class="l">Нас малый червь частей сложением дивит.</span><span class="l">Велик создатель наш в огромности небесной!</span><span class="l">Велик в строении червей, скудели тесной!</span><span class="l">Стеклом познали мы толики чудеса,</span><span class="l">Чем он наполнил понт, и воздух, и леса.</span><span class="l">Прибавив рост вещей, оно, коль нам потребно,</span><span class="l">Являет трав разбор и знание врачебно;</span><span class="l">Коль много Микроскоп нам тайностей открыл,</span><span class="l">Невидимых частиц и тонких в теле жил!</span><span class="gap"></span><span class="mark" id="m15"></span><span class="l">Но что еще? уже в Стекле нам Барометры</span><span class="l">Хотят предвозвещать, коль скоро будут ветры,</span><span class="l">Коль скоро дождь густой на нивах зашумит,</span><span class="l">Иль, облаки прогнав, их солнце осушит.</span><span class="l">Надежда наша в том обманами не льстится:</span><span class="l">Стекло поможет нам, и дело совершится.</span><span class="l">Открылись точно им движения светил:</span><span class="l">Чрез то ж откроется в погодах разность сил.</span><span class="l">Коль могут счастливы селяне быть оттоле,</span><span class="l">Когда не будет зной ни дождь опасен в поле?</span><span class="l">Какой способности ждать должно кораблям,</span><span class="l">Узнав, когда шуметь или молчать волнам,</span><span class="l">И плавать по морю безбедно и спокойно!</span><span class="l">Велико дело в сем и гор златых достойно!</span><span class="l">Далече до конца Стеклу достойных хвал,</span><span class="l">На кои целой год едва бы мне достал.</span><span class="l">Затем уже слова похвальны оставляю,</span><span class="l">И что об нем писал, то делом начинаю.</span><span class="l">Однако при конце не можно преминуть,</span><span class="l">Чтоб новых мне его чудес не помянуть.</span><span class="gap"></span><span class="mark" id="m16"></span><span class="l">Что может смертным быть ужаснее удара,</span><span class="l">С которым молния из облак блещет яра?</span><span class="l">Услышав в темноте внезапной треск и шум</span><span class="l">И видя быстрый блеск, мятется слабый ум;</span><span class="l">От гневного часа желает где б укрыться;</span><span class="l">Причины оного исследовать страшится.</span><span class="l">Дабы истолковать что молния и гром,</span><span class="l">Такие мысли все считает он грехом.</span><span class="l">На бич, он говорит, я посмотреть не смею,</span><span class="l">Когда грозит отец нам яростью своею.</span><span class="l">Но как он нас казнит, подняв в пучине вал,</span><span class="l">То грех ли то сказать, что ветром он нагнал?</span><span class="l">Когда в Египте хлеб довольный не родился,</span><span class="l">То грех ли то сказать, что Нил там не разлился?</span><span class="l">Подобно надлежит о громе рассуждать.</span><span class="l">Но блеск и звук его, не дав главы поднять,</span><span class="l">Держал ученых смысл в смущении толиком,</span><span class="l">Что в заблуждении теряли путь великом</span><span class="l">И истинных причин достигнуть не могли,</span><span class="l">Поколе действ в Стекле подобных не нашли.</span><span class="l">Вертясь, <button class="note" data-note="Часть электростатической машины, в которой электричество получалось путём трения о стеклянную поверхность.">Стеклянный шар</button> дает удары с блеском,</span><span class="l">С громовым сходственны сверьканием и треском.</span><span class="l">Дивился сходству ум; но видя малость сил,</span><span class="l"><button class="note" data-note="Имеется в виду известие об опытах Франклина с атмосферным электричеством, полученное в 1752 г.">До лета прошлого</button> сомнителен в том был;</span><span class="l">Довольствуя одне чрез любопытство очи,</span><span class="l">Искал в том перемен приятных дни и ночи;</span><span class="l">И больше в том одном рачения имел,</span><span class="l">Чтоб силою Стекла болезни одолел;</span><span class="l">И видел часто в том успехи вожделенны.</span><span class="l">О коль со древними дни наши несравненны!</span><span class="l">Внезапно чудный слух по всем странам течет,</span><span class="l">Что от громовых стрел опасности уж нет!</span><span class="l">Что та же сила туч гремящих мрак наводит,</span><span class="l">Котора от Стекла движением исходит,</span><span class="l">Что зная правила изысканны Стеклом,</span><span class="l">Мы можем отвратить от храмин наших гром.</span><span class="l">Единство оных сил доказано стократно:</span><span class="l">Мы лета ныне ждем приятного обратно.</span><span class="l">Тогда о истине Стекло уверит нас,</span><span class="l">Ужасный будет ли безбеден грома глас?</span><span class="l">Европа ныне в то всю мысль свою вперила</span><span class="l">И махины уже пристойны учредила.</span><span class="l">Я, следуя за ней, с Парнасских гор схожу,</span><span class="l">На время ко Стеклу весь труд свой приложу.</span><span class="gap"></span><span class="mark" id="m17"></span><span class="l">Ходя за тайнами в искусстве и природе,</span><span class="l">Я слышу восхищен веселый глас в народе.</span><span class="l">Елисаветина повсюду похвала</span><span class="l">Гласит премудрости и щедрости дела.</span><span class="l">Златые времена! о кроткие законы!</span><span class="l">Народу своему <button class="note" data-note="15 декабря 1752 г. Елизавета издала указ о снятии недоимок по подушному сбору.">прощает миллионы</button>;</span><span class="l">И пользу общую Отечества прозря,</span><span class="l">Учению велит расшириться в моря,</span><span class="l">Умножив бодрость в нем щедротою своею!</span><span class="l">А ты, о <button class="note" data-note="И. И. Шувалов.">Меценат</button>, предстательством пред нею</span><span class="l">Какой наукам путь стараешься открыть,</span><span class="l">Пред светом в том могу свидетель верной быть.</span><span class="l">Тебе похвальны все приятны и любезны,</span><span class="l">Что тщатся постигать учения полезны.</span><span class="l">Мои посильные и малые труды</span><span class="l">Коль часто перед ней воспоминаешь ты!</span><span class="l">Услышанному быть ее кротчайшим слухом</span><span class="l">Есть новым в бытии животвориться духом!</span><span class="l">Кто кажет старых смысл во днях еще младых,</span><span class="l">Тот будет всем пример, дожив власов седых.</span><span class="l">Кто склонность в счастии и доброту являет,</span><span class="l">Тот счастие себе недвижно утверждает.</span><span class="l">Всяк чувствует в тебе и хвалит обое,</span><span class="l">И небо чаемых покажет сбытие.</span><span class="gap"></span><cite>Декабрь 1752</cite></div>
+</section>
+</div>
+<div class="sheet" role="dialog" aria-label="Примечание"><div class="sheet-in"><p><b></b><span></span></p><button aria-label="Закрыть примечание">×</button></div></div>
+<nav class="next" aria-label="Переход между разделами"><a href="anakreon.html"><small>Назад</small><b>Разговор с Анакреоном</b></a><a class="fw" href="derzhavin.html"><small>Дальше</small><b>Державин. Годы</b></a></nav>
+</main>
+<script>(function(){
+var PAGES=[["klassicizm", "Классицизм: основы"], ["prosveshchenie", "Век Просвещения: в погоне за Европой"], ["lomonosov", "Ломоносов. Годы"], ["ody", "Ломоносов. Оды"], ["anakreon", "Разговор с Анакреоном"], ["steklo", "Письмо о пользе Стекла"], ["derzhavin", "Державин. Годы"]];
+var CUR="steklo";
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function load(){try{return JSON.parse(localStorage.getItem("klassicizm-modul"))||{v:{},q:{}}}catch(e){return {v:{},q:{}}}}
+function save(s){try{localStorage.setItem("klassicizm-modul",JSON.stringify(s))}catch(e){}}
+var st=load(); if(!st.v)st.v={}; if(!st.q)st.q={};
+if(CUR!=="index"){st.v[CUR]=1;save(st)}
+
+/* полоса прокрутки */
+var sc=$(".scroll");
+if(sc){var upd=function(){var h=document.documentElement;var m=h.scrollHeight-h.clientHeight;sc.style.width=(m>0?h.scrollTop/m*100:0)+"%"};addEventListener("scroll",upd,{passive:true});upd()}
+
+/* вкладки */
+$$("[data-tabs]").forEach(function(t){
+  var bs=$$(".tablist button",t),ps=$$(":scope > .panel",t);
+  function go(i){bs.forEach(function(b,j){b.setAttribute("aria-selected",j===i)});ps.forEach(function(p,j){p.classList.toggle("on",j===i)})}
+  bs.forEach(function(b,i){b.setAttribute("role","tab");b.addEventListener("click",function(){go(i)})});go(0);
+});
+
+/* карточки-раскрытия и переключатели */
+$$(".reveal button,[data-toggle]").forEach(function(b){
+  b.setAttribute("aria-pressed","false");
+  b.addEventListener("click",function(){
+    var on=b.getAttribute("aria-pressed")!=="true";b.setAttribute("aria-pressed",on);
+    var t=b.getAttribute("data-toggle");if(t){$$(t).forEach(function(e){e.classList.toggle("show",on)})}
+  });
+});
+
+/* подсветка строф */
+$$("[data-hl]").forEach(function(b){
+  b.setAttribute("aria-pressed","false");
+  b.addEventListener("click",function(){
+    var r=b.getAttribute("data-hl").split("-"),a=+r[0],z=+r[1];
+    $$("[data-hl]").forEach(function(x){x.setAttribute("aria-pressed",x===b)});
+    $$(".strip span").forEach(function(s,i){s.classList.toggle("hl",i+1>=a&&i+1<=z)});
+    var m=$("#strip-msg");if(m)m.textContent=b.getAttribute("data-t");
+  });
+});
+
+/* сортировка */
+$$("[data-sorter]").forEach(function(s){
+  var sel=null,msg=$(".msg",s);
+  $$(".pool button",s).forEach(function(b){
+    b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",function(){
+      $$(".pool button",s).forEach(function(x){x.setAttribute("aria-pressed","false")});
+      sel=b;b.setAttribute("aria-pressed","true");msg.className="msg";msg.textContent="Теперь выберите группу.";
+    });
+  });
+  $$(".bin",s).forEach(function(bin){
+    bin.addEventListener("click",function(){
+      if(!sel){msg.className="msg";msg.textContent="Сначала выберите слово.";return}
+      if(sel.getAttribute("data-g")===bin.getAttribute("data-g")){
+        var c=document.createElement("span");c.textContent=sel.textContent;$(".got",bin).appendChild(c);
+        sel.remove();sel=null;
+        if(!$$(".pool button",s).length){msg.className="msg ok";msg.textContent="Всё распределено верно."}
+        else{msg.className="msg ok";msg.textContent="Верно."}
+      }else{
+        bin.classList.add("no");setTimeout(function(){bin.classList.remove("no")},600);
+        msg.className="msg no";msg.textContent="Не сюда. Попробуйте другую группу.";
+      }
+    });
+  });
+});
+
+/* примечания */
+var sheet=$(".sheet");
+if(sheet){
+  $$(".note").forEach(function(n){n.addEventListener("click",function(){
+    $(".sheet b").textContent=n.textContent;$(".sheet span").textContent=n.getAttribute("data-note");sheet.classList.add("on");
+  })});
+  $(".sheet button").addEventListener("click",function(){sheet.classList.remove("on")});
+}
+
+/* главная: отметки */
+$$("[data-page]").forEach(function(a){
+  var id=a.getAttribute("data-page");
+  if(st.v[id]){a.classList.add("done");var s=$(".st",a);if(s){s.textContent="открыт"}}
+});
+var rs=$("#reset");if(rs)rs.addEventListener("click",function(){save({v:{},q:{}});location.reload()});
+})();
+</script>
+</body></html>
