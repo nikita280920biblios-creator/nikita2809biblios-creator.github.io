@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Искусство комедии: Мольер</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d0d0c;
+  --black-2:#1a1a18;
+  --white:#ffffff;
+  --paper:#f3f1ea;
+  --ink:#161512;
+  --ink-dim:#4c463c;
+  --ink-faint:#8a8272;
+  --line:rgba(22,21,18,0.14);
+  --line-strong:rgba(22,21,18,0.35);
+  --line-on-black:rgba(255,255,255,0.18);
+  --red:#a92420;
+  --serif:'PT Serif', Georgia, serif;
+  --sans:'Manrope', Arial, sans-serif;
+  --sidebar-w:272px;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--black);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+::selection{background:var(--red);color:#fff;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;margin:0;color:var(--ink);}
+
+/* ================= APP SHELL ================= */
+.app{display:flex;height:100vh;width:100vw;overflow:hidden;}
+
+/* ---- Sidebar (TOC) ---- */
+.sidebar{
+  width:var(--sidebar-w);flex:0 0 auto;background:var(--black);color:#fff;
+  display:flex;flex-direction:column;height:100vh;overflow:hidden;
+  border-right:1px solid var(--line-on-black);
+}
+.sb-brand{padding:24px 22px 18px;border-bottom:1px solid var(--line-on-black);}
+.sb-brand .nm{font-family:var(--serif);font-size:17px;font-weight:700;}
+.sb-brand .nm em{font-style:italic;color:#c9a24a;font-weight:400;}
+.sb-brand .dt{font-size:12px;color:#9c9border-box6f5;color:#a99;opacity:.65;margin-top:4px;}
+.sb-progress{padding:14px 22px;border-bottom:1px solid var(--line-on-black);}
+.sb-progress .bar{height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.sb-progress .bar-fill{height:100%;background:var(--red);width:6%;transition:width .35s;}
+.sb-progress .lbl{font-size:11px;color:#a39c8c;margin-top:8px;letter-spacing:.04em;}
+.sb-list{flex:1;overflow-y:auto;padding:10px 0;}
+.sb-list::-webkit-scrollbar{width:5px;}
+.sb-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);}
+.sb-item{
+  display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;
+  background:none;border:none;color:#b6b0a2;cursor:pointer;
+  padding:11px 22px;font-family:var(--sans);font-size:13.5px;line-height:1.35;
+  border-left:2px solid transparent;transition:all .15s;
+}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.04);}
+.sb-item.active{color:#fff;border-left-color:var(--red);background:rgba(255,255,255,.06);}
+.sb-item .num{flex:0 0 auto;width:20px;font-family:var(--serif);font-style:italic;font-size:12px;color:#6b6458;padding-top:1px;}
+.sb-item.active .num{color:var(--red);}
+.sb-item .dot{flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:#3a362e;margin-top:6px;}
+.sb-item.visited .dot{background:#6b6458;}
+.sb-item.active .dot{background:var(--red);}
+.sb-item .tt{flex:1;}
+.sb-close{display:none;}
+
+/* ---- Main column ---- */
+.main-col{flex:1;display:flex;flex-direction:column;height:100vh;min-width:0;background:var(--paper);}
+
+.topbar{
+  display:none;
+  align-items:center;justify-content:space-between;
+  background:var(--black);color:#fff;padding:14px 18px;flex:0 0 auto;
+}
+.topbar .menu-btn{background:none;border:1px solid var(--line-on-black);color:#fff;width:36px;height:36px;border-radius:3px;cursor:pointer;font-size:15px;}
+.topbar .tt{font-family:var(--serif);font-size:14px;}
+.topbar .ct{font-size:11px;color:#a39c8c;}
+
+.stage{flex:1;overflow-y:auto;position:relative;}
+.stage::-webkit-scrollbar{width:8px;}
+.stage::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
+
+.slide{display:none;min-height:100%;}
+.slide.active{display:block;animation:slidein .35s ease;}
+@keyframes slidein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.slide-inner{max-width:680px;margin:0 auto;padding:56px 32px 90px;}
+.slide-inner.wide{max-width:820px;}
+
+/* black cover slide */
+.slide.cover{background:var(--black);color:#fff;}
+.slide.cover .slide-inner{max-width:640px;padding-top:64px;}
+.cover-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c9a24a;margin-bottom:18px;}
+.cover-portrait{width:170px;border:1px solid var(--line-on-black);margin-bottom:28px;filter:grayscale(100%) contrast(1.08);}
+.slide.cover h1{color:#fff;font-size:clamp(30px,5vw,48px);line-height:1.08;}
+.slide.cover .dates{font-family:var(--serif);font-style:italic;color:#9c9587;font-size:16px;margin-top:10px;}
+.slide.cover .quote{
+  font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.6vw,27px);color:#fff;
+  margin-top:30px;border-left:3px solid var(--red);padding-left:20px;
+}
+.cover-start{
+  margin-top:40px;background:var(--red);color:#fff;border:none;padding:13px 26px;
+  font-family:var(--sans);font-size:13px;letter-spacing:.04em;cursor:pointer;border-radius:2px;
+}
+.cover-start:hover{background:#c22b26;}
+
+/* ---- typography inside slides ---- */
+p{margin:0 0 18px;color:var(--ink-dim);font-size:16.5px;}
+p:last-child{margin-bottom:0;}
+.kicker{font-size:12px;letter-spacing:.1em;color:var(--red);margin-bottom:10px;text-transform:uppercase;}
+.slide-inner h2{font-size:clamp(23px,3.2vw,31px);line-height:1.18;margin-bottom:22px;}
+.slide-sub{font-family:var(--serif);font-style:italic;color:var(--ink-faint);font-size:15px;margin-top:-14px;margin-bottom:22px;}
+
+/* images */
+figure.fig{margin:28px 0;}
+figure.fig img{width:100%;border-radius:2px;cursor:zoom-in;}
+figure.fig.bw img{filter:grayscale(100%) contrast(1.06);}
+figure.fig figcaption{font-size:12.5px;color:var(--ink-faint);margin-top:9px;font-style:italic;font-family:var(--serif);text-align:center;}
+.fig-sm{max-width:360px;margin-left:auto;margin-right:auto;}
+.fig-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.fig-row-3{grid-template-columns:1fr 1fr 1fr;}
+.fig-row figure{margin:0;}
+.fig-row img{width:100%;border-radius:2px;cursor:zoom-in;aspect-ratio:4/5;object-fit:cover;}
+.fig-row.bw img{filter:grayscale(100%) contrast(1.06);}
+.fig-row figcaption{font-size:11.5px;color:var(--ink-faint);margin-top:7px;font-style:italic;font-family:var(--serif);text-align:center;}
+
+/* black pull-quote band */
+.quote-band{
+  background:var(--black);color:#fff;margin:32px -32px;padding:34px 32px;
+}
+.quote-band p{
+  font-family:var(--serif);font-style:italic;font-weight:400;color:#fff;
+  font-size:clamp(18px,2.1vw,22px);line-height:1.45;margin:0;
+}
+.quote-band cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:#c9a24a;margin-top:14px;}
+
+.divider{height:1px;background:var(--line);margin:38px 0;}
+
+/* ---- expand cards ---- */
+.card-list{display:flex;flex-direction:column;gap:9px;margin-top:6px;}
+.info-card{background:var(--white);border:1px solid var(--line);border-radius:2px;overflow:hidden;}
+.card-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;cursor:pointer;padding:15px 17px;text-align:left;font-family:inherit;}
+.card-head .tag{font-size:10.5px;letter-spacing:.06em;color:var(--red);text-transform:uppercase;display:block;margin-bottom:3px;}
+.card-head .nm{font-family:var(--serif);font-size:16.5px;color:var(--ink);}
+.card-head .plus{flex:0 0 auto;width:16px;height:16px;position:relative;}
+.card-head .plus::before,.card-head .plus::after{content:"";position:absolute;background:var(--red);transition:transform .25s;}
+.card-head .plus::before{left:0;top:50%;width:100%;height:1px;transform:translateY(-50%);}
+.card-head .plus::after{top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);}
+.info-card.open .plus::after{transform:translateX(-50%) rotate(90deg);opacity:0;}
+.card-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.info-card.open .card-body{max-height:700px;}
+.card-body-inner{padding:0 17px 17px;}
+.card-body-inner p{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--ink-dim);line-height:1.55;margin:0;}
+.card-body-inner .src{display:block;margin-top:9px;font-family:var(--sans);font-style:normal;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);text-transform:uppercase;}
+.group-label{font-size:11.5px;letter-spacing:.08em;color:var(--ink-faint);margin:28px 0 10px;text-transform:uppercase;}
+.group-label:first-child{margin-top:0;}
+
+/* ---- accordion ---- */
+.accordion{border-top:1px solid var(--line);margin-top:6px;}
+.acc-item{border-bottom:1px solid var(--line);}
+.acc-trigger{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:none;border:none;color:var(--ink);cursor:pointer;padding:17px 0;
+  font-family:var(--serif);font-size:17px;text-align:left;
+}
+.acc-trigger .plus{flex:0 0 auto;width:16px;height:16px;position:relative;}
+.acc-trigger .plus::before,.acc-trigger .plus::after{content:"";position:absolute;background:var(--red);transition:transform .25s;}
+.acc-trigger .plus::before{left:0;top:50%;width:100%;height:1px;transform:translateY(-50%);}
+.acc-trigger .plus::after{top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);}
+.acc-item.open .plus::after{transform:translateX(-50%) rotate(90deg);opacity:0;}
+.acc-panel{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.acc-item.open .acc-panel{max-height:700px;}
+.acc-panel-inner{padding-bottom:20px;}
+
+/* ---- dialogue reveal ---- */
+.dialogue{margin-top:6px;}
+.dg-line{display:none;padding:14px 17px;margin-bottom:2px;border-left:3px solid var(--line-strong);background:var(--white);}
+.dg-line.shown{display:block;animation:fadein .4s ease;}
+.dg-line .who{font-size:10.5px;letter-spacing:.06em;color:var(--red);margin-bottom:5px;text-transform:uppercase;}
+.dg-line p{font-family:var(--serif);font-style:italic;font-size:15.5px;color:var(--ink);margin:0;}
+.dg-line.emph{border-left-color:var(--red);background:#efe9de;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.dg-next{margin-top:14px;padding:10px 22px;background:var(--black);color:#fff;border:none;font-family:var(--sans);font-size:12px;letter-spacing:.04em;cursor:pointer;border-radius:2px;}
+.dg-next:hover{background:var(--red);}
+.dg-next[disabled]{opacity:0;pointer-events:none;}
+
+/* ---- character cards grid (module) ---- */
+.char-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:6px;}
+@media (max-width:560px){.char-grid{grid-template-columns:1fr;}}
+
+/* ---- critics deck ---- */
+.deck{margin-top:6px;position:relative;}
+.deck-card{display:none;background:var(--white);border:1px solid var(--line);border-radius:2px;padding:24px 26px;}
+.deck-card.active{display:block;animation:fadein .35s ease;}
+.deck-card p{font-family:var(--serif);font-style:italic;font-size:clamp(15.5px,1.9vw,18px);color:var(--ink);line-height:1.5;margin:0;}
+.deck-card cite{display:block;margin-top:13px;font-style:normal;font-family:var(--sans);font-size:11.5px;letter-spacing:.04em;color:var(--red);}
+.deck-controls{display:flex;align-items:center;gap:14px;margin-top:14px;}
+.deck-controls button{background:var(--white);border:1px solid var(--line-strong);color:var(--ink);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:14px;}
+.deck-controls button:hover{border-color:var(--red);color:var(--red);}
+.deck-dots{display:flex;gap:6px;}
+.deck-dot{width:6px;height:6px;border-radius:50%;background:var(--line-strong);border:none;cursor:pointer;padding:0;}
+.deck-dot.active{background:var(--red);}
+
+/* ---- timeline module ---- */
+.tl-wrap{margin-top:4px;}
+.tl-track{display:flex;overflow-x:auto;padding-bottom:14px;}
+.tl-track::-webkit-scrollbar{height:5px;}
+.tl-track::-webkit-scrollbar-thumb{background:var(--line-strong);}
+.tl-node{flex:0 0 auto;min-width:128px;padding:0 16px 14px 0;position:relative;cursor:pointer;background:none;border:none;text-align:left;}
+.tl-node::before{content:"";position:absolute;left:0;top:24px;right:16px;height:1px;background:var(--line-strong);}
+.tl-node::after{content:"";position:absolute;left:0;top:20px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--ink-faint);}
+.tl-node .yr{display:block;font-family:var(--serif);font-size:17px;color:var(--ink-faint);padding-top:33px;transition:color .2s;}
+.tl-node .lb{display:block;font-size:10.5px;color:var(--ink-faint);margin-top:4px;max-width:128px;}
+.tl-node.active::after{background:var(--red);border-color:var(--red);width:11px;height:11px;top:19px;}
+.tl-node.active .yr{color:var(--red);}
+.tl-panel{margin-top:16px;padding:20px 22px;background:var(--white);border:1px solid var(--line);border-radius:2px;min-height:90px;}
+.tl-panel .tl-year{font-family:var(--serif);font-style:italic;color:var(--red);font-size:14px;margin-bottom:8px;display:block;}
+.tl-panel p{margin:0;font-size:15px;}
+
+/* ---- bottom nav ---- */
+.bottombar{
+  flex:0 0 auto;background:var(--black);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;gap:20px;
+}
+.bb-btn{
+  background:none;border:1px solid var(--line-on-black);color:#fff;
+  padding:10px 18px;font-family:var(--sans);font-size:13px;cursor:pointer;border-radius:2px;
+  display:flex;align-items:center;gap:8px;transition:all .2s;
+}
+.bb-btn:hover:not([disabled]){border-color:var(--red);color:#ffdcd9;}
+.bb-btn[disabled]{opacity:.25;pointer-events:none;}
+.bb-prog{flex:1;display:flex;align-items:center;gap:14px;max-width:320px;}
+.bb-track{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.bb-fill{height:100%;background:var(--red);width:6%;transition:width .35s;}
+.bb-ct{font-size:12px;color:#a39c8c;white-space:nowrap;font-family:var(--serif);font-style:italic;}
+
+/* ---- lightbox ---- */
+.lightbox{
+  position:fixed;inset:0;background:rgba(8,7,6,.94);z-index:1000;
+  display:none;align-items:center;justify-content:center;padding:32px;flex-direction:column;
+}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:min(860px,90vw);max-height:72vh;object-fit:contain;border-radius:2px;}
+.lightbox figcaption{color:#ded6c4;margin-top:16px;text-align:center;max-width:600px;font-family:var(--serif);font-style:italic;}
+.lightbox-close{position:absolute;top:20px;right:22px;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;width:38px;height:38px;font-size:18px;cursor:pointer;border-radius:50%;}
+
+.sb-overlay{display:none;}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:880px){
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;z-index:200;
+    transform:translateX(-100%);transition:transform .3s;
+    width:80vw;max-width:300px;
+  }
+  .sidebar.open{transform:translateX(0);}
+  .sb-close{display:block;position:absolute;top:20px;right:18px;background:none;border:1px solid var(--line-on-black);color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;}
+  .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;}
+  .sb-overlay.open{display:block;}
+  .topbar{display:flex;}
+  .slide-inner{padding:34px 22px 70px;}
+  .quote-band{margin:28px -22px;padding:26px 22px;}
+  .fig-row{grid-template-columns:1fr 1fr;gap:10px;}
+  .bottombar{padding:12px 16px;}
+  .bb-prog{display:none;}
+  .char-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="sb-overlay" id="sbOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <button class="sb-close" id="sbClose">×</button>
+    <div class="sb-brand">
+      <div class="nm">Мольер <em>— курс</em></div>
+      <div class="dt">1622 — 1673</div>
+    </div>
+    <div class="sb-progress">
+      <div class="bar"><div class="bar-fill" id="sbBarFill"></div></div>
+      <div class="lbl" id="sbLabel">Слайд 1</div>
+    </div>
+    <nav class="sb-list" id="sbList"></nav>
+  </aside>
+
+  <div class="main-col">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div class="tt" id="topTitle"></div>
+      <div class="ct" id="topCt"></div>
+    </div>
+
+    <div class="stage" id="stage">
+
+      <!-- SLIDE 0 — COVER -->
+      <section class="slide cover active" data-title="Мольер">
+        <div class="slide-inner">
+          <h1>Искусство комедии: Мольер</h1>
+          <div class="dates">Жан-Батист Поклен, 1622—1673</div>
+          <button class="cover-start" id="startBtn">Начать</button>
+        </div>
+      </section>
+
+      <!-- SLIDE 1 — ИЗ ПАРИЖА В ПРОВИНЦИЮ И ОБРАТНО -->
+      <section class="slide" data-title="Из Парижа в провинцию и обратно">
+        <div class="slide-inner">
+          <div class="kicker">Искусство комедии: Мольер</div>
+          <h2>Из Парижа в провинцию и обратно</h2>
+          <p>В биографии Мольера, написанной Михаилом Булгаковым, есть глава «Бру-га-га», посвященная первому представлению мольеровского театра при дворе. Это произошло в одном из залов Лувра 24 октября 1658 г. Вечер открылся трагедией Корнеля «Никомед». В зале - король, придворные, актеры Бургундского отеля, признанные мастера трагического жанра. По ходу спектакля скучнеет зал, сжался в своем кресле брат короля юный Филипп Орлеанский - это он добился права для провинциальной труппы играть в Лувре. И что же - провал? Он кажется уже свершившимся, когда после «Никомеда» на сцене появляется Мольер и предлагает комедию собственного сочинения - «Влюбленный доктор»: провинция на ней смеялась. Король кивнул.</p>
+          <p>В главной роли, как и в только что провалившемся «Никомеде», выступил сам директор театра - Мольер. Он выбежал на сцену:</p>
+          <div class="quote-band">
+            <p>«...в зале заулыбались. После первой реплики - стали хохотать. А через несколько минут - хохот превратился в грохот. И видно было, как надменный человек в кресле [король] отвалился на спинку его и стал, всхлипывая, вытирать слезы. Вдруг, совершенно неожиданно для себя, рядом визгливо захохотал Филипп Орлеанский. В глазах у влюбленного врача вдруг посветлело. Он понял, что слышит... знаменитый, непередаваемый, говорящий о полном успехе комедии обвал в зале, который в труппе Мольера называли «бру-га-га»...»</p>
+          </div>
+          <p>Так столица узнала о новой труппе и ее руководителе, неважном исполнителе трагических ролей, но зато великолепном фарсёре и авторе комедий. Король узаконил существование нового театра, отведя ему зал Пти-Бур-бон. По неофициальному титулу брата короля театр назвали труппой Месье. Всего этого могло и не быть, провались «Влюбленный доктор». И что тогда? Обратный путь в провинцию, уже однажды совершенный Мольером.</p>
+          <p>Настоящее имя Мольера - Жан-Батист Поклен (1622—1673). Он - сын и внук королевского обойщика. Завидная должность, от которой он отказался в пользу своего брата, избрав другое поприще - театр и приняв сценическое имя, ставшее всемирно знаменитым.</p>
+          <p>Мольер получил хорошее образование, окончив Клер-монский коллеж (ныне лицей Людовика Великого) в 1639 г. Следующие три года он изучает право. В 1641 г. в доме своего друга Мольер слушает лекции философа Пьера Гассенди (1592—1655). Знаменательное знакомство! Если в трагедии классицизма с интеллектуальной стройностью ее конфликта видят параллель философии Декарта, то не логично ли, что комедиографу проповедует Гассенди? Он убежденный противник теории врожденных идей. Мир, согласно Гассенди, творится не Божественным разумом, а рождается самотворящей материей для радости и наслаждения человека. Насколько этот склад мысли увлек Мольера, можно судить по тому, что его первым литературным созданием был перевод древнеримской поэмы Лукреция «О природе вещей», увы, не сохранившийся.</p>
+          <p>В 1643 г. Жан-Батист Поклен сделал окончательный выбор: 1 января следующего года открывается Блистательный театр, и в числе его создателей значится новое театральное имя - Мольер. Среди его сотоварищей -семейство Бежаров, и в том числе - Мадлена Бежар, партнерша по сцене и подруга Мольера.</p>
+          <p>Первый парижский период в театральной карьере Мольера длился недолго - чуть более года - и закончился бесславно. Осенью 1645 г. Блистательный театр разорился. Несколько дней Мольер провел в долговой тюрьме, а затем с остатком своей в ту пору не слишком профессиональной труппы отправился в провинцию на гастроли, продлившиеся тринадцать лет. Скитание из города в город, тяготы пути и жалкого актерского быта. Профессия в ту пору не считалась благородной. Мольеру предстояло изменить статус и смысл своего ремесла.</p>
+          <p>Что они могли тогда играть? Перелицовывали старые, еще средневековые фарсы. Новым опытом во Франции было знакомство с итальянским театром масок, комедией дель арте. Как и французский фарс, она наследовала старой традиции народной площадной культуры, но, сформировавшаяся лишь в XVI в., представляла собой более высокий этап ее развития. В сценическом отношении эта комедия предполагала создание актерского ансамбля, состоящего из четырех масок. Самую известную - «северную» - четверку составляли Панталоне (купец, скупой), Доктор и два простака - Дзанни: Бригелла (первоначально хитрый, изворотливый, злой крестьянин) и Арлекин (первоначально глупец, позже - плут).</p>
+          <p>Этот опыт многое дал Мольеру. Можно сказать, что он заставил его стать драматургом, поскольку комедия дель арте - театр импровизации. Существует лишь общий, как бы теперь сказали, сценарный план, а текст роли создается самим актером. Мольер начал набрасывать роли, варьировать сюжеты, приспосабливать итальянские маски к французской жизни. В некоторых именах мольеровских персонажей и много позже угадывается их родословная: так герой нескольких комедий - Сганарель - происходит от Дзанарелло (Дзанни). Оттуда же и Влюбленный Доктор, принесший первый парижский успех.</p>
+          <p>Успех подтвердил мастерство труппы, но в не меньшей степени и мастерство ее комедиографа, чье творение смешило узнаваемостью в масках типов реальной жизни. Для Мольера это был лишь один из первых набросков. Именно теперь он начинает подробно и обстоятельно писать с натуры.</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 2 — ХРОНОЛОГИЯ -->
+      <section class="slide" data-title="Хронология">
+        <div class="slide-inner">
+          <div class="kicker">Жан-Батист Поклен — Мольер</div>
+          <h2>Хронология</h2>
+          <div class="tl-wrap">
+            <div class="tl-track" id="tlTrack">
+              <button class="tl-node" data-i="0"><span class="yr">1622</span><span class="lb">Родился Жан-Батист Поклен</span></button>
+              <button class="tl-node" data-i="1"><span class="yr">1639</span><span class="lb">Окончил Клермонский коллеж</span></button>
+              <button class="tl-node" data-i="2"><span class="yr">1643</span><span class="lb">Открыт Блистательный театр</span></button>
+              <button class="tl-node" data-i="3"><span class="yr">1645</span><span class="lb">Блистательный театр разорился</span></button>
+              <button class="tl-node" data-i="4"><span class="yr">1658</span><span class="lb">Премьера в Лувре</span></button>
+              <button class="tl-node" data-i="5"><span class="yr">1659</span><span class="lb">«Смешные жеманницы»</span></button>
+              <button class="tl-node" data-i="6"><span class="yr">1664</span><span class="lb">Версаль, «Тартюф» запрещён</span></button>
+              <button class="tl-node" data-i="7"><span class="yr">1665</span><span class="lb">«Дон Жуан»</span></button>
+              <button class="tl-node" data-i="8"><span class="yr">1666</span><span class="lb">«Мизантроп»</span></button>
+              <button class="tl-node" data-i="9"><span class="yr">1669</span><span class="lb">«Тартюф» наконец показан</span></button>
+              <button class="tl-node" data-i="10"><span class="yr">1673</span><span class="lb">«Мнимый больной», смерть Мольера</span></button>
+              <button class="tl-node" data-i="11"><span class="yr">1680</span><span class="lb">Основан театр Комеди Франсез</span></button>
+            </div>
+            <div class="tl-panel" id="tlPanel"></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3 — УРОК ВСЕМ -->
+      <section class="slide" data-title="Урок всем">
+        <div class="slide-inner">
+          <div class="kicker">Урок всем</div>
+          <h2>«Бичевать пороки моего века»</h2>
+          <p>В предисловии к одной из своих самых известных и, безусловно, самой своей многострадальной пьесе -«Тартюф» Мольер скажет: «Поскольку назначение комедии состоит в том, чтобы развлекать людей, исправляя их, я рассудил, что по роду своих занятий я не могу делать ничего более достойного, чем бичевать пороки моего века...»</p>
+          <p>Есть драматурги, скорее развлекающие, чем исправляющие нравы. Мольер сам был в их числе до возвращения в Париж. Теперь же, когда его аудитория - самые могущественные, утонченные и образованные люди Франции, он не может не ставить задачи более важные. И первая из них - показать зрителям их самих, показать без лести и снисхождения. Свою портретную галерею Мольер откроет, продемонстрировав двору то, чем люди, его посещающие, отличаются от остальных жителей королевства, гордясь своим отличием.</p>
+          <p>Вторым и еще более шумным успехом Мольера в Париже была премьера 18 ноября 1659 г. пьесы «Смешные жеманницы» (Les précieuses ridicules). Точно передать на русский язык название сложно, ибо французское précieuses имеет силу культурного термина, который тогда и следовало бы оставить как прециозницы, носительницы определенного стиля. М. Булгаков переводит его - «Смешные драгоценные», объясняя, что этот культурный стиль получил свое название от того, что при встрече посетительницы салонов, демонстрируя свою изысканность и утонченность, именовали друг друга: «Моя драгоценная». В общем так же - только с поправкой на архаический стиль времени - звучит это название у того, кто первым попытался дать перевод комедии на русском языке, - у Петра Первого: «Драгыя смеянные» (в бумагах императора сохранилось лишь самое начало пьесы).</p>
+          <p>Действие происходит в доме почтенного горожанина-буржуа Горжи-бюса. Его дочь Мадлон и племянница Като отвергают поклонников: Лагранжа и Дюкруази, - поскольку те не маркизы, не бывают в лучшем обществе, в общем, поскольку не находят в них прециозности. Все имена требуют комментария, ибо в каждом из них - свой намек, своя реальная подоплека. Имена поклонников не выдуманы - это настоящие имена актеров труппы, играющих эти роли (Лагранж знаменит тем, что на протяжении многих лет вел «реестр» всех дел театра Мольера). В фарсовой традиции той эпохи было принято, чтобы псевдоним известного комического актера превращался в своего рода амплуа, в маску. Так было с Жодле, который в данном спектакле, как и всегда, под своим сценическим именем играл одного из лакеев. Второго — Маскари-ля (в самом имени звучит слово «маска») - играл Мольер. Однако с Лагранжем и Дюкруази случай иной - это не маски, а реальные фамилии, за которыми - обычные люди, не маркизы, не прециозники.</p>
+          <p>Этот акцент на их обычности, человечности здесь и важен, поскольку именно эти свойства неприемлемы для девиц: Мадлон и Като. Едва ли зрители, многие из которых были многолетними посетителями салонов, могли забыть, что имя основательницы первого из салонов маркизы де Рамбуйе - Екатерина. А имя самой модной прециозной писательницы - Мадлона де Скюдери. В духе ее романов девицы перекрещивают себя в Аминту и Поликсену.</p>
+          <p>Отвергнутые поклонники решают отомстить. Теперь они посылают своих лакеев - Маскариля и Жодле - сыграть роль маркизов, якобы привлеченных изяществом и прелестями новоявленных прециозниц. Мольер играл в огромном парике, которым подметал пол при каждом поклоне. Все - и в одежде, и в языке, и в поведении - было несуразно преувеличено, но лишь с тем, чтобы еще более подчеркнуть, сделав явной, несуразность прециозного стиля. Пародия и непосредственно метит в литературное продолжение этого культурно-бытового вкуса. Маскариль читает свой экспромт-комплимент:</p>
+          <div class="quote-band">
+            <p>Ого! Какого дал я маху:<br>Я в очи вам глядел без страху,<br>Но сердце мне тайком пленили ваши взоры.<br>Ах, воры! воры! воры! воры!</p>
+          </div>
+          <p>Слушательницы в восторге, оценив изящество и непринужденность. Но автор не упускает случая привлечь внимание и к своим отдельным удачам:</p>
+          <p>М а с к а р и л ь . Обратили вы внимание, как начинается первая строка? Ого! В высшей степени оригинально. Ого! Словно бы человек вдруг спохватился: Ого! Возглас удивления: Ого!</p>
+          <p>Да, соглашается Мадлон: «Я бы предпочла быть автором одного этого Ого! нежели целой эпической поэмы». Налицо все черты, так ценимые прециозной культурой: неожиданность, оригинальность, непринужденность творчества, в котором не должно быть труда, но лишь - мгновенно обнаруживающий себя дар остроумия.</p>
+          <p>Мольер сыграл пародию на прециозность перед носителями этой культуры. Рискованно, но он победил. Выходя из театра, литератор Менаж сказал знаменитому блюстителю литературных правил и поэту Шаплену: «Мы с вами одобряли все те глупости, которые были здесь только что так остроумно и справедливо осмеяны; но, поверьте мне, нам придется сжечь то, чему мы поклонялись, и поклониться тому, что сжигали».</p>
+          <p>Это была счастливая и полная, ибо пришедшаяся чрезвычайно ко времени, победа. Людовик XIV спешил расстаться со стилем, так кстати побежденным Мольером, как с напоминанием о фрондёрах, над которыми он восторжествовал на поле боя, в парламенте и которых теперь предстояло превратить в совершенных придворных совершенного двора. В этом смысле реформа нравов, затеянная Мольером, была уместна в королевском плане преобразований. Труппа Мольера получает королевский пенсион и с 1660 г. играет во дворце Пале-Рояль (после того как из-за происков врагов здание Пти-Бурбон было снесено).</p>
+          <p>Преподав веселый урок двору (смеялись все, и даже те, кому было не до смеха), Мольер обратил свою речь к городу: «Урок мужьям» (L'École des maris; 1661 г.) и «Урок женам» (L'École des femmes; 1662 г.). В первой комедии -семейная история двух братьев: разумный Арист и ревнивый, подозрительный Сганарель (уже по имени можно предположить его характер - глупец, простак). Первый - счастлив, второй - обманут.</p>
+          <p>В «Уроке женам» Арнольф решил не полагаться на удачу в выборе жены, а воспитать ее для себя, взяв для этого скромную деревенскую девушку. Однако первая же встреча Агнессы с любезным молодым человеком Орасом разрушает воспитательный план. Природа все равно возьмет свое. Очень вероятно, что этот урок Мольер вынес из слышанных в юности лекций Гассенди. Однако лекции лекциями, а теперь его семейные комедии приобретают и личный оттенок: ведь он только что женился на воспитанной им младшей сестре своей многолетней подруги - Арманде Бежар. Между ними двадцать с лишним лет разницы. Увы, брак оказался не слишком счастливым, а к тому же породил массу слухов: была ли Арманда действительно сестрой, а может быть, дочерью Мадлены? Тогда от кого - уж не от Мольера ли?</p>
+          <p>Сплетня и по сей день неотвязно тянется за биографией Мольера, хотя известно даже, кто ее придумал - премьер труппы Бургундского отеля Монфлери, злобный, несмотря на свою необъятную толщину. Он настолько толст, что его в один вечер никак не отдубасишь, - острил по этому поводу друг юности Мольера писатель Сирано де Бержерак.</p>
+          <p>Репутацию Мольера начинают в это время чернить не только театральные сплетники. За «Уроками» последовала первая кампания обвинения его в нарушении как эстетических, так и нравственных законов. Мольер ответил пьесами, вынеся обсуждение прямо на сцену. В «Критике «Урока женам» (1663 г.) он представил спор в гостиной, где насмешнику-маркизу и ученому педанту-сочинителю отвечают шевалье Дорант и молодая светская дама, которая не читала Аристотеля, но судит с позиции здравого смысла. Они защищают Мольера.</p>
+          <p>Сразу следом за «Критикой» Мольер написал еще более блистательный ответ - «Версальский экспромт», поставленный как репетиция спектакля. Все актеры выведены под своими настоящими именами. Они говорят открыто и следуют в своих суждениях здравому смыслу, а не предрассудкам морали и школьной поэтики.</p>
+          <p>Тучи сгущаются, но для Мольера все еще ярко светит солнце, ибо за ним поддержка молодого короля. Именно Мольер приглашен быть постановщиком блистательного действа в Версале в мае 1664 г. К этому случаю им написана комедия «Докучные». Вторую комедию он не успел закончить: в Версале были представлены лишь три действия «Тартюфа».</p>
+          <p>Уроки, которые в течение первых пяти лет своего пребывания в Париже Мольер преподавал обществу, начались с насмешки над прециозностью, порока, свойственного высшему классу или его подражателям. Картина нравов ширилась с каждой новой комедией, и вот теперь под прицелом порок века - лицемерие. Те, кто счел себя задетым, заявили, что автор оскорбил благочестие. Этого следовало ожидать: иначе они не были бы лицемерами: «Щеголи, жеманницы, рогоносцы и лекари покорно терпели, что их выводят на подмостки, и даже притворялись, что списанные с них персонажи забавляют их не меньше, чем прочую публику. Но лицемеры не снесли насмешек; они сразу подняли переполох и объявили из ряда вон выходящей дерзостью то, что я изобразил их ужимки и попытался набросить тень на ремесло, к коему причастно столько почтенных людей», - свидетельствует Мольер в предисловии к своей пьесе.</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 4 — ВЫСОКАЯ КОМЕДИЯ -->
+      <section class="slide" data-title="Высокая комедия">
+        <div class="slide-inner">
+          <div class="kicker">Высокая комедия</div>
+          <h2>«Тартюф», «Дон Жуан», «Мизантроп»</h2>
+          <p>Помимо предисловия, текст пьесы предваряют три прошения к королю. Они были отправлены в разное время с просьбой защитить автора, посягнувшего «на, несомненно, один из самых распространенных, невыносимых и опасных пороков» века. Так Мольер определил лицемерие в первом прошении. Оно написано в конце августа 1664 г., после того как еще не завершенная пьеса была осуждена и запрещена, а один из парижских священников потребовал отправить ее автора на костер. За отдельными выпадами стояла влиятельная сила - Общество Святых Даров, патронируемое самой королевой-матерью. Их целью было следить за общественной моралью, выдвигая идеалы те же самые, что на словах исповедует Тартюф: благочестие, воздержание, смирение, милосердие.</p>
+          <p>Разве идеалы подвергает сомнению Мольер? В первом же прошении королю он подчеркивает, что принял все предосторожности к тому, чтобы «противопоставить выведенного мною лицемера человеку истинно благочестивому...» Но ничто не возымело действия: лишь после смерти королевы-матери 5 августа 1667 г. Мольер добился права показать смягченный вариант пьесы под названием «Обманщик», где герой вместо полумонашеского одеяния был облачен в светский камзол. И опять предосторожности тщетны: на следующий же день Мольер получает от парижского суда запрет на постановку. Тогда со вторым прошением он отправляет двух актеров в ставку короля, находящегося при действующей армии во Фландрии.</p>
+          <p>Лишь в 1669 г., после пяти лет борьбы, «Тартюф» был показан в нынешней редакции (предыдущие до нас не дошли). Успех был полным, но попытки запретить пьесу и на этом не прекратились. История постановки - свидетельство остроты, с которой Мольер диагностировал общественные пороки. Актуальные произведения часто не могут пережить своего времени. Не такова судьба «Тартюфа». Имя ее героя, образованное Мольером от старого французского глагола truffer - «обманывать», стало нарицательным для лицемера. А сама пьеса представляет собой шедевр мировой драматургии.</p>
+          <p>Пожалуй, первое, что поражает в «Тартюфе», - это блеск диалога, виртуозное мастерство сценической речи. Кажется, что в хоре семейной перебранки, открывающей действие, каждый голос различим с определенностью даже не драматического, а музыкального звучания. Невольно возникает сравнение с оперой, тем более уместное в этот момент расцвета оперного искусства. Итальянская опера, серьезная и комическая (буфф), популярна при европейских дворах. Во Франции рождается и своя опера. Ее создатель Жан Батист Люлли сотрудничает с Мольером в постановке придворных торжеств и пишет музыку к нескольким его балетам.</p>
+          <p>Драматические сцены «Тартюфа» выстроены как дуэты, трио, квартеты... В первой сцене основную партию ведет госпожа Пернель, матушка хозяина дома Органа, на два дня отбывшего в деревню. Она в гневе покидает дом сына, но прежде выдает сполна каждому из домочадцев за то, что, забыв собственные пороки, они все ополчились против святого человека Тартюфа, нашедшего пристанище у Оргона. Слепота матери комична, слепота ее сына, сменяющего ее на сцене, исполнена зловещего абсурда. Увлечение Оргона Тартюфом таково, что в XX в. позволило критикам увидеть в нем едва ли не первый случай энтузиазма, который испытывает человек толпы перед созданным им культом великой личности. На вопрос вернувшегося Оргона о домочадцах горничная его дочери Марианы Дорина рассказывает о жестокой головной боли у его жены Эльмиры. Дорина говорит об Эльмире, а Оргон спрашивает о Тартюфе. Он пропускает мимо ушей слова о страданиях Эльмиры, но на каждое известие о Тартюфе (уплел двух жареных цыплят и окорок, храпел до бела дня) прочувствованно откликается: «Бедняга».</p>
+          <p>Стол и постель не только обеспечены Тартюфу, но и пользуется он ими, как видно, от души. Привязанность к нему хозяина, которую Тартюф первоначально завоевал услужливой лестью, поддерживается образом смирения и благочестия. Всеобщая нелюбовь к Тартюфу - лишний аргумент в его пользу в глазах Оргона, ибо он воочию убеждается, какие страдания и гонения тот претерпевает. В первом действии происходит размежевание позиций в отношении к еще незримому герою. Во втором - чувство Оргона стремится найти вполне материальное воплощение: оказывается, он готов расторгнуть помолвку его дочери с любезным ей Валером и выдать ее за Тартюфа.</p>
+          <p>Мариана, покорная дочь, убита известием и почти потеряла дар речи. Зато им вполне владеет ее горничная Дорина. Ее безмолвия доведенный до белого каления Оргон добивается - да и то не вполне - лишь строгим приказом: молчать! Дорина не только говорит, она действует. Она мирит и подбадривает некстати поссорившихся влюбленных; охлаждает пыл сына Оргона Дамиса, который готов «приструнить» Тартюфа подручными средствами и тем самым совсем испортить дело; она собирается от имени всех домочадцев потолковать с Тартюфом и объяснить, что ему не на пользу всеобщая ненависть; и, наконец, она первой понимает, на какой слабой струнке Тартюфа удобнее всего будет сыграть... Он «втюрился» в госпожу - в Эльмиру.</p>
+          <p>Дорина - один из самых блестящих сценических характеров, созданных Мольером. Этот типаж чуть более чем столетие спустя получит замечательное продолжение во французском театре в образе Фигаро, вездесущего, неунывающего, исполненного жизненной энергии простолюдина. Это один из тех образов у Мольера, которые делают его в своем времени писателем, предсказывающим идеалы и литературный стиль следующей - просветительской - эпохи с ее общей тенденцией в направлении демократизма, ломающего как социальную, так и литературную иерархию. Можно сказать, что Дорина - главное действующее (ибо она едва ли не единственная, кто действует!) лицо первых двух актов комедии. В начале третьего, наконец, предстанет тот, чьим именем пьеса названа.</p>
+          <div class="quote-band">
+            <p>Лоран! Ты прибери и плеть и власяницу.<br>Кто спросит, отвечай, что я пошел в темницу<br>К несчастным узникам, дабы утешить их<br>И лепту им вручить от скудных средств моих.</p>
+            <cite>III, 2. Пер. М. Донского</cite>
+          </div>
+          <p>Восставший от сладкого сна на пуховом ложе, Тартюф дает понять, что вовсе не спал, а долгим самобичеванием изнурял плоть. Любитель жизни, он зарабатывает на ее радости показным отказом от них. Однако его тайна раскрыта. Да он сам, не ожидая, пока для него расставят сети, попадается в собственную ловушку, куда пытается завлечь Эльмиру. В первый раз это ему сходит с рук, ибо, как и предупреждала Дорина, все испортила горячность Дамиса. Оргон верит не ему, а Тартюфу. В результате: Дамис лишен наследства и изгнан; Мариана предназначена для Тартюфа, которому написана дарственная и на дом Оргона. Этой дарственной мошенник воспользуется, после того как Оргон, спрятанный под столом, все-таки удостоверится, что названный брат и задушевный друг за его спиной пытается соблазнить его жену. Тартюф изгнан, но присылает представителя закона с предписанием Оргону и его семье очистить дом. Тут прозревает даже госпожа Пернель. Увы, кажется, уже поздно, и Тартюфа ожидает полный триумф... Комедия должна иметь счастливый финал, а зло в ней должно быть наказано. Но король милостив. За прошлые заслуги он прощает Оргона. Королю известны и прошлые деяния Тартюфа, не более честные, чем те, что были представлены на сцене. Несостоявшийся апофеоз лицемерия сменяется апофеозом королевского милосердия.</p>
+          <p>Создание «Тартюфа» по не зависящим от автора причинам растянулось на пять лет. Попутно приходилось работать над другими пьесами, которых ожидала труппа. На все, что писалось в те годы, лег отсвет «Тартюфа». В первую очередь это касается двух высоких комедий, которые вместе с ним составляют своего рода трилогию - величайшее творение Мольера. В феврале 1665 г. поставлен «Дон Жуан». В июне 1666-го - «Мизантроп».</p>
+          <p>«Дон Жуан» написан прозой, что было не принято в жанре высокой комедии. Иногда это объясняют нехваткой времени: Мольер торопился заменить запрещенного «Тартюфа». Возможно и иное объяснение: высота и величие этой комедии достигаются снижением, пародийным переиначиванием самых высоких ценностей: любви земной и небесной. Пьеса прошла пятнадцать раз и была снята.</p>
+          <p>Драматическую обработку легенды о безнравственном покорителе сердец Дон Жуане (с тех пор имя героя стало нарицательным) за тридцать лет до Мольера осуществил испанский драматург Тирсо де Молина. Мольер дал сюжету новый поворот, сделав безнравственность Дон Жуана лишь частью его вольнодумства, простирающегося вплоть до безбожия. Именно так считает в первой же сцене слуга Дон Жуана Сганарель. Слугу играл сам Мольер, хозяина - Лагранж. И тот и другой поражают неодномерностью своих характеров, способностью к неожиданным речам и поступкам.</p>
+          <p>Слуга - как будто бы традиционный простак, который в то же время хитроват, плутоват, трусоват и, безусловно, жаден. Пьеса кончается его отчаянным воплем: «Мое жалованье, мое жалованье, мое жалованье!» - эпитафия Дон Жуану, провалившемуся в преисподнюю. Такой исход, впрочем, Сганарель предрек еще в первой сцене. Для простака он вообще очень проницателен. Замечательный комический эффект этого характера порождается тем, что Сганарель здесь все время балансирует на грани своей простоватости, переступая ее. Находясь вблизи своего необычного господина, Сганарель примеряет к его поступкам ходячие истины, чтобы убеждаться, что они не работают. Выбитый из привычной колеи, он пробует проповедовать, рассуждать, искренне сочувствовать очередной жертве Дон Жуана или даже попытаться спасти ее, как в случае с крестьянкой Шарлоттой. Однако с появлением хозяина Сганарель идет на попятный или, вовлеченный тем в спор, терпит поражение.</p>
+          <div class="quote-band">
+            <p>С г а н а р е л ь . Разве это не поразительно, что вот я тут стою, а в голове у меня что-то такое думает о сотне всяких вещей сразу и приказывает моему телу все, что угодно? Захочу ли я ударить в ладоши, вскинуть руки, поднять глаза к небу, опустить голову, пошевелить ногами, пойти направо, налево, вперед, назад, повернуться... (Поворачивается и падает.)<br>Дон Жуан. Вот твое рассуждение и разбило себе же нос.</p>
+            <cite>III, 1. Пер. А. Федорова</cite>
+          </div>
+          <p>Диапазон контрастов в характере самого Дон Жуана еще шире. Почитаемый обманщиком, он необычайно прямодушен, что и доказывает сразу же, когда своей последней жене (он женится на каждой покорившей его сердце женщине) донне Эльвире признается, что покинул ее, ибо более не любит. Он верен любви, полагая, что вся ее прелесть - в переменах. Чувство чести не позволяет Дон Жуану видеть, как в лесу трое разбойников нападают на одного дворянина. Дворянин окажется Дон Карлосом - братом Эльвиры, разыскивающим именно его - Дон Жуана, чтобы наказать за оскорбление, нанесенное семье. Вызов принят, но поединок не произойдет, ибо, когда Дон Карлос явится, чтобы получить удовлетворение, он встретит совершенно иного человека. Дон Жуан стал лицемером и по всем своим счетам предлагает взыскивать с неба.</p>
+          <p>Это перевоплощение, от которого видавший виды Сганарель исполнился не ужаса, а отвращения, - маска. Модный и такой удобный, по словам Дон Жуана, порок: «Роль человека добрых правил - лучшая из ролей, какие только можно сыграть. В наше время лицемерие имеет громадные преимущества» (V, 2).</p>
+          <p>Это превращение делает двусмысленным финал. Кого увлекает в преисподнюю Статуя Командора (некогда убитого на поединке Дон Жуаном) - вольнодумца или лицемера? Кто был наказан? Ведь пятый акт изменил тему пьесы, превратив ее в дополнение к «Тартюфу»: как будто представлен механизм того, как и почему овладевают мастерством лицемерия в качестве благопристойного прикрытия любовного порока.</p>
+          <p>Завершает трилогию и тему «Мизантроп». Пьеса о человеке, не приемлющем лицемерия, страдающем от любого его проявления, способном обрушить обличительный монолог на своего друга Филинта, всего-то любезно ответившего на приветствие пустого человека. Еще более страдает Альцест (его роль играл сам Мольер) от собственной любви к кокетке Селимене, принимающей и его любовь, и ухаживание еще нескольких кавалеров, а за спиной злословящей о каждом из них. Что остается ему? Бежать:</p>
+          <div class="quote-band">
+            <p>А я, измученный, поруганный жестоко,<br>Уйду от пропасти, царящего порока,<br>И буду уголок искать вдали от всех,<br>Где мог бы человек быть честным без помех.</p>
+            <cite>V, 8. Пер. Т. Щепкиной-Куперник</cite>
+          </div>
+          <p>Параллель с грибоедовским Чацким возникает не случайно. Чацкий - прямой потомок Альцеста и в том, что касается ума, и в отношении его горестных последствий. Нравственная непримиримость делает порой Альцеста неуместным в обществе, а отсюда - комичным. Впрочем, на этот счет есть объяснение писателя следующей эпохи – Просвещения Жан Жака Руссо: «Везде, где Мизантроп смешон, он лишь исполняет долг порядочного человека».</p>
+          <p>Мольер с его доверием к человеческой природе и пониманием ее оказался близок следующему веку - Просвещению, как, впрочем, и предыдущему - Возрождению. Но его собственный век - время опасливого отношения к природе, которой, конечно, необходимо подражать, но ограничивая себя массой правил и условностей. Что же так плох человек, что он уже не рискует показаться в своем подлинном виде, как это было в эпоху Возрождения, как этого потребуют просветители?</p>
+          <p>Степень развития личности, ее свободы, вначале казавшаяся прекрасной, затем потрясла своими последствиями и вызвала кризис гуманизма. Гамлетовский вопрос обретает в условиях XVII в. форму: быть или казаться?</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 5 — ХАРАКТЕР И МАСКА -->
+      <section class="slide" data-title="Характер и маска">
+        <div class="slide-inner">
+          <div class="kicker">Характер и маска</div>
+          <h2>Быть или казаться?</h2>
+          <p>О характере в драматургии классицизма чаще всего можно услышать, что он одномерен и что он не развивается. Принято ссылаться в подтверждение этого мнения на А. С. Пушкина:</p>
+          <div class="quote-band">
+            <p>«Лица, созданные Шекспиром, не суть, как у Мольера, типы такой-то страсти, такого-то порока, но существа живые, исполненные многих страстей, многих пороков; обстоятельства развивают перед зрителем их разнообразные и многосторонние характеры. У Мольера Скупой скуп - и только; у Шекспира Шейлок скуп, сметлив, мстителен, чадолюбив, остроумен. У Мольера лицемер волочится за женою своего благодетеля, лицемеря; принимает имение под сохранение, лицемеря; спрашивает стакан воды, лицемеря...»</p>
+            <cite>А. С. Пушкин, «Table-talk»</cite>
+          </div>
+          <p>Прервем цитату на этом месте, непосредственно относящемся к Тартюфу. Лицемер - и только! Но совершенный ли лицемер? Совершенство Тартюфа в своем ремесле было поставлено под сомнение еще современником Мольера Лабрюйером в его «Характерах»: разве истинный лицемер станет волочиться за женой покровителя, разве он выберет для себя дом, где есть сын-наследник и дочь на выданье? Нет, ибо опасность шума, огласки, разоблачения слишком велика. Лицемер - «гроза двоюродных братьев и сестер, племянников и племянниц, верный друг и поклонник богатых дядюшек; он считает себя законным наследником всех богатых и бездетных старцев...»</p>
+          <div class="quote-band">
+            <p>«Мольер не имел в виду изобразить совершенного лицемера. Главный смысл и комический эффект этого образа достигнут путем контраста «между ролью святоши, которую разыгрывает Тартюф, и природным характером Тартюфа», здоровяка-мужлана. Мольер «гораздо менее типизирует и гораздо индивидуальнее схватывает действительность, чем большинство моралистов его времени».</p>
+            <cite>Эрих Ауэрбах, «Мимесис»</cite>
+          </div>
+          <p>Пушкинская сравнительная характеристика очень верно противопоставляет две эпохи - шекспировскую и век классицизма - в том, как они видят и оценивают человека. Однако внутри классицизма есть свои градации, зависящие от жанра и индивидуальности авторов. Одно дело нравописательная проза, исследующая не людей, а характеры - отвлеченные, собирательные типы. Там скупой скуп, а лицемер лицемерен - и только! Так же одномерны драматические маски, которые прирастают настолько, что становятся ликом-амплуа актера. С них начинал и Мольер. В то же время мы уже видели, что в зрелом творчестве он любит усложнить амплуа вплоть до выхода из роли, как это происходит со Сганарелем в «Дон Жуане». Еще ранее Мольер начал извлекать комический эффект из несовпадения маски и человеческого лица, к которому она примеривается. Так было в «Смешных жеманницах», так будет в «Мещанине во дворянстве» (Le bougeois gentilhomme; 1670 г.), одной из поздних комедий. Маска - дворянин, сущность - мещанин. Маска, несмотря на все усилия, никак не становится лицом.</p>
+          <p>В цикле высоких комедий Мольер делает это несовпадение основной проблемой. Для этого он берет порок века - лицемерие. В «Тартюфе» оно уже не внешнее - не маска, а страсть - свойство души героя. Дана ли она сразу во всей полноте и окончательно? Нет, мы узнаем ее по мере того, как эта страсть обнаруживает себя, подчиняет себе все жизненное пространство и, как кажется, уверенно приближается к финалу. Здесь нет развития в смысле изменения, эволюции, но оно есть в смысле осуществления, развертывания, проецирования характера вовне, вплоть до того, что он грозит стать характером всеобщим, всемирным. Именно так будет воспринимать окружающий мир Альцест в «Мизантропе»: всё - ложное, кажущееся, и ничего искреннего, человеческого.</p>
+          <p>Отвечая на вопрос быть или казаться, герои Мольера не колеблются в выборе. Тартюф и Дон Жуан выбирают казаться, чтобы быть, понимая, что их природным склонностям можно осуществиться лишь под благовидным прикрытием. Альцест, напротив, хочет, чтобы каждый был самим собой. Повсюду встречая лицемерие, он становится мизантропом. А что автор? Он возмущен вместе со своим героем, но свободен от его мизантропии, ибо за искажениями природы человека не теряет доверия к человечности. Альцест слепо предан собственной страсти, следуя которой он готов осудить человека вообще. От однообразия пороков и страстей у Мольера есть лекарство, которым не обладает Альцест, - смех. Оно природное и человеческое.</p>
+          <p>В последние, самые тяжелые годы Мольер продолжает писать комедии, чтобы поучать, развлекая: «Скупой» (1668 г.), «Мещанин во дворянстве», «Ученые женщины» (1672 г.), «Мнимый больной» (1673 г.). Король все более склоняется к святошам; враги продолжают чернить имя Мольера; дома нет семейного мира и покоя... Но остается театр. Когда-то, в юности, Мольер назвал свой театр блистательным, теперь он его сделал таким. В нем есть все: блеск ума, фарс, балет, как того требует придворный вкус. Автор смешит и смеется, в том числе и над собой. Тяжелобольной Мольер пишет «Мнимого больного», играет в нем центральную роль, но лишь в трех спектаклях. Четвертого он не доиграл. Мольера унесли со сцены, через полчаса пошла горлом кровь, и он умер, не успев получить покаяние. На этом основании святоши отказали ему в христианском погребении. Потребовалось слово короля, чтобы похоронить Мольера.</p>
+          <p>Через семь лет после смерти великого драматурга, в 1680 г., Людовик XIV издает указ, по которому труппа Мольера соединяется с труппой Бургундского отеля, и возникает новый театр, с тех пор один из самых славных в мире - Комеди Франсез. Дом Мольера, величайшего из создателей комедий.</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 6 — ВОПРОСЫ -->
+      <section class="slide" data-title="Вопросы">
+        <div class="slide-inner">
+          <div class="kicker">Вопросы</div>
+          <h2>К биографии Мольера</h2>
+          <ol style="color:var(--ink-dim);font-size:16.5px;line-height:1.6;padding-left:22px;">
+            <li style="margin-bottom:14px;">Какие философские идеи отзываются в творчестве Мольера?</li>
+            <li style="margin-bottom:14px;">Какие уроки современному обществу преподает Мольер до «Тартюфа»?</li>
+            <li style="margin-bottom:14px;">Что позволяет говорить о трех высоких комедиях Мольера как о трилогии?</li>
+            <li style="margin-bottom:14px;">Были ли характеры Мольера одномерными? Оцените высказывание А. С. Пушкина на этот счет.</li>
+            <li>Почему лицемерие считается пороком века в XVII столетии?</li>
+          </ol>
+        </div>
+      </section>
+
+    </div><!-- /stage -->
+
+    <div class="bottombar">
+      <button class="bb-btn" id="prevBtn">‹ Назад</button>
+      <div class="bb-prog">
+        <div class="bb-track"><div class="bb-fill" id="bbFill"></div></div>
+        <div class="bb-ct" id="bbCt"></div>
+      </div>
+      <button class="bb-btn" id="nextBtn">Далее ›</button>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose">×</button>
+  <figure><img id="lbImg" src="" alt=""><figcaption id="lbCaption"></figcaption></figure>
+</div>
+
+<script>
+/* ================= SLIDES / COURSE ENGINE ================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+const visited = new Array(total).fill(false);
+
+const sbList = document.getElementById('sbList');
+slides.forEach((s,i) => {
+  const btn = document.createElement('button');
+  btn.className = 'sb-item' + (i===0?' active':'');
+  btn.innerHTML = '<span class="num">'+String(i).padStart(2,'0')+'</span><span class="dot"></span><span class="tt">'+s.dataset.title+'</span>';
+  btn.addEventListener('click', () => goTo(i));
+  sbList.appendChild(btn);
+});
+const sbItems = Array.from(sbList.children);
+
+const bbFill = document.getElementById('bbFill');
+const bbCt = document.getElementById('bbCt');
+const sbBarFill = document.getElementById('sbBarFill');
+const sbLabel = document.getElementById('sbLabel');
+const topTitle = document.getElementById('topTitle');
+const topCt = document.getElementById('topCt');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const stage = document.getElementById('stage');
+
+function render(){
+  slides.forEach((s,i) => s.classList.toggle('active', i===current));
+  sbItems.forEach((b,i) => {
+    b.classList.toggle('active', i===current);
+    b.classList.toggle('visited', visited[i]);
+  });
+  const pct = Math.round(((current+1)/total)*100);
+  bbFill.style.width = pct+'%';
+  sbBarFill.style.width = pct+'%';
+  bbCt.textContent = (current+1)+' / '+total;
+  sbLabel.textContent = 'Слайд '+(current+1)+' из '+total;
+  topTitle.textContent = slides[current].dataset.title;
+  topCt.textContent = (current+1)+' / '+total;
+  prevBtn.disabled = current===0;
+  nextBtn.textContent = current===total-1 ? 'В начало ›' : 'Далее ›';
+  stage.scrollTop = 0;
+  const activeItem = sbItems[current];
+  if(activeItem) activeItem.scrollIntoView({block:'nearest'});
+}
+function goTo(i){
+  current = Math.max(0, Math.min(total-1, i));
+  visited[current] = true;
+  render();
+  closeSidebarMobile();
+}
+prevBtn.addEventListener('click', () => goTo(current-1));
+nextBtn.addEventListener('click', () => { if(current===total-1){ goTo(0); } else { goTo(current+1); } });
+document.getElementById('startBtn').addEventListener('click', () => goTo(1));
+window.addEventListener('keydown', e => {
+  if(document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='ArrowRight') goTo(current+1);
+  if(e.key==='ArrowLeft') goTo(current-1);
+});
+visited[0] = true;
+render();
+
+/* ---- mobile sidebar ---- */
+const sidebar = document.getElementById('sidebar');
+const sbOverlay = document.getElementById('sbOverlay');
+function openSidebarMobile(){ sidebar.classList.add('open'); sbOverlay.classList.add('open'); }
+function closeSidebarMobile(){ sidebar.classList.remove('open'); sbOverlay.classList.remove('open'); }
+document.getElementById('menuBtn').addEventListener('click', openSidebarMobile);
+document.getElementById('sbClose').addEventListener('click', closeSidebarMobile);
+sbOverlay.addEventListener('click', closeSidebarMobile);
+
+/* ================= TIMELINE ================= */
+const tlData = ["Настоящее имя Мольера - Жан-Батист Поклен (1622—1673). Он - сын и внук королевского обойщика.", "Мольер получил хорошее образование, окончив Клермонский коллеж (ныне лицей Людовика Великого) в 1639 г.", "Жан-Батист Поклен сделал окончательный выбор: 1 января 1644 г. открывается Блистательный театр, и в числе его создателей значится новое театральное имя - Мольер.", "Осенью 1645 г. Блистательный театр разорился. Несколько дней Мольер провел в долговой тюрьме, а затем отправился в провинцию на гастроли, продлившиеся тринадцать лет.", "Первое представление мольеровского театра при дворе произошло в одном из залов Лувра 24 октября 1658 г. Мольер предложил комедию собственного сочинения - «Влюбленный доктор»: провинция на ней смеялась. Король кивнул.", "Премьера пьесы «Смешные жеманницы» (Les précieuses ridicules) состоялась 18 ноября 1659 г. и стала вторым, еще более шумным успехом Мольера в Париже.", "В Версале в мае 1664 г. были представлены лишь три действия «Тартюфа»; пьеса была осуждена и запрещена.", "В феврале 1665 г. поставлен «Дон Жуан».", "В июне 1666 г. поставлен «Мизантроп».", "Лишь в 1669 г., после пяти лет борьбы, «Тартюф» был показан в нынешней редакции. Успех был полным.", "Тяжелобольной Мольер играет центральную роль в «Мнимом больном», но лишь в трех спектаклях. Четвертого он не доиграл: его унесли со сцены, через полчаса пошла горлом кровь, и он умер.", "Через семь лет после смерти драматурга, в 1680 г., Людовик XIV издает указ, по которому труппа Мольера соединяется с труппой Бургундского отеля, и возникает театр Комеди Франсез."];
+const tlNodes = Array.from(document.querySelectorAll('.tl-node'));
+const tlPanel = document.getElementById('tlPanel');
+function showTl(i){
+  tlNodes.forEach(n => n.classList.remove('active'));
+  tlNodes[i].classList.add('active');
+  const yr = tlNodes[i].querySelector('.yr').textContent;
+  tlPanel.innerHTML = '<span class="tl-year">'+yr+'</span><p>'+tlData[i]+'</p>';
+}
+if(tlNodes.length){
+  tlNodes.forEach((n,i) => n.addEventListener('click', () => showTl(i)));
+  showTl(0);
+}
+
+/* ================= EXPAND CARDS ================= */
+document.querySelectorAll('.card-head').forEach(btn => {
+  btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+});
+
+/* ================= ACCORDION ================= */
+document.querySelectorAll('.acc-trigger').forEach(btn => {
+  btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+});
+
+/* ================= DIALOGUE ================= */
+const dgLines = Array.from(document.querySelectorAll('.dg-line'));
+const dgNext = document.getElementById('dgNext');
+let dgStep = 1;
+if(dgNext){
+  dgNext.addEventListener('click', () => {
+    if(dgStep < dgLines.length){
+      dgLines[dgStep].classList.add('shown');
+      dgStep++;
+    }
+    if(dgStep >= dgLines.length) dgNext.setAttribute('disabled','');
+  });
+}
+
+/* ================= LIGHTBOX ================= */
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCaption = document.getElementById('lbCaption');
+document.querySelectorAll('figure[data-cap]').forEach(fig => {
+  fig.addEventListener('click', () => {
+    const img = fig.querySelector('img');
+    lbImg.src = img.src;
+    lbCaption.textContent = fig.getAttribute('data-cap');
+    lightbox.classList.add('open');
+  });
+});
+function closeLightbox(){ lightbox.classList.remove('open'); }
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+window.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+
+/* ================= CRITICS DECK ================= */
+const deckCards = Array.from(document.querySelectorAll('.deck-card'));
+if(deckCards.length){
+  const deckDots = document.getElementById('deckDots');
+  let deckIndex = 0;
+  deckCards.forEach((c,i) => {
+    const d = document.createElement('button');
+    d.className = 'deck-dot' + (i===0?' active':'');
+    d.addEventListener('click', () => showDeck(i));
+    deckDots.appendChild(d);
+  });
+  function showDeck(i){
+    deckIndex = (i+deckCards.length)%deckCards.length;
+    deckCards.forEach((c,j) => c.classList.toggle('active', j===deckIndex));
+    Array.from(deckDots.children).forEach((d,j) => d.classList.toggle('active', j===deckIndex));
+  }
+  document.getElementById('deckPrev').addEventListener('click', () => showDeck(deckIndex-1));
+  document.getElementById('deckNext').addEventListener('click', () => showDeck(deckIndex+1));
+}
+</script>
+</body>
+</html>

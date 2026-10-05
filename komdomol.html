@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Комедия до Мольера — фарс, комедия дель арте, комедия плаща и шпаги</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --black:#0d0d0c;
+  --black-2:#1a1a18;
+  --white:#ffffff;
+  --paper:#f3f1ea;
+  --ink:#161512;
+  --ink-dim:#4c463c;
+  --ink-faint:#8a8272;
+  --line:rgba(22,21,18,0.14);
+  --line-strong:rgba(22,21,18,0.35);
+  --line-on-black:rgba(255,255,255,0.18);
+  --red:#a92420;
+  --serif:'PT Serif', Georgia, serif;
+  --sans:'Manrope', Arial, sans-serif;
+  --sidebar-w:272px;
+}
+*{box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  margin:0;
+  background:var(--black);
+  color:var(--ink);
+  font-family:var(--sans);
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+::selection{background:var(--red);color:#fff;}
+img{max-width:100%;display:block;}
+button{font-family:inherit;}
+h1,h2,h3,h4{font-family:var(--serif);font-weight:700;margin:0;color:var(--ink);}
+
+/* ================= APP SHELL ================= */
+.app{display:flex;height:100vh;width:100vw;overflow:hidden;}
+
+/* ---- Sidebar (TOC) ---- */
+.sidebar{
+  width:var(--sidebar-w);flex:0 0 auto;background:var(--black);color:#fff;
+  display:flex;flex-direction:column;height:100vh;overflow:hidden;
+  border-right:1px solid var(--line-on-black);
+}
+.sb-brand{padding:24px 22px 18px;border-bottom:1px solid var(--line-on-black);}
+.sb-brand .nm{font-family:var(--serif);font-size:17px;font-weight:700;}
+.sb-brand .nm em{font-style:italic;color:#c9a24a;font-weight:400;}
+.sb-brand .dt{font-size:12px;color:#9c9border-box6f5;color:#a99;opacity:.65;margin-top:4px;}
+.sb-progress{padding:14px 22px;border-bottom:1px solid var(--line-on-black);}
+.sb-progress .bar{height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.sb-progress .bar-fill{height:100%;background:var(--red);width:6%;transition:width .35s;}
+.sb-progress .lbl{font-size:11px;color:#a39c8c;margin-top:8px;letter-spacing:.04em;}
+.sb-list{flex:1;overflow-y:auto;padding:10px 0;}
+.sb-list::-webkit-scrollbar{width:5px;}
+.sb-list::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);}
+.sb-item{
+  display:flex;align-items:flex-start;gap:12px;width:100%;text-align:left;
+  background:none;border:none;color:#b6b0a2;cursor:pointer;
+  padding:11px 22px;font-family:var(--sans);font-size:13.5px;line-height:1.35;
+  border-left:2px solid transparent;transition:all .15s;
+}
+.sb-item:hover{color:#fff;background:rgba(255,255,255,.04);}
+.sb-item.active{color:#fff;border-left-color:var(--red);background:rgba(255,255,255,.06);}
+.sb-item .num{flex:0 0 auto;width:20px;font-family:var(--serif);font-style:italic;font-size:12px;color:#6b6458;padding-top:1px;}
+.sb-item.active .num{color:var(--red);}
+.sb-item .dot{flex:0 0 auto;width:6px;height:6px;border-radius:50%;background:#3a362e;margin-top:6px;}
+.sb-item.visited .dot{background:#6b6458;}
+.sb-item.active .dot{background:var(--red);}
+.sb-item .tt{flex:1;}
+.sb-close{display:none;}
+
+/* ---- Main column ---- */
+.main-col{flex:1;display:flex;flex-direction:column;height:100vh;min-width:0;background:var(--paper);}
+
+.topbar{
+  display:none;
+  align-items:center;justify-content:space-between;
+  background:var(--black);color:#fff;padding:14px 18px;flex:0 0 auto;
+}
+.topbar .menu-btn{background:none;border:1px solid var(--line-on-black);color:#fff;width:36px;height:36px;border-radius:3px;cursor:pointer;font-size:15px;}
+.topbar .tt{font-family:var(--serif);font-size:14px;}
+.topbar .ct{font-size:11px;color:#a39c8c;}
+
+.stage{flex:1;overflow-y:auto;position:relative;}
+.stage::-webkit-scrollbar{width:8px;}
+.stage::-webkit-scrollbar-thumb{background:var(--line-strong);border-radius:4px;}
+
+.slide{display:none;min-height:100%;}
+.slide.active{display:block;animation:slidein .35s ease;}
+@keyframes slidein{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+.slide-inner{max-width:680px;margin:0 auto;padding:56px 32px 90px;}
+.slide-inner.wide{max-width:820px;}
+
+/* black cover slide */
+.slide.cover{background:var(--black);color:#fff;}
+.slide.cover .slide-inner{max-width:640px;padding-top:64px;}
+.cover-eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#c9a24a;margin-bottom:18px;}
+.cover-portrait{width:170px;border:1px solid var(--line-on-black);margin-bottom:28px;filter:grayscale(100%) contrast(1.08);}
+.slide.cover h1{color:#fff;font-size:clamp(30px,5vw,48px);line-height:1.08;}
+.slide.cover .dates{font-family:var(--serif);font-style:italic;color:#9c9587;font-size:16px;margin-top:10px;}
+.slide.cover .quote{
+  font-family:var(--serif);font-style:italic;font-size:clamp(20px,2.6vw,27px);color:#fff;
+  margin-top:30px;border-left:3px solid var(--red);padding-left:20px;
+}
+.cover-start{
+  margin-top:40px;background:var(--red);color:#fff;border:none;padding:13px 26px;
+  font-family:var(--sans);font-size:13px;letter-spacing:.04em;cursor:pointer;border-radius:2px;
+}
+.cover-start:hover{background:#c22b26;}
+
+/* ---- typography inside slides ---- */
+p{margin:0 0 18px;color:var(--ink-dim);font-size:16.5px;}
+p:last-child{margin-bottom:0;}
+.kicker{font-size:12px;letter-spacing:.1em;color:var(--red);margin-bottom:10px;text-transform:uppercase;}
+.slide-inner h2{font-size:clamp(23px,3.2vw,31px);line-height:1.18;margin-bottom:22px;}
+.slide-sub{font-family:var(--serif);font-style:italic;color:var(--ink-faint);font-size:15px;margin-top:-14px;margin-bottom:22px;}
+
+/* images */
+figure.fig{margin:28px 0;}
+figure.fig img{width:100%;border-radius:2px;cursor:zoom-in;}
+figure.fig.bw img{filter:grayscale(100%) contrast(1.06);}
+figure.fig figcaption{font-size:12.5px;color:var(--ink-faint);margin-top:9px;font-style:italic;font-family:var(--serif);text-align:center;}
+.fig-sm{max-width:360px;margin-left:auto;margin-right:auto;}
+.fig-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0;}
+.fig-row-3{grid-template-columns:1fr 1fr 1fr;}
+.fig-row figure{margin:0;}
+.fig-row img{width:100%;border-radius:2px;cursor:zoom-in;aspect-ratio:4/5;object-fit:cover;}
+.fig-row.bw img{filter:grayscale(100%) contrast(1.06);}
+.fig-row figcaption{font-size:11.5px;color:var(--ink-faint);margin-top:7px;font-style:italic;font-family:var(--serif);text-align:center;}
+
+/* black pull-quote band */
+.quote-band{
+  background:var(--black);color:#fff;margin:32px -32px;padding:34px 32px;
+}
+.quote-band p{
+  font-family:var(--serif);font-style:italic;font-weight:400;color:#fff;
+  font-size:clamp(18px,2.1vw,22px);line-height:1.45;margin:0;
+}
+.quote-band cite{display:block;font-family:var(--sans);font-style:normal;font-size:12px;color:#c9a24a;margin-top:14px;}
+
+.divider{height:1px;background:var(--line);margin:38px 0;}
+
+/* ---- expand cards ---- */
+.card-list{display:flex;flex-direction:column;gap:9px;margin-top:6px;}
+.info-card{background:var(--white);border:1px solid var(--line);border-radius:2px;overflow:hidden;}
+.card-head{width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;background:none;border:none;cursor:pointer;padding:15px 17px;text-align:left;font-family:inherit;}
+.card-head .tag{font-size:10.5px;letter-spacing:.06em;color:var(--red);text-transform:uppercase;display:block;margin-bottom:3px;}
+.card-head .nm{font-family:var(--serif);font-size:16.5px;color:var(--ink);}
+.card-head .plus{flex:0 0 auto;width:16px;height:16px;position:relative;}
+.card-head .plus::before,.card-head .plus::after{content:"";position:absolute;background:var(--red);transition:transform .25s;}
+.card-head .plus::before{left:0;top:50%;width:100%;height:1px;transform:translateY(-50%);}
+.card-head .plus::after{top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);}
+.info-card.open .plus::after{transform:translateX(-50%) rotate(90deg);opacity:0;}
+.card-body{max-height:0;overflow:hidden;transition:max-height .35s ease;}
+.info-card.open .card-body{max-height:700px;}
+.card-body-inner{padding:0 17px 17px;}
+.card-body-inner p{font-family:var(--serif);font-style:italic;font-size:14.5px;color:var(--ink-dim);line-height:1.55;margin:0;}
+.card-body-inner .src{display:block;margin-top:9px;font-family:var(--sans);font-style:normal;font-size:10.5px;letter-spacing:.04em;color:var(--ink-faint);text-transform:uppercase;}
+.group-label{font-size:11.5px;letter-spacing:.08em;color:var(--ink-faint);margin:28px 0 10px;text-transform:uppercase;}
+.group-label:first-child{margin-top:0;}
+
+/* ---- accordion ---- */
+.accordion{border-top:1px solid var(--line);margin-top:6px;}
+.acc-item{border-bottom:1px solid var(--line);}
+.acc-trigger{
+  width:100%;display:flex;align-items:center;justify-content:space-between;gap:16px;
+  background:none;border:none;color:var(--ink);cursor:pointer;padding:17px 0;
+  font-family:var(--serif);font-size:17px;text-align:left;
+}
+.acc-trigger .plus{flex:0 0 auto;width:16px;height:16px;position:relative;}
+.acc-trigger .plus::before,.acc-trigger .plus::after{content:"";position:absolute;background:var(--red);transition:transform .25s;}
+.acc-trigger .plus::before{left:0;top:50%;width:100%;height:1px;transform:translateY(-50%);}
+.acc-trigger .plus::after{top:0;left:50%;width:1px;height:100%;transform:translateX(-50%);}
+.acc-item.open .plus::after{transform:translateX(-50%) rotate(90deg);opacity:0;}
+.acc-panel{max-height:0;overflow:hidden;transition:max-height .4s ease;}
+.acc-item.open .acc-panel{max-height:700px;}
+.acc-panel-inner{padding-bottom:20px;}
+
+/* ---- dialogue reveal ---- */
+.dialogue{margin-top:6px;}
+.dg-line{display:none;padding:14px 17px;margin-bottom:2px;border-left:3px solid var(--line-strong);background:var(--white);}
+.dg-line.shown{display:block;animation:fadein .4s ease;}
+.dg-line .who{font-size:10.5px;letter-spacing:.06em;color:var(--red);margin-bottom:5px;text-transform:uppercase;}
+.dg-line p{font-family:var(--serif);font-style:italic;font-size:15.5px;color:var(--ink);margin:0;}
+.dg-line.emph{border-left-color:var(--red);background:#efe9de;}
+@keyframes fadein{from{opacity:0;transform:translateY(4px);}to{opacity:1;transform:translateY(0);}}
+.dg-next{margin-top:14px;padding:10px 22px;background:var(--black);color:#fff;border:none;font-family:var(--sans);font-size:12px;letter-spacing:.04em;cursor:pointer;border-radius:2px;}
+.dg-next:hover{background:var(--red);}
+.dg-next[disabled]{opacity:0;pointer-events:none;}
+
+/* ---- character cards grid (module) ---- */
+.char-grid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:6px;}
+@media (max-width:560px){.char-grid{grid-template-columns:1fr;}}
+
+/* ---- critics deck ---- */
+.deck{margin-top:6px;position:relative;}
+.deck-card{display:none;background:var(--white);border:1px solid var(--line);border-radius:2px;padding:24px 26px;}
+.deck-card.active{display:block;animation:fadein .35s ease;}
+.deck-card p{font-family:var(--serif);font-style:italic;font-size:clamp(15.5px,1.9vw,18px);color:var(--ink);line-height:1.5;margin:0;}
+.deck-card cite{display:block;margin-top:13px;font-style:normal;font-family:var(--sans);font-size:11.5px;letter-spacing:.04em;color:var(--red);}
+.deck-controls{display:flex;align-items:center;gap:14px;margin-top:14px;}
+.deck-controls button{background:var(--white);border:1px solid var(--line-strong);color:var(--ink);width:34px;height:34px;border-radius:50%;cursor:pointer;font-size:14px;}
+.deck-controls button:hover{border-color:var(--red);color:var(--red);}
+.deck-dots{display:flex;gap:6px;}
+.deck-dot{width:6px;height:6px;border-radius:50%;background:var(--line-strong);border:none;cursor:pointer;padding:0;}
+.deck-dot.active{background:var(--red);}
+
+/* ---- timeline module ---- */
+.tl-wrap{margin-top:4px;}
+.tl-track{display:flex;overflow-x:auto;padding-bottom:14px;}
+.tl-track::-webkit-scrollbar{height:5px;}
+.tl-track::-webkit-scrollbar-thumb{background:var(--line-strong);}
+.tl-node{flex:0 0 auto;min-width:128px;padding:0 16px 14px 0;position:relative;cursor:pointer;background:none;border:none;text-align:left;}
+.tl-node::before{content:"";position:absolute;left:0;top:24px;right:16px;height:1px;background:var(--line-strong);}
+.tl-node::after{content:"";position:absolute;left:0;top:20px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--ink-faint);}
+.tl-node .yr{display:block;font-family:var(--serif);font-size:17px;color:var(--ink-faint);padding-top:33px;transition:color .2s;}
+.tl-node .lb{display:block;font-size:10.5px;color:var(--ink-faint);margin-top:4px;max-width:128px;}
+.tl-node.active::after{background:var(--red);border-color:var(--red);width:11px;height:11px;top:19px;}
+.tl-node.active .yr{color:var(--red);}
+.tl-panel{margin-top:16px;padding:20px 22px;background:var(--white);border:1px solid var(--line);border-radius:2px;min-height:90px;}
+.tl-panel .tl-year{font-family:var(--serif);font-style:italic;color:var(--red);font-size:14px;margin-bottom:8px;display:block;}
+.tl-panel p{margin:0;font-size:15px;}
+
+/* ---- bottom nav ---- */
+.bottombar{
+  flex:0 0 auto;background:var(--black);color:#fff;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 28px;gap:20px;
+}
+.bb-btn{
+  background:none;border:1px solid var(--line-on-black);color:#fff;
+  padding:10px 18px;font-family:var(--sans);font-size:13px;cursor:pointer;border-radius:2px;
+  display:flex;align-items:center;gap:8px;transition:all .2s;
+}
+.bb-btn:hover:not([disabled]){border-color:var(--red);color:#ffdcd9;}
+.bb-btn[disabled]{opacity:.25;pointer-events:none;}
+.bb-prog{flex:1;display:flex;align-items:center;gap:14px;max-width:320px;}
+.bb-track{flex:1;height:3px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden;}
+.bb-fill{height:100%;background:var(--red);width:6%;transition:width .35s;}
+.bb-ct{font-size:12px;color:#a39c8c;white-space:nowrap;font-family:var(--serif);font-style:italic;}
+
+/* ---- lightbox ---- */
+.lightbox{
+  position:fixed;inset:0;background:rgba(8,7,6,.94);z-index:1000;
+  display:none;align-items:center;justify-content:center;padding:32px;flex-direction:column;
+}
+.lightbox.open{display:flex;}
+.lightbox img{max-width:min(860px,90vw);max-height:72vh;object-fit:contain;border-radius:2px;}
+.lightbox figcaption{color:#ded6c4;margin-top:16px;text-align:center;max-width:600px;font-family:var(--serif);font-style:italic;}
+.lightbox-close{position:absolute;top:20px;right:22px;background:none;border:1px solid rgba(255,255,255,.3);color:#fff;width:38px;height:38px;font-size:18px;cursor:pointer;border-radius:50%;}
+
+.sb-overlay{display:none;}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width:880px){
+  .sidebar{
+    position:fixed;top:0;left:0;bottom:0;z-index:200;
+    transform:translateX(-100%);transition:transform .3s;
+    width:80vw;max-width:300px;
+  }
+  .sidebar.open{transform:translateX(0);}
+  .sb-close{display:block;position:absolute;top:20px;right:18px;background:none;border:1px solid var(--line-on-black);color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:15px;}
+  .sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:150;}
+  .sb-overlay.open{display:block;}
+  .topbar{display:flex;}
+  .slide-inner{padding:34px 22px 70px;}
+  .quote-band{margin:28px -22px;padding:26px 22px;}
+  .fig-row{grid-template-columns:1fr 1fr;gap:10px;}
+  .bottombar{padding:12px 16px;}
+  .bb-prog{display:none;}
+  .char-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="sb-overlay" id="sbOverlay"></div>
+
+  <aside class="sidebar" id="sidebar">
+    <button class="sb-close" id="sbClose">×</button>
+    <div class="sb-brand">
+      <div class="nm">Комедия <em>до Мольера</em></div>
+      <div class="dt">фарс · дель арте · плащ и шпага</div>
+    </div>
+    <div class="sb-progress">
+      <div class="bar"><div class="bar-fill" id="sbBarFill"></div></div>
+      <div class="lbl" id="sbLabel">Слайд 1</div>
+    </div>
+    <nav class="sb-list" id="sbList"></nav>
+  </aside>
+
+  <div class="main-col">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn">☰</button>
+      <div class="tt" id="topTitle"></div>
+      <div class="ct" id="topCt"></div>
+    </div>
+
+    <div class="stage" id="stage">
+
+      <!-- SLIDE 0 — COVER -->
+      <section class="slide cover active" data-title="Комедия до Мольера">
+        <div class="slide-inner">
+          <h1>Комедия до Мольера</h1>
+          <div class="dates">Фарс · Комедия дель арте · Комедия плаща и шпаги</div>
+          <button class="cover-start" id="startBtn">Начать</button>
+        </div>
+      </section>
+
+      <!-- SLIDE 1 — ФАРС -->
+      <section class="slide" data-title="Фарс">
+        <div class="slide-inner">
+          <div class="kicker">Фарс</div>
+          <h2>ФАРС [франц. farce, латин. farsa]</h2>
+          <div class="slide-sub">один из комических жанров средневекового театра</div>
+          <p>Содержание фарсов, как и чрезвычайно близких к ним фаблио, заимствовалось из повседневной действительности; темы фарсов разнообразны — семейные отношения и отношения хозяина и челяди, обман жены, плутни в торговле и на суде, похождения хвастливого солдата, неудачи зазнавшегося студента; образы пестры — монахи и попы, торговцы и ремесленники, солдаты и студенты, крестьяне и батраки, судьи, чиновники. Комическая ситуация в фарсе достигается за счет привнесения внешнего эффекта — потасовки, перебранки и пр.; часто много осложнений вносит в действие использование нескольких диалектов, профессиональной лексики.</p>
+          <p>Индивидуализация речи персонажей фарса проведена в большинстве случаев достаточно последовательно. Развитых характеров в фарсе нет; как и в фаблио, герои фарсов больше действуют, обмениваются каламбурами и остроумными репликами; нарастание сюжета происходит за счет быстрого переноса действия с одного места в другое, неожиданных разъяснений. В отличие от больших форм средневекового городского театра фарс не знал длительной подготовки спектакля, не имел оборудованной сценической площадки, обходился самыми примитивными постановочными средствами.</p>
+          <p>Исследователи зачастую определяют фарс как вариант «низменно-комического», так же как и балаганные представления, клоунады и т. д. К «низшим», или «внешним», видам комизма в большинстве случаев относят такие фарсовые элементы, как красные носы, толстые животы, словесные выверты, драки и потасовки, надувательства и т. д.</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 2 — КОМЕДИЯ ДЕЛЬ АРТЕ -->
+      <section class="slide" data-title="Комедия дель арте">
+        <div class="slide-inner">
+          <div class="kicker">Комедия дель арте</div>
+          <h2>Comedia dell'arte</h2>
+          <div class="slide-sub">комедия масок, вид итальянского театра</div>
+          <p>Комедия дель арте (итал. commedia dell'arte) - комедия масок, вид итальянского театра, спектакли которого создавались методом импровизации, на основе сценария, содержащего краткую сюжетную схему представления. Персонажами комедии дель арте были типовые «маски», переходившие из одного спектакля в другой. Возникнув в середине 16 в., комедия дель арте унаследовала реалистические традиции народного фарса, маски и буффонаду карнавальных действий, а также использовала некоторые мотивы и сюжеты гуманистической «учёной комедии» («комедия эрудита»). Буффонно яркие представления комедии дель арте, разыгрываемые на народных диалектах, насыщенные площадными мелодиями и песнями, ловкими лацци (трюками), дерзкими грубоватыми насмешками, приобретали сатирическую направленность.</p>
+          <div class="quote-band">
+            <p>Душой спектакля были «слуги» — наглый весельчак и изобретатель всех интриг Бригелла, нескладный, ребячливый Арлекин, разбитная, острая на язык Серветта, не лишённый злости и лукавства, грубоватый Пульчинелла и др. Объектом постоянной сатиры комедии дель арте были глупый, жадный и влюбчивый купец Панталоне, фанфарон и трус испанский дворянин Капитан, болтун и тупица Доктор.</p>
+          </div>
+          <p>Поэтическую сторону комедии дель арте определяли идеализированные образы «влюблённых», выступавших без масок и говоривших на литературном итальянском языке. Актёры комедии дель арте, виртуозно владевшие искусством коллективной импровизации, впервые в европейском театре выработали сценический ансамбль.</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 3 — КОМЕДИЯ ПЛАЩА И ШПАГИ -->
+      <section class="slide" data-title="«Комедия плаща и шпаги»">
+        <div class="slide-inner">
+          <div class="kicker">«Комедия плаща и шпаги»</div>
+          <h2>Исп. сomedia de capa y espada</h2>
+          <div class="slide-sub">вид испанской драматургии — Лопе де Вега, Кальдерон</div>
+          <p>«Комедия плаща и шпаги» (исп. сomedia decapa у espada) - вид испанской драматургии, авторы – Лопе де Вега, Кальдерон. С начала XVII в. этот термин употреблялся актерами по отношению к пьесам из современной жизни - комедиям нравов, игравшимся в обычных дворянских костюмах, в отличие от т. н. «зрелищных комедий». Позднее термин стал обозначать группу комедий Лопе де Вегa и драматургов его школы.</p>
+          <p>Характерные признаки этих пьес: изображение конфликтов, порожденных любовью, ревностью, чувством чести; быстрое, динамичное развитие действия; преобладание интриги над разработкой характеров; устойчивость сценич. типов и др. Пример – «Собака на сене» Лопе де Веги.</p>
+        </div>
+      </section>
+
+      <!-- SLIDE 4 — ЛОПЕ ДЕ ВЕГА -->
+      <section class="slide" data-title="Лопе де Вега о сочинении комедий">
+        <div class="slide-inner">
+          <div class="kicker">Лопе де Вега</div>
+          <h2>«Новое руководство к сочинению комедий»</h2>
+          <p>Стихотворный теоретический трактат Лопе де Веги был опубликован в 1609 г. В нем автор предлагает свод правил, признаваясь, что сам все время грешит против них («Вот правила для тех, кто об искусстве Античном помышленья не имеет»). Вот вкратце эти правила:</p>
+          <ul style="color:var(--ink-dim);font-size:16px;line-height:1.65;padding-left:22px;">
+            <li style="margin-bottom:12px;">Комедия и трагедия должны «поступкам человека подражать» (речью, стихом и гармонией (музыкой)).</li>
+            <li style="margin-bottom:12px;">Различие: в трагедии – знатные особы, а в комедии – плебеи, простой народ.</li>
+            <li style="margin-bottom:12px;">Комедию питает вымысел, трагедию – история.</li>
+            <li style="margin-bottom:12px;">Комедии в Афинах пороки бичевали. В современности, по словам автора, происходит нарушение канонов в угоду черни. Появляются короли в комедиях, происходит «смешение трагичного с забавным – Теренция с Сенекою» (так возникает образ минотавра).</li>
+            <li style="margin-bottom:12px;">«По действию единою должна быть фабула». «Нет нужды соблюдать границы суток». Между актами – какой угодно перерыв.</li>
+            <li style="margin-bottom:12px;">«Удобнее первоначально в прозе дать фабулу, в три акта уложив» (в акте – не больше суток)</li>
+            <li style="margin-bottom:12px;">«В комедии всегда балет уместен»</li>
+            <li style="margin-bottom:12px;">«Пуская интрига с самого начала Завяжется и разовьется в пьесе… развязку же не нужно допускать До наступления последней сцены». 1 акт – завязка, 2 – различные осложнения, до середины 3-го акта не должна быть ясна развязка.</li>
+            <li style="margin-bottom:12px;">«Пустой пусть редко остается сцена»</li>
+            <li style="margin-bottom:12px;">«Язык в комедии простым быть должен» (достоверность и соответствие речевых характеристик!). «Размер стихов искусно приспособлен Быть должен к содержанию всегда»</li>
+            <li style="margin-bottom:12px;">«Необходимо избегать всего невероятного. Предмет искусства – правдоподобное».</li>
+            <li style="margin-bottom:12px;">«Двусмысленность и мрак иносказанья Всегда бывают по сердцу толпе» («Ей кажется, что лишь она одна проникла в мысли скрытые актера»)</li>
+            <li style="margin-bottom:12px;">«Тем превосходней нет, чем темы чести»</li>
+            <li style="margin-bottom:12px;">Костюмы должны соответствовать героям</li>
+            <li>«Обман посредством правды – мастерский прием»: испанский зритель привык к хитроумным интригам, и в самой бесхитростной интриге ждет подвоха, таким образом, впечателение он получает одинаковое что от хитроумной интриги, что от бесхитростной.</li>
+          </ul>
+        </div>
+      </section>
+
+    </div><!-- /stage -->
+
+    <div class="bottombar">
+      <button class="bb-btn" id="prevBtn">‹ Назад</button>
+      <div class="bb-prog">
+        <div class="bb-track"><div class="bb-fill" id="bbFill"></div></div>
+        <div class="bb-ct" id="bbCt"></div>
+      </div>
+      <button class="bb-btn" id="nextBtn">Далее ›</button>
+    </div>
+  </div>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lbClose">×</button>
+  <figure><img id="lbImg" src="" alt=""><figcaption id="lbCaption"></figcaption></figure>
+</div>
+
+<script>
+/* ================= SLIDES / COURSE ENGINE ================= */
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total = slides.length;
+let current = 0;
+const visited = new Array(total).fill(false);
+
+const sbList = document.getElementById('sbList');
+slides.forEach((s,i) => {
+  const btn = document.createElement('button');
+  btn.className = 'sb-item' + (i===0?' active':'');
+  btn.innerHTML = '<span class="num">'+String(i).padStart(2,'0')+'</span><span class="dot"></span><span class="tt">'+s.dataset.title+'</span>';
+  btn.addEventListener('click', () => goTo(i));
+  sbList.appendChild(btn);
+});
+const sbItems = Array.from(sbList.children);
+
+const bbFill = document.getElementById('bbFill');
+const bbCt = document.getElementById('bbCt');
+const sbBarFill = document.getElementById('sbBarFill');
+const sbLabel = document.getElementById('sbLabel');
+const topTitle = document.getElementById('topTitle');
+const topCt = document.getElementById('topCt');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+const stage = document.getElementById('stage');
+
+function render(){
+  slides.forEach((s,i) => s.classList.toggle('active', i===current));
+  sbItems.forEach((b,i) => {
+    b.classList.toggle('active', i===current);
+    b.classList.toggle('visited', visited[i]);
+  });
+  const pct = Math.round(((current+1)/total)*100);
+  bbFill.style.width = pct+'%';
+  sbBarFill.style.width = pct+'%';
+  bbCt.textContent = (current+1)+' / '+total;
+  sbLabel.textContent = 'Слайд '+(current+1)+' из '+total;
+  topTitle.textContent = slides[current].dataset.title;
+  topCt.textContent = (current+1)+' / '+total;
+  prevBtn.disabled = current===0;
+  nextBtn.textContent = current===total-1 ? 'В начало ›' : 'Далее ›';
+  stage.scrollTop = 0;
+  const activeItem = sbItems[current];
+  if(activeItem) activeItem.scrollIntoView({block:'nearest'});
+}
+function goTo(i){
+  current = Math.max(0, Math.min(total-1, i));
+  visited[current] = true;
+  render();
+  closeSidebarMobile();
+}
+prevBtn.addEventListener('click', () => goTo(current-1));
+nextBtn.addEventListener('click', () => { if(current===total-1){ goTo(0); } else { goTo(current+1); } });
+document.getElementById('startBtn').addEventListener('click', () => goTo(1));
+window.addEventListener('keydown', e => {
+  if(document.getElementById('lightbox').classList.contains('open')) return;
+  if(e.key==='ArrowRight') goTo(current+1);
+  if(e.key==='ArrowLeft') goTo(current-1);
+});
+visited[0] = true;
+render();
+
+/* ---- mobile sidebar ---- */
+const sidebar = document.getElementById('sidebar');
+const sbOverlay = document.getElementById('sbOverlay');
+function openSidebarMobile(){ sidebar.classList.add('open'); sbOverlay.classList.add('open'); }
+function closeSidebarMobile(){ sidebar.classList.remove('open'); sbOverlay.classList.remove('open'); }
+document.getElementById('menuBtn').addEventListener('click', openSidebarMobile);
+document.getElementById('sbClose').addEventListener('click', closeSidebarMobile);
+sbOverlay.addEventListener('click', closeSidebarMobile);
+
+/* ================= TIMELINE ================= */
+const tlData = [];
+const tlNodes = Array.from(document.querySelectorAll('.tl-node'));
+const tlPanel = document.getElementById('tlPanel');
+function showTl(i){
+  tlNodes.forEach(n => n.classList.remove('active'));
+  tlNodes[i].classList.add('active');
+  const yr = tlNodes[i].querySelector('.yr').textContent;
+  tlPanel.innerHTML = '<span class="tl-year">'+yr+'</span><p>'+tlData[i]+'</p>';
+}
+if(tlNodes.length){
+  tlNodes.forEach((n,i) => n.addEventListener('click', () => showTl(i)));
+  showTl(0);
+}
+
+/* ================= EXPAND CARDS ================= */
+document.querySelectorAll('.card-head').forEach(btn => {
+  btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+});
+
+/* ================= ACCORDION ================= */
+document.querySelectorAll('.acc-trigger').forEach(btn => {
+  btn.addEventListener('click', () => btn.parentElement.classList.toggle('open'));
+});
+
+/* ================= DIALOGUE ================= */
+const dgLines = Array.from(document.querySelectorAll('.dg-line'));
+const dgNext = document.getElementById('dgNext');
+let dgStep = 1;
+if(dgNext){
+  dgNext.addEventListener('click', () => {
+    if(dgStep < dgLines.length){
+      dgLines[dgStep].classList.add('shown');
+      dgStep++;
+    }
+    if(dgStep >= dgLines.length) dgNext.setAttribute('disabled','');
+  });
+}
+
+/* ================= LIGHTBOX ================= */
+const lightbox = document.getElementById('lightbox');
+const lbImg = document.getElementById('lbImg');
+const lbCaption = document.getElementById('lbCaption');
+document.querySelectorAll('figure[data-cap]').forEach(fig => {
+  fig.addEventListener('click', () => {
+    const img = fig.querySelector('img');
+    lbImg.src = img.src;
+    lbCaption.textContent = fig.getAttribute('data-cap');
+    lightbox.classList.add('open');
+  });
+});
+function closeLightbox(){ lightbox.classList.remove('open'); }
+document.getElementById('lbClose').addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+window.addEventListener('keydown', e => { if(e.key==='Escape') closeLightbox(); });
+
+/* ================= CRITICS DECK ================= */
+const deckCards = Array.from(document.querySelectorAll('.deck-card'));
+if(deckCards.length){
+  const deckDots = document.getElementById('deckDots');
+  let deckIndex = 0;
+  deckCards.forEach((c,i) => {
+    const d = document.createElement('button');
+    d.className = 'deck-dot' + (i===0?' active':'');
+    d.addEventListener('click', () => showDeck(i));
+    deckDots.appendChild(d);
+  });
+  function showDeck(i){
+    deckIndex = (i+deckCards.length)%deckCards.length;
+    deckCards.forEach((c,j) => c.classList.toggle('active', j===deckIndex));
+    Array.from(deckDots.children).forEach((d,j) => d.classList.toggle('active', j===deckIndex));
+  }
+  document.getElementById('deckPrev').addEventListener('click', () => showDeck(deckIndex-1));
+  document.getElementById('deckNext').addEventListener('click', () => showDeck(deckIndex+1));
+}
+</script>
+</body>
+</html>
