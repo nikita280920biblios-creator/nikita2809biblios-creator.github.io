@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="ru"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>М.О. Гершензон. Памятник</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=Old+Standard+TT:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>:root{
+  color-scheme:light;
+  --paper:#ffffff; --ink:#0e1726; --blue:#1647e0; --red:#e5341a;
+  --line:#cfd6e2; --wash:#eef2f9; --muted:#4a566b;
+  --display:"Old Standard TT","Times New Roman",Georgia,serif;
+  --text:"Golos Text",system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font:17px/1.6 var(--text)}
+img{max-width:100%;height:auto;display:block}
+a{color:var(--blue)}
+:focus-visible{outline:3px solid var(--red);outline-offset:2px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+
+/* шапка */
+.bar{position:sticky;top:0;z-index:20;background:var(--paper);border-bottom:1px solid var(--line)}
+.bar-in{max-width:1040px;margin:0 auto;padding:10px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px}
+.bar a{font-family:var(--display);font-weight:700;font-size:20px;color:var(--ink);text-decoration:none}
+.bar span{font-size:14px;color:var(--muted)}
+.scroll{height:3px;background:var(--blue);width:0}
+
+main{max-width:1040px;margin:0 auto;padding:0 20px 64px}
+.narrow{max-width:700px}
+
+/* первый экран */
+.hero{display:grid;grid-template-columns:1fr;gap:28px;padding:40px 0 8px;align-items:end}
+.hero h1{font-family:var(--display);font-weight:400;font-size:clamp(40px,8vw,76px);line-height:1.02;margin:0 0 18px;letter-spacing:-.01em}
+.hero .num{font-family:var(--display);font-size:22px;color:var(--blue);display:block;margin-bottom:10px}
+.hero p{margin:0;font-size:19px;max-width:34em}
+.hero figure{margin:0}
+.hero img{width:100%;border-left:10px solid var(--blue)}
+@media(min-width:820px){.hero{grid-template-columns:1.15fr .85fr;gap:48px;padding-top:64px}.hero.wide-img{grid-template-columns:1fr 1fr}}
+
+/* текст */
+section{padding-top:44px}
+h2{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.6vw,38px);line-height:1.12;margin:0 0 18px;padding-top:18px;border-top:2px solid var(--ink)}
+h2 .n{color:var(--blue);margin-right:.35em}
+h3{font-size:19px;font-weight:600;margin:28px 0 8px}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 14px;padding-left:1.2em}
+li{margin-bottom:6px}
+.lead{font-size:19px}
+.src{font-size:14px;color:var(--muted)}
+figure{margin:24px 0}
+figcaption{font-size:14px;color:var(--muted);margin-top:8px}
+.two{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:820px){.two{grid-template-columns:1fr 1fr;gap:40px;align-items:start}.two.r{grid-template-columns:1.5fr 1fr}}
+.pic-s{max-width:320px}
+
+blockquote{margin:22px 0;padding:2px 0 2px 22px;position:relative;font-family:var(--display);font-size:20px;line-height:1.45}
+blockquote::before{content:"";position:absolute;left:0;top:0;bottom:0;width:10px;background:repeating-linear-gradient(90deg,var(--blue) 0 2px,transparent 2px 4px)}
+blockquote cite{display:block;font:14px/1.4 var(--text);color:var(--muted);font-style:normal;margin-top:8px}
+
+.verse{font-family:var(--display);font-size:19px;line-height:1.5;margin:20px 0;padding-left:18px;border-left:3px solid var(--red)}
+.verse .l{display:block}
+.verse cite{display:block;font:14px/1.4 var(--text);color:var(--muted);font-style:normal;margin-top:10px}
+
+/* кнопки, вкладки */
+button{font:inherit;color:inherit;cursor:pointer}
+.btn,.tablist button,.chipbtn{background:var(--paper);border:1.5px solid var(--ink);padding:9px 14px;border-radius:0;min-height:44px}
+.btn:hover,.tablist button:hover{background:var(--wash)}
+.btn[aria-pressed=true],.tablist button[aria-selected=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.tablist{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
+.panel{display:none}
+.panel.on{display:block}
+
+/* раскрывающиеся блоки */
+details{border-bottom:1px solid var(--line)}
+details:first-of-type{border-top:1px solid var(--line)}
+summary{cursor:pointer;padding:14px 34px 14px 0;font-weight:600;list-style:none;position:relative}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";position:absolute;right:4px;top:10px;font:400 26px/1 var(--display);color:var(--blue)}
+details[open] summary::after{content:"–"}
+details>div{padding:0 0 14px}
+
+/* карточки-раскрытия */
+.reveal{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:10px;margin:16px 0}
+.reveal button{text-align:left;background:var(--paper);border:1.5px solid var(--ink);padding:14px;min-height:96px;display:block}
+.reveal b{font-family:var(--display);font-weight:400;font-size:21px;display:block;line-height:1.2}
+.reveal small{color:var(--muted);font-size:14px}
+.reveal i{display:none;font-style:normal;font-size:15px;margin-top:6px}
+.reveal button[aria-pressed=true]{background:var(--blue);border-color:var(--blue);color:#fff}
+.reveal button[aria-pressed=true] small{color:#dfe7ff}
+.reveal button[aria-pressed=true] i{display:block}
+
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0;padding:0;list-style:none}
+.chips li{border:1.5px solid var(--ink);padding:5px 12px;margin:0;font-size:15px}
+
+/* сортировка */
+.sorter{margin:18px 0;border:1.5px solid var(--ink);padding:16px}
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:44px;margin-bottom:14px}
+.pool button{background:var(--paper);border:1.5px solid var(--ink);padding:7px 12px;min-height:42px;font-family:var(--display);font-size:19px}
+.pool button[aria-pressed=true]{background:var(--ink);color:#fff}
+.bins{display:grid;gap:10px;grid-template-columns:1fr}
+@media(min-width:720px){.bins{grid-template-columns:repeat(var(--n,3),1fr)}}
+.bin{text-align:left;background:var(--wash);border:1.5px solid var(--wash);padding:12px;min-height:92px;display:block;width:100%}
+.bin:hover{border-color:var(--blue)}
+.bin b{display:block}
+.bin small{display:block;color:var(--muted);font-size:14px;line-height:1.4}
+.bin .got{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.bin .got span{background:var(--blue);color:#fff;padding:2px 9px;font-family:var(--display);font-size:17px}
+.bin.no{border-color:var(--red);background:#fff}
+.msg{margin:12px 0 0;font-size:15px;min-height:1.5em}
+.msg.ok{color:var(--blue);font-weight:600}
+.msg.no{color:var(--red);font-weight:600}
+
+/* таблицы */
+.tw{overflow-x:auto;margin:18px 0}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:16px}
+th,td{text-align:left;vertical-align:top;padding:12px 14px 12px 0;border-bottom:1px solid var(--line)}
+thead th{border-bottom:2px solid var(--ink);font-weight:600}
+tbody th{font-family:var(--display);font-weight:400;font-size:21px;color:var(--blue);white-space:nowrap}
+tr.sep td{background:var(--ink);color:#fff;padding:6px 12px;font-size:14px}
+
+/* хронология */
+.time{list-style:none;padding:0;margin:18px 0;border-left:2px solid var(--ink)}
+.time li{position:relative;padding:0 0 16px 22px;margin:0}
+.time li::before{content:"";position:absolute;left:-7px;top:8px;width:12px;height:12px;background:var(--blue)}
+.time b{font-family:var(--display);font-weight:400;font-size:22px;display:block;line-height:1.2}
+
+/* противопоставление */
+.versus{display:grid;grid-template-columns:1fr auto 1fr;align-items:stretch;margin:18px 0;border:1.5px solid var(--ink)}
+.versus div{padding:18px 14px;text-align:center}
+.versus div:first-child{background:var(--blue);color:#fff}
+.versus div:last-child{background:var(--red);color:#fff}
+.versus b{font-family:var(--display);font-weight:400;font-size:clamp(22px,5vw,32px);display:block;line-height:1.1}
+.versus span{font-size:14px}
+.versus .mid{display:flex;align-items:center;padding:0 10px;font-family:var(--display);font-size:20px;background:#fff;color:var(--ink)}
+
+/* квадрат норм */
+.square{display:grid;grid-template-columns:1fr 1fr;border:2px solid var(--ink);max-width:420px;margin:18px 0}
+.square a{padding:26px 12px;text-align:center;font-family:var(--display);font-size:26px;color:var(--ink);text-decoration:none;border:1px solid var(--ink)}
+.square a:hover{background:var(--blue);color:#fff}
+
+/* одическая строфа */
+.stanza .l{display:grid;grid-template-columns:2.2em 1fr;align-items:baseline}
+.stanza .l i{font:600 15px var(--text);font-style:normal;color:transparent}
+.stanza.show .l i{color:var(--ink)}
+.stanza.show .l[data-r=A],.stanza.show .l[data-r=b]{color:var(--blue)}
+.stanza.show .l[data-r=C],.stanza.show .l[data-r=d],.stanza.show .l[data-r=E]{color:var(--red)}
+.stanza.show .l:nth-child(5){margin-top:12px;padding-top:12px;border-top:1px dashed var(--ink)}
+.strip{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin:16px 0}
+.strip span{border:1.5px solid var(--ink);text-align:center;padding:8px 0;font-size:14px}
+.strip span.hl{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* акростих */
+.acro .ac{font-weight:700}
+.acro.show .ac{background:var(--red);color:#fff;padding:0 4px;margin-right:1px}
+.acro-res{font-family:var(--display);font-size:28px;letter-spacing:.12em;display:none;margin:10px 0}
+.acro.show+.acro-res{display:block}
+
+/* диалог */
+.dialog{display:grid;gap:24px;grid-template-columns:1fr}
+@media(min-width:820px){.dialog{grid-template-columns:1fr 1fr;gap:40px}}
+.dialog h3{font-family:var(--display);font-weight:400;font-size:26px;margin:0 0 2px}
+.dialog .who-a h3{color:var(--red)}
+.dialog .who-l h3{color:var(--blue)}
+.dialog .who-l .verse{border-left-color:var(--blue)}
+
+/* примечания в тексте */
+.poem .l{display:block}
+.poem .gap{display:block;height:14px}
+.poem .mark{display:block;height:0;scroll-margin-top:120px}
+.note{background:none;border:0;border-bottom:2px solid var(--blue);padding:0;font:inherit;color:var(--blue)}
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--ink);color:#fff;padding:18px 20px calc(18px + env(safe-area-inset-bottom,0px));display:none}
+.sheet.on{display:block}
+.sheet-in{max-width:700px;margin:0 auto;display:flex;gap:16px;align-items:flex-start}
+.sheet p{margin:0;font-size:16px;flex:1}
+.sheet b{display:block;font-family:var(--display);font-weight:400;font-size:20px;margin-bottom:4px}
+.sheet button{background:#fff;color:var(--ink);border:0;min-width:44px;min-height:44px;font-size:22px}
+.jump{position:sticky;top:48px;z-index:10;background:var(--paper);border-bottom:1px solid var(--line);padding:10px 0;display:flex;gap:8px;overflow-x:auto}
+.jump a{white-space:nowrap;border:1.5px solid var(--ink);padding:6px 12px;font-size:15px;color:var(--ink);text-decoration:none}
+.jump a:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+
+/* переход между разделами */
+.next{display:grid;gap:10px;grid-template-columns:1fr;margin-top:56px;padding-top:20px;border-top:2px solid var(--ink)}
+@media(min-width:720px){.next{grid-template-columns:1fr 1fr}}
+.next a{display:block;border:1.5px solid var(--ink);padding:14px 16px;text-decoration:none;color:var(--ink)}
+.next a:hover{background:var(--blue);border-color:var(--blue);color:#fff}
+.next a:hover small{color:#dfe7ff}
+.next small{display:block;color:var(--muted);font-size:14px}
+.next b{font-family:var(--display);font-weight:400;font-size:22px}
+.next .fw{text-align:right}
+
+/* главная: колоннада */
+.temple{margin:36px auto 0;max-width:760px}
+.temple svg{display:block;width:100%;height:auto}
+.frieze{border:2px solid var(--ink);border-width:2px 0;padding:8px 0;text-align:center;font-size:14px;color:var(--muted)}
+.colonnade{display:flex;gap:clamp(6px,2vw,22px);padding:0 clamp(4px,2vw,24px)}
+.col{flex:1;height:clamp(230px,44vw,330px);text-decoration:none;color:var(--ink);display:flex;flex-direction:column;align-items:center;border-top:10px solid var(--ink);border-bottom:10px solid var(--ink);
+  background:repeating-linear-gradient(90deg,#fff 0 5px,var(--line) 5px 6px)}
+.col .rn{font-family:var(--display);font-size:18px;background:#fff;padding:4px 2px;margin-top:8px}
+.col .ct{writing-mode:vertical-rl;transform:rotate(180deg);background:#fff;padding:6px 2px;margin:auto 0 10px;font-size:clamp(12px,2.6vw,15px);line-height:1.15;white-space:nowrap}
+.col:hover,.col:focus-visible{background:var(--blue);border-color:var(--blue)}
+.col.done{border-top-color:var(--blue);border-bottom-color:var(--blue)}
+.col.done .rn{color:var(--blue)}
+.base{height:10px;background:var(--ink);margin-top:0}
+.base+.base{margin:4px -10px 0}
+.toc{list-style:none;padding:0;margin:0}
+.toc li{margin:0;border-bottom:1px solid var(--line)}
+.toc a{display:grid;grid-template-columns:3em 1fr auto;gap:8px;padding:16px 0;text-decoration:none;color:var(--ink);align-items:baseline}
+.toc a:hover b{color:var(--blue)}
+.toc .rn{font-family:var(--display);font-size:22px;color:var(--blue)}
+.toc b{font-family:var(--display);font-weight:400;font-size:24px;line-height:1.15;display:block}
+.toc small{color:var(--muted);font-size:15px;display:block}
+.toc .st{font-size:14px;color:var(--blue);white-space:nowrap}
+
+.jump{top:0}
+.by{font-family:var(--display);font-size:22px;color:var(--blue);display:block;margin-bottom:10px}
+.verse{font-size:18px}.verse .l{padding-left:1.4em;text-indent:-1.4em}.verse .l.in{padding-left:3.4em}
+.verse .date{display:block;font:14px/1.5 var(--text);color:var(--muted)}
+.essay p{font-size:18px;line-height:1.65}
+.notes p{font-size:16px}
+.poem-h{font-family:var(--display);font-weight:400;font-size:clamp(28px,4.6vw,38px);line-height:1.12;margin:0}
+.poem-s{margin:4px 0 0;color:var(--muted)}
+</style></head>
+<body>
+<main>
+<div class="hero" style="grid-template-columns:1fr"><div><span class="by">М.О. Гершензон</span><h1>Памятник</h1></div></div>
+<div class="narrow essay"><nav class="jump" aria-label="Части"><a href="#p1">1</a><a href="#p2">2</a></nav>
+<h2 id="p1" class="mark" style="display:block;height:auto">1</h2>
+<p>«Замко́м» называют камень, замыкающий и укрепляющий свод; в критической легенде о Пушкине есть частность, исполняющая роль такого «замка». Если общепринятое истолкование «Памятника» верно, то легенда имеет за себя важный аргумент: зрелое самосознание самого поэта; если оно ошибочно, – «замо́к» выпадает и легенда расшатывается. Поэтому вопрос о «Памятнике» требует специального расследования.</p>
+<p>Вот полный текст «Памятника» по сохранившейся рукописи.</p>
+<h3 style="font-family:var(--display);font-weight:400;font-size:24px">Exegi monumentum</h3>
+<div class="verse"><span class="l">Я памятник себе воздвиг нерукотворный,</span><span class="l">К нему не зарастет народная тропа,</span><span class="l">Вознесся выше он главою непокорной</span><span class="l">Александрийского столпа.</span></div>
+<div class="verse"><span class="l">Нет, весь я не умру — душа в заветной лире</span><span class="l">Мой прах переживет и тленья убежит —</span><span class="l">И славен буду я, доколь в подлунном мире</span><span class="l">Жив будет хоть один пиит.</span></div>
+<div class="verse"><span class="l">Слух обо мне пройдет по всей Руси великой,</span><span class="l">И назовет меня всяк сущий в ней язык,</span><span class="l">И гордый внук славян, и финн, и ныне дикий</span><span class="l">Тунгус и друг степей калмык.</span></div>
+<div class="verse"><span class="l">И долго буду тем любезен я народу,</span><span class="l">Что чувства добрые я лирой пробуждал,</span><span class="l">Что в мой жестокий век восславил я свободу</span><span class="l">И милость к падшим призывал.</span></div>
+<div class="verse"><span class="l">Веленью Божию, о Муза, будь послушна,</span><span class="l">Обиды не страшась, не требуя венца;</span><span class="l">Хвалу и клевету приемли равнодушно,</span><span class="l">И не оспоривай глупца.</span></div>
+<div class="verse" style="border:0;margin-top:-8px"><span class="date">1836</span><span class="date">Авг.21</span><span class="date">Каменный Остров</span></div>
+<p>В 4-й строфе первоначально было:</p>
+<div class="verse"><span class="l">Что звуки новые для песен я обрел,</span><span class="l">Что вслед Радищеву восславил я свободу</span><span class="l in">И милосердие воспел.</span></div>
+<p>Стихотворение это написано Пушкиным месяцев за пять до смерти и по содержанию представляет как бы его поэтическую исповедь или завещание. О смысле этой исповеди у нас никогда не возникало споров; напротив, все понимают ее одинаково, и убеждены, что понимают верно. Пушкин с законной гордостью говорит здесь о завоеванном им бессмертии, и тут же перечисляет те заключенные в его поэзии непреходящие ценности, которые дают ему право на это бессмертие. Так он сам понимал свою деятельность и так определял ее значение; и эта завершительная самооценка бросает свет на весь пройденный им путь. «Памятник» с полной ясностью открывает нам, какие сознательные цели Пушкин ставил себе в своем творчестве. – Так искони объясняют «Памятник» биографы и комментаторы Пушкина.</p>
+<p>Я сразу выскажу свою мысль, чуждую всяких ученых соображений, внушенную единственно простым чтением Пушкинских строк; я полагаю, что только так, и никак не иначе, должен понять эти строки всякий разумный человек, который прочтет их без предубеждения и внимательно. Мне кажется, что традиционное истолкование «Памятника» всецело искажает смысл этой пьесы. Пушкин в 4-й строфе говорит не от своего лица, – напротив, он излагает чужое мнение – мнение о себе народа. Эта строфа – не самооценка поэта, а изложение той оценки, которую он с уверенностью предвидит себе. Следовательно, первые четыре строфы содержат в себе не два мотива, как обыкновенно думают (один объективный – констатирование своей обеспеченной славы, другой субъективный – самооценку своего подвига), но один, состоящий из двух частей и одинаково объективный в обеих, именно предвидение: предвидение, во-первых, своей посмертной славы, и во-вторых, содержания этой своей посмертной славы. Пушкин говорит: «Знаю, что мое имя переживет меня; мои писания надолго обеспечивают мне славу. Но что будет гласить эта слава? Увы! она будет трубным гласом разглашать в мире клевету о моем творчестве и о поэзии вообще. Потомство будет чтить память обо мне не за то подлинно-ценное, что есть в моих писаниях и что я один знаю в них, а за их мнимую и жалкую полезность для обиходных нужд, для грубых потребностей толпы». Много лет назад Пушкин подвел первый итог своего опыта, и каким горьким разочарованием звучали его слова! «Мне жизни дался бедный клад!»{33} «Разоблачив пленительный кумир», он увидал «в их наготе» и свет, и жизнь, и дружбу, и любовь: кумир, внушавший такие надежды, пожравший столько жертв, оказался жалким и страшным остовом.</p>
+<div class="verse"><span class="l">Ужели он казался прежде мне</span><span class="l in">Столь величавым и прекрасным?</span><span class="l">Что ж видел в нем безумец молодой?</span><span class="l in">Кого любил, к чему стремился?</span><span class="l">Кого ж, кого возвышенной мечтой</span><span class="l in">Боготворить не постыдился?{34}</span></div>
+<p>Теперь Пушкин подводил другой итог – не жизни, а достигнутой им славы. Весь «Памятник» – как бы один подавленный вздох. И этот пленительный кумир оказался безобразным скелетом; вот кости лица скалятся дьявольской насмешкой: он издевается над ожиданием! В юности Пушкин без сомнения мечтал о славе; теперь, обретенная, она ужасает его. Он проклинает ее, как в том наброске – жизнь; в черновой того наброска был стих: «Чего искал, то ненавижу»{35}.</p>
+<p>Я утверждаю, что лишь при таком понимании первых четырех строф становится понятной пятая, последняя строфа «Памятника», совершенно бессмысленная в традиционном истолковании пьесы, хотя комментаторы наперекор здравому смыслу объявляют ее естественным заключением пьесы. Ее смысл – смирение пред обидой. Поэт как бы подавляет свой невольный вздох. Горька обида, но таков роковой закон – «Божье веление»; покорись Божьей воле: вот что говорит эта строфа. Пушкин написал первоначально: «Призванью своему, о Муза, будь послушна», то есть иди своим путем наперекор обиде, – потом изменил этот стих, сообразно всему замыслу стихотворения, дав ему не положительный смысл призыва, а отрицательный смысл покорности, смирения:</p>
+<div class="verse"><span class="l">Веленью Божию, о Муза, будь послушна,</span><span class="l in">Обиды не страшась, не требуя венца;</span><span class="l">Хвалу и клевету приемли равнодушно,</span><span class="l in">И не оспоривай глупца.</span></div>
+<p>Хвала толпы и клевета ее – одной цены: обе равно ничтожны. И не силься опровергать клевету, то есть объяснять толпе ее ошибку. Пушкин в прежние годы не раз пытался «оспаривать глупца» относительно подлинной ценности искусства, – потому что только об этом об одном идет здесь речь; теперь он признает эти попытки тщетными и ненужными: так устроено высшей волею.</p>
+<p>В частности, только при таком понимании объясняются и те две замены в рукописи – во-первых, стих:</p>
+<div class="verse"><span class="l">И долго буду тем любезен я народу,</span><span class="l in">Что звуки новые для песен я обрел.</span></div>
+<p>Пушкин отверг эту строку, потому что она приписывала народу такое суждение о поэзии, до которого он едва ли способен возвыситься: он видит и ценит в поэзии гораздо более деловые ценности – «Что чувства добрые я лирой пробуждал». Вторая замена – чисто формальная: «Что вслед Радищеву восславил я свободу». Это суждение подходит народу, только Пушкин предпочел потом выразить его в более общей форме. Но как могли комментаторы влагать этот стих в уста самого Пушкина при его достаточно известном отрицательном отношении к Радищеву{36}, – этого нельзя объяснить. Впрочем, я приведу ниже те доводы, которыми они ухитрялись обходить это затруднение.</p>
+<p>Таков, по-моему, смысл стихотворения «Памятник», который неминуемо и естественно складывается в сознании при простом чтении этой пьесы. А простое чтение и здравый смысл суть в таких случаях совместно – наилучший судья, в отношении к Пушкину я сказал бы даже – единственный разумный эксперт и судья. Наоборот, неумение медленно читать, в соединении с предвзятой мыслью о жизни, о должном, о добре и зле, неминуемо приводит к тому искажению истины, о котором с такой болью говорит Пушкин.</p>
+<h2 id="p2" class="mark" style="display:block;height:auto">2</h2>
+<p>Но прочитав и поняв пьесу в пределах ее текста, вполне законно попытаться найти ее место в целостном творчестве поэта и в целом его мировоззрении. Та мысль о поэзии и об отношении к ней толпы, которая выражена в «Памятнике», – согласуется ли она с прочими его суждениями об этом предмете, или напротив, противоречит им? Мы увидим дальше, что этим вопросом определяется все традиционное отношение критики к «Памятнику». – Я и здесь прямо выскажу свою мысль. Пушкин во многом противоречил себе, не раз менял свои суждения; но было бы странно, если бы он хоть раз изменил себе в этом пункте. Поэзия была его жизненным делом; он упорно и глубоко размышлял о поэзии с юных лет и составил себе представление о ней – о смысле и ценности ее – столь органически-личное (хотя и под влиянием романтических теорий), что опыт не мог уклонить его, но мог лишь все более углублять продолженное русло его мышления. Так должно думать а priori, и таким оказывается дело при конкретном исследовании.</p>
+<p>Деятельность Пушкина в ее завершенном виде отчетливо делится на две неравные и неравноценные части: главным его жизненным делом было поэтическое творчество, подсобным – распространение в обществе правильных идей о поэзии. Этой второй своей работе он сам придавал громадное значение и вел ее совершенно сознательно, упорно, не уставая, на протяжении многих лет. Теория, которую он проповедовал, сложилась у него в зародыше очень рано, уже к 1821 году, и осталась неизменной до конца его жизни, так что на расстоянии 10 или 15 лет он неоднократно излагал ее в тождественных выражениях. Но во-первых, внутренно она с годами раскрывалась ему самому, во-вторых, в провозглашении ее он становился все более нетерпеливым, можно сказать даже – все более ожесточался, по мере того как убеждался в бесплодности своей проповеди. Он твердил одно – и, кажется, как было не понять это? – Поэт – существо особенное: в нем дышит пламенный дух. Пламенность, или, другими словами, чрезвычайная бодрость, страстность, живость восприятий и соображений, словом – исключительная быстрота духовных движений – в противоположность задержкам, косности, длительному пребыванию духа в его частных образованиях, – вот отличие поэта. Эта стремительность духа, по мысли Пушкина, тем совершеннее, чем более она постоянна и длительна, потому что только в постоянстве она обретает спокойствие – «необходимое условие прекрасного». Итак, поэзия есть гармонический восторг, поэт – пламенный дух. Говоря о поэте, Пушкин неизменно скажет: пламень, гореть и т. п.: «Единый пламень их волнует» (поэтов); «С младенчества дух песен в нас горел – И дивное волненье мы познали»; «… алтарь, где твой огонь горит»; особенность поэта – «пламенные порывы чувства и воображения». Нести людям жар и свет своего пламени – таково призвание поэта, предуказанное свыше; Бог повелевает поэту-пророку:</p>
+<div class="verse"><span class="l">Исполнись волею Моей</span><span class="l">И, обходя моря и земли,</span><span class="l">Глаголом жги сердца людей{37}.</span></div>
+<p>Но люди, толпа – также по воле Бога – не понимают поэзии, не умеют принять ее бесценный дар, бесценный для них самих, – и в этом – несчастье, ущерб губительный для обеих сторон: поэт страдает, видя бесплодность своих усилий, толпа хиреет вдали от животворящей поэзии. Толпа, в отличие от поэта, – это люди, в которых духовная жизнь совершается медлительно, коснеет в своих проявлениях, стынет в остановках, словом – люди холодного духа. Именно в силу косности своего духа толпа считает косность или медлительность духа – нормою, и потому не видит в поэзии ничего ценного; напротив, поэзия, какова она подлинно есть – пламенность духа – кажется ей уродством и ненужностью. Толпа, разумеется, чувствует силу поэзии, ее действенность, – но чувствует почти физиологически, как некоторую формально-психическую энергию. Поэт «сердца волнует, мучит, как своенравный чародей»; и вот наступает худшее: в косности своей толпа предъявляет поэту соответственные требования: он должен употреблять силу, дарованную ему свыше, не на бесцельный бег духа, а на устроение его остановок, на закрепление и меблировку станций. Непонимание толпы поэт еще может снести, хотя и с двойной болью – за себя и за самую толпу; но вмешательства в свой труд он не вправе, не смеет терпеть, во имя призвавшего его Бога. И Пушкин пятнадцать лет яростно, можно сказать, истекая кровью, боролся за свою поэтическую свободу, за свободу поэта вообще.</p>
+<p>&lt;…&gt;</p>
+<p>Толпа требует, чтобы поэт служил ее нуждам, она требует от поэзии пользы. Польза, которой она требует от поэзии, – конечно, не материальная, не научная или какая-нибудь иная; речь идет, разумеется, о пользе моральной. «Чернь» говорит:</p>
+<div class="verse"><span class="l">… Если ты небес избранник,</span><span class="l">Свой дар, божественный посланник,</span><span class="l">Во благо нам употребляй:</span><span class="l">Сердца собратьев исправляй.</span><span class="l">Мы малодушны, мы коварны,</span><span class="l">Бесстыдны, злы, неблагодарны;</span><span class="l">Мы сердцем хладные скопцы,</span><span class="l">Клеветники, рабы, глупцы;</span><span class="l">Гнездятся клубом в нас пороки;</span><span class="l">Ты можешь, ближнего любя,</span><span class="l">Давать нам смелые уроки,</span><span class="l">А мы послушаем тебя.</span></div>
+<p>Пушкин без устали твердит, «оспаривая глупца»:</p>
+<div class="verse"><span class="l">Не для житейского волненья,</span><span class="l">Не для корысти, не для битв —</span><span class="l">Мы рождены для вдохновенья,</span><span class="l">Для звуков сладких и молитв.</span></div>
+<p>«Поэзия бывает исключительно страстью немногих, родившихся поэтами: она объемлет и поглощает все наблюдения, все усилия, все впечатления их жизни» («О предисловии Г-на Лемонте», 1825 г.). Он пишет Жуковскому (1825 г.): «Ты спрашиваешь, какая цель у Цыганов? Вот на! Цель поэзии – поэзия, как говорит Дельвиг… «Думы» Рылеева и целят, а все невпопад»{39}. Он требует для поэта полной свободы от каких бы то ни было «целей» и «польз»:</p>
+<div class="verse"><span class="l">Таков поэт. Как Аквилон,</span><span class="l">Что хочет, то уносит он:</span><span class="l">Увядший лист, иль прах площадный…</span><span class="l">И, не спросясь ни у кого,</span><span class="l">Как Дездемона, избирает</span><span class="l">Кумир для сердца своего.</span></div>
+<p>У него Моцарт говорит:</p>
+<div class="verse"><span class="l">Нас мало избранных, счастливцев праздных,</span><span class="l">Пренебрегающих презренной пользой,</span><span class="l">Единого прекрасного жрецов.</span></div>
+<p>У него поэт отвечает «черни»:</p>
+<div class="verse"><span class="l">Молчи, бессмысленный народ,</span><span class="l">Поденщик, раб нужды, забот!</span><span class="l">Несносен мне твой ропот дерзкий.</span><span class="l">Ты червь земли, не сын небес:</span><span class="l">Тебе бы пользы все – на вес</span><span class="l">Кумир ты ценишь Бельведерский.</span><span class="l">Ты пользы, пользы в нем не зришь.</span><span class="l">Но мрамор сей ведь бог!. Так что же?</span><span class="l">Печной горшок тебе дороже:</span><span class="l">Ты пищу в нем себе варишь.</span></div>
+<p>«Памятник» есть завершительный акт этой борьбы, этой проповеди и самозащиты, Пушкин знал: элементарная сила его поэзии – Божье дыханье в ней – не пройдет бесследно; люди почувствовали ее и будут еще долго чувствовать; это – слава; слава ему обеспечена. Но в попытках осмыслить свое волнение, возбуждаемое его поэзией, люди неизбежно откроют в ней то, чего в ней вовсе нет, и проглядят ее истинное содержание: они откроют в ней полезность, нравоучительность. Отсюда горький сарказм этого Пушкинского слова: буду любезен народу тем,</p>
+<div class="verse"><span class="l">Что чувства добрые я лирой пробуждал,</span><span class="l">Что в мой жестокий век восславил я свободу</span><span class="l">И милость к падшим призывал,</span></div>
+<p>то есть, что «сердца собратьев исправлял». Всю жизнь он слышал от толпы это требование, и всю жизнь отвергал его; но едва он умолкнет, толпа объяснит его творчество по-своему.</p>
+<p>В «Памятнике» точно различены – 1) подлинная слава – среди людей, понимающих поэзию, – а таковы преимущественно поэты:</p>
+<div class="verse"><span class="l">И славен буду я, доколь в подлунном мире</span><span class="l">Жив будет хоть один пиит;</span></div>
+<p>и 2) слава пошлая, среди толпы, смутная слава – известность:</p>
+<div class="verse"><span class="l">Слух обо мне пройдет по всей Руси великой…</span></div>
+<p>Эта пошлая слава будет клеветою. Навеки ли упрочится непонимание? По-видимому, Пушкин думал, что со временем оно уступит верному пониманию его поэзии; оттого он и говорит:</p>
+<div class="verse"><span class="l">И долго буду тем любезен я народу,</span><span class="l">Что чувства добрые я лирой пробуждал.</span></div>
+<p>&lt;…&gt;</p>
+</div>
+</main>
+
+</body></html>
