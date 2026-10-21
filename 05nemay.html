@@ -1,0 +1,296 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Манн Ю. Немая сцена</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:ital,wght@0,400;0,700;1,400&family=Golos+Text:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f4f3ef; --panel:#ffffff; --ink:#1d1d1b; --muted:#6d6b66; --line:#e3e1db;
+  --accent:#2f4b7c; --accent-soft:#e8edf6; --mark:#fbf1c7; --ok:#2e7d5b; --ok-soft:#e3f2ea;
+  --shadow:0 1px 2px rgba(0,0,0,.04),0 8px 30px rgba(0,0,0,.05);
+  --serif:"PT Serif",Georgia,"Times New Roman",serif;
+  --sans:"Golos Text",-apple-system,"Segoe UI",Roboto,Arial,sans-serif;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#151618; --panel:#1e2023; --ink:#e9e7e2; --muted:#9a978f; --line:#2e3135;
+  --accent:#8fb0e8; --accent-soft:#232c3c; --mark:#3a3420; --ok:#6fcf9f; --ok-soft:#1d3329;
+  --shadow:none;}}
+:root[data-theme="dark"]{
+  --bg:#151618; --panel:#1e2023; --ink:#e9e7e2; --muted:#9a978f; --line:#2e3135;
+  --accent:#8fb0e8; --accent-soft:#232c3c; --mark:#3a3420; --ok:#6fcf9f; --ok-soft:#1d3329;
+  --shadow:none;}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit}
+.app{display:grid;grid-template-columns:300px 1fr;grid-template-rows:56px 1fr;height:100vh;height:100dvh}
+.app.nosb{grid-template-columns:1fr}
+/* top bar */
+.top{grid-column:1/-1;display:flex;align-items:center;gap:14px;padding:0 18px;background:var(--panel);border-bottom:1px solid var(--line);position:relative}
+.top .crumb{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .ttl{font-weight:600;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.top .sep{width:1px;height:20px;background:var(--line)}
+.top .sp{flex:1}
+.progress{position:absolute;left:0;bottom:-1px;height:3px;background:var(--accent);width:0;transition:width .35s ease}
+.icon-btn{width:36px;height:36px;border-radius:9px;border:1px solid transparent;background:transparent;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.icon-btn:hover{background:var(--accent-soft);color:var(--accent)}
+.icon-btn svg{width:20px;height:20px}
+#menuBtn{display:none}
+/* sidebar */
+.side{background:var(--panel);border-right:1px solid var(--line);overflow:auto;padding:14px 10px 30px}
+.side .grp{font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);padding:16px 12px 6px}
+.side .grp.num{font-family:var(--serif);font-size:15px;letter-spacing:0;text-transform:none;color:var(--accent)}
+.side a{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border-radius:9px;color:var(--ink);text-decoration:none;font-size:14px;line-height:1.35;cursor:pointer}
+.side a .n{flex:0 0 22px;height:22px;border-radius:50%;border:1.5px solid var(--line);font-size:11px;display:grid;place-items:center;color:var(--muted);margin-top:-1px}
+.side a.sub{padding-left:26px;font-size:13.5px;color:var(--muted)}
+.side a:hover{background:var(--bg)}
+.side a.on{background:var(--accent-soft);color:var(--accent);font-weight:500}
+.side a.on .n{border-color:var(--accent);background:var(--accent);color:var(--panel)}
+.side a.seen .n{border-color:var(--accent);color:var(--accent)}
+/* main */
+.main{overflow:auto;position:relative;scroll-behavior:smooth}
+.stage{max-width:820px;margin:0 auto;padding:40px 32px 120px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;box-shadow:var(--shadow);padding:48px 56px}
+.slide{animation:in .35s ease}
+@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.kicker{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 10px;line-height:1.5}
+.doc-h{font-family:var(--serif);font-size:30px;line-height:1.2;margin:0 0 28px;font-weight:700}
+.prose{font-family:var(--serif);font-size:19px;line-height:1.72}
+.prose p{margin:0 0 1.05em;text-indent:1.4em;hyphens:auto}
+.prose h2{font-family:var(--sans);font-size:22px;font-weight:600;margin:0 0 18px;padding-bottom:12px;border-bottom:2px solid var(--accent);display:inline-block}
+.prose h2+p,.prose .part-no+p,.prose p:first-child{text-indent:0}
+.prose strong{font-weight:700;background:linear-gradient(transparent 62%,var(--mark) 62%);padding:0 1px}
+.prose em{font-style:italic}
+.prose sup.ref{font-family:var(--sans);font-size:.6em;color:var(--muted);vertical-align:super;line-height:0}
+.part-no{font-family:var(--serif);font-size:56px;line-height:1;color:var(--accent);margin:0 0 20px;font-weight:700}
+.part-no::after{content:"";display:block;width:40px;height:2px;background:var(--accent);margin-top:14px}
+/* cover */
+.cover{display:grid;grid-template-columns:220px 1fr;gap:36px;align-items:center;margin-bottom:34px;padding-bottom:30px;border-bottom:1px solid var(--line)}
+.cover figure{margin:0}
+.cover img{width:100%;border-radius:10px;display:block}
+.cover figcaption{font-family:var(--sans);font-size:12.5px;line-height:1.45;color:var(--muted);margin-top:10px;text-indent:0}
+.cover figcaption strong{background:none;font-weight:600;color:var(--ink)}
+.cover .big{font-family:var(--serif);font-size:20px;letter-spacing:.3em;margin:0 0 22px;color:var(--muted);font-weight:400}
+.cover .eyebrow{font-family:var(--sans);font-size:13px;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);margin-bottom:6px}
+.cover .work{font-family:var(--serif);font-size:44px;font-weight:700;line-height:1.1}
+/* pager */
+.pager{position:sticky;bottom:0;display:flex;justify-content:center;pointer-events:none;padding:0 0 18px;margin-top:-80px}
+.pager .bar{pointer-events:auto;display:flex;align-items:center;gap:6px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px;box-shadow:var(--shadow)}
+.pager .cnt{font-size:13px;color:var(--muted);min-width:70px;text-align:center;font-variant-numeric:tabular-nums}
+.pager button{width:42px;height:42px;border-radius:50%;border:0;background:var(--bg);cursor:pointer;display:grid;place-items:center}
+.pager button.next{background:var(--accent);color:var(--panel)}
+.pager button:disabled{opacity:.3;cursor:default}
+.pager svg{width:20px;height:20px}
+/* terms */
+.lead{font-family:var(--serif);font-size:19px;line-height:1.65;margin:0 0 26px}
+.terms{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:12px;margin:0 0 30px;padding:0;list-style:none}
+.term{display:flex;align-items:center;gap:12px;padding:16px 16px;border:1.5px solid var(--line);border-radius:12px;cursor:pointer;background:var(--panel);font-family:var(--serif);font-size:17.5px;font-weight:700;transition:.2s;user-select:none;text-align:left;width:100%}
+.term:hover{border-color:var(--accent)}
+.term .box{flex:0 0 24px;height:24px;border-radius:7px;border:1.5px solid var(--line);display:grid;place-items:center;transition:.2s}
+.term .box svg{width:15px;height:15px;opacity:0;color:#fff}
+.term.on{border-color:var(--ok);background:var(--ok-soft)}
+.term.on .box{background:var(--ok);border-color:var(--ok)}
+.term.on .box svg{opacity:1}
+.meter{display:flex;align-items:center;gap:14px;margin:0 0 22px}
+.meter .track{flex:1;height:6px;background:var(--line);border-radius:6px;overflow:hidden}
+.meter .fill{height:100%;background:var(--ok);width:0;transition:width .3s}
+.meter .val{font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.callout{border-left:3px solid var(--accent);background:var(--accent-soft);padding:18px 22px;border-radius:0 12px 12px 0;font-family:var(--serif);font-size:18px;line-height:1.6}
+.callout strong{color:var(--accent)}
+/* essay */
+.q{border:1px solid var(--line);border-radius:14px;margin:0 0 12px;background:var(--panel);overflow:hidden}
+.q-head{display:flex;gap:16px;align-items:flex-start;padding:18px 20px;cursor:pointer;width:100%;border:0;background:none;text-align:left}
+.q-head .no{flex:0 0 34px;height:34px;border-radius:50%;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center;font-weight:600;font-size:14px}
+.q-head .tx{flex:1;font-family:var(--serif);font-size:18px;line-height:1.5;padding-top:4px}
+.q-head .chev{flex:0 0 20px;margin-top:8px;color:var(--muted);transition:transform .25s}
+.q.open .chev{transform:rotate(180deg)}
+.q-body{display:none;padding:0 20px 20px 70px}
+.q.open .q-body{display:block}
+.q textarea{width:100%;min-height:170px;border:1px solid var(--line);border-radius:10px;padding:14px;font-family:var(--serif);font-size:17px;line-height:1.6;background:var(--bg);color:var(--ink);resize:vertical}
+.q textarea:focus{outline:2px solid var(--accent);border-color:transparent}
+.q .dot{width:8px;height:8px;border-radius:50%;background:var(--ok);margin-top:13px;flex:0 0 8px;opacity:0}
+.q.has .dot{opacity:1}
+/* glossary */
+.gl-tools{display:flex;gap:10px;align-items:center;margin:0 0 16px;flex-wrap:wrap}
+.search{flex:1;min-width:200px;display:flex;align-items:center;gap:8px;border:1.5px solid var(--line);border-radius:10px;padding:0 12px;background:var(--bg)}
+.search:focus-within{border-color:var(--accent)}
+.search svg{width:18px;height:18px;color:var(--muted)}
+.search input{flex:1;border:0;background:transparent;height:42px;font:inherit;font-size:16px;color:var(--ink);outline:none}
+.seg{display:flex;border:1.5px solid var(--line);border-radius:10px;overflow:hidden}
+.seg button{border:0;background:transparent;width:44px;height:42px;display:grid;place-items:center;cursor:pointer;color:var(--muted)}
+.seg button.on{background:var(--accent);color:var(--panel)}
+.seg svg{width:19px;height:19px}
+.abc{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 24px}
+.abc button{min-width:34px;height:34px;border-radius:8px;border:1px solid var(--line);background:var(--panel);cursor:pointer;font-family:var(--serif);font-size:16px;text-transform:uppercase}
+.abc button.on{background:var(--ink);color:var(--panel);border-color:var(--ink)}
+.gl-list{list-style:none;margin:0;padding:0}
+.gl-list li{display:grid;grid-template-columns:220px 1fr;gap:20px;padding:15px 0;border-top:1px solid var(--line)}
+.gl-list li:first-child{border-top:0}
+.gl-list .t{font-family:var(--serif);font-weight:700;font-size:18px}
+.gl-list .d{font-family:var(--serif);font-size:17.5px;line-height:1.55}
+.gl-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.flip{perspective:1000px;height:180px;cursor:pointer;border:0;background:none;padding:0}
+.flip .in{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .in{transform:rotateY(180deg)}
+.flip .f,.flip .b{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:14px;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;padding:18px;text-align:center;background:var(--panel)}
+.flip .f{font-family:var(--serif);font-weight:700;font-size:21px}
+.flip .b{transform:rotateY(180deg);background:var(--accent-soft);border-color:var(--accent);font-family:var(--serif);font-size:15.5px;line-height:1.45;overflow:auto;align-items:safe center}
+.empty{color:var(--muted);text-align:center;padding:30px 0;font-size:28px}
+/* mobile */
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  #menuBtn{display:grid}
+  .side{position:fixed;top:56px;left:0;bottom:0;width:min(320px,86vw);z-index:20;transform:translateX(-102%);transition:transform .25s;box-shadow:0 10px 40px rgba(0,0,0,.2)}
+  .app.sbopen .side{transform:none}
+  .stage{padding:20px 16px 110px}
+  .card{padding:28px 20px;border-radius:12px}
+  .prose{font-size:18px}
+  .cover{grid-template-columns:1fr;gap:20px}
+  .cover figure{max-width:220px}
+  .cover .work{font-size:34px}
+  .doc-h{font-size:24px}
+  .gl-list li{grid-template-columns:1fr;gap:4px}
+  .q-body{padding:0 16px 16px}
+  .top .crumb,.top .sep{display:none}
+}
+@media print{
+  .top,.side,.pager{display:none!important}
+  .app{display:block;height:auto}
+  .main{overflow:visible}
+  .card{box-shadow:none;border:0;padding:0}
+}
+</style>
+</head>
+<body>
+<div class="app" id="app">
+  <header class="top">
+    <button class="icon-btn" id="menuBtn" aria-label="☰"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+    <div class="crumb">«РЕВИЗОР» · Ю.В. МАНН</div><div class="sep"></div>
+    <div class="ttl">Манн Ю. Немая сцена</div>
+    <div class="sp"></div>
+    <button class="icon-btn" id="themeBtn" aria-label="◐"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg></button>
+    <div class="progress" id="prog"></div>
+  </header>
+  <nav class="side" id="side"></nav>
+  <main class="main" id="main"><div class="stage" id="stage"></div></main>
+</div>
+<script>
+const MODE="slides", KEY="Ревизор_05_Манн_Немая_сцена_html", D={"heading": "Манн Ю. Немая сцена", "kicker": "Прочитайте фрагменты статьи Ю.В. Манна, посвященные комедии Гоголя “Ревизор”", "pages": [{"group": "", "label": "Немая сцена вызвала в литературе о…", "html": "<p>Немая сцена вызвала в литературе о Гоголе самые разнообразные суждения. Белинский, не входя в подробный разбор сцены, подчеркнул её органичность для общего замысла: она «превосходно замыкает собою целость пьесы»<sup class=\"ref\">[1]<\/sup>.<\/p><p>В академическом литературоведении акцент ставился подчас на политическом подтексте немой сцены. Для H. Котляревского, например, это «апология правительственной бдительной власти»:.«Унтер, который заставляет начальника города и всех высших чиновников окаменеть и превратиться, в истуканов,— наглядный пример благомыслия автора»<sup class=\"ref\">[2]<\/sup>.<\/p><p>По мнению В. Гиппиуса, немая сцена также выражает идею власти и закона, но своеобразно трактованную: «Реалистически-типизированным образам местных властей... он &lt;Гоголь&gt; противопоставил голую абстрактную идею власти, невольно приводившую к ещё большему обобщению, к <em>идее возмездия»<\/em><em><strong><sup class=\"ref\">[3]<\/sup><\/strong>.<\/em><\/p><p>A. Воронский, опираясь на выводы Андрея Белого  (в книге  «Мастерство Гоголя»)   о постепенном  «умерщвлении жеста» гоголевских героев, считает немую сцену символическим выражением этого умерщвления: «Произошло всё это потому, что живые люди “Вечеров”, весёлые парубки, дивчины... уступили место манекенам   и марионеткам, «живым трупам»<sup class=\"ref\">[4]<\/sup>.<\/p><p>По мнению М. Храпченко, появление жандарма и немая сцена представляют собою «внешнюю развязку». «Подлинная развязка комедии заключена в монологе Городничего, в его гневных высказываниях по своему адресу, по адресу щелкопёров, бумагомарателей, в его саркастических словах: “Чему смеётесь? над собою смеётесь!..”»<sup class=\"ref\">[5]<\/sup>. Эпизод с жандармом — лишь механический привесок к пьесе.<\/p><p>B. Ермилов,   напротив,   убеждён   в   психологическом правдоподобии финала комедии. «“Психологическая” причина остолбенения действующих лиц в финале комедии<br/> понятна:  пережив столько волнений и хлопот, надо всё опять начинать сначала, а ведь новый ревизор как раз и может   оказаться особоуполномоченным   лицом;   и   наверняка ему станет известна скандальная история со лжеревизором. Но не в этом, конечно, значение изумительного   финала.   Перед   нами  парад  высеченной   подлости   и пошлости,   застывшей  в   изумлении   перед потрясшей её самое бездной собственной глупости»<sup class=\"ref\">[6]<\/sup>.<\/p><p>Можно было бы увеличить сводку различных высказываний о немой сцене. Но в основном все они сводятся к названным выше точкам зрения.<\/p><p>А как трактовал немую сцену сам Гоголь? Нам неизвестно, что говорил он по этому поводу до представления «Ревизора». После же представления писатель много раз подчеркивал, что немая сцена выражает идею «закона», при наступлении которого всё «побледнело и потряслось» (черновая редакция «Театрального разъезда...»). В окончательном тексте «Театрального разъезда...» «второй любитель искусств», наиболее близкий Гоголю по своим взглядам (ему, например, принадлежат высказывания об Аристофане, об «общественной комедии»), говорит, что развязка пьесы должна напомнить о справедливости, о долге правительства: «Дай Бог, чтобы правительство всегда и везде слышало призвание своё —быть представителем провиденья на земле — и чтоб мы веровали в него, как древние веровали в рок, настигавший преступления».<\/p>"}, {"group": "", "label": "У нас нет никаких оснований сомневаться…", "html": "<p>У нас нет никаких оснований сомневаться в искренности Гоголя, то есть в том, что мысль о законе, о защите правительством справедливости, на самом деле связывалась им с финалом комедии. Г. Гуковский неточен, полагая, что авторский комментарий к немой сцене возник в 40-е годы, когда писатель «скатился... в реакцию»<sup class=\"ref\">[7]<\/sup>. Набросок «Театрального разъезда...» сделан вскоре после премьеры комедии, а между тем гоголевское толкование финала в основном выражено уже здесь.<\/p><p>Но всё дело в том, что это не больше чем понятийное оформление одной идеи. Это так называемый «ключ», которым обычно хотят заменить цельное прочтение художественной вещи. Но Гоголь во второй редакции «Развязки Ревизора» вкладывает в уста первого комика такое замечание: «Автор не давал мне ключа... Комедия тогда бы сбилась на аллегорию». Немая сцена не аллегория. Это элемент образной мысли «Ревизора», и как таковой он даёт выход сложному и целостному художественному мироощущению. Словом, задача состоит в том, чтобы прочесть финал «Ревизора» как выражение художественной мысли.<\/p><p>Некоторые штрихи такого прочтения намечены в приведённых выше объяснениях немой сцены. Обращено внимание на то, что «идея власти» выражена в финале абстрактно в противовес полнокровной конкретности — бытовой, психологической, общественной — всей пьесы. Точнее говоря, Гоголь намечает некоторую конкретность, но доводит её до определённого рубежа. Тенденцию к конкретизации отчётливо обнаруживает творческая история финальной реплики. В первой черновой редакции: «Приехавший чиновник требует Городничего и всех чиновников к себе». В окончательной редакции: «Приехавший <em>по именному повелению из Петербурга<\/em> чиновник требует вас <em>сей же час<\/em> к себе». Новый ревизор несколько конкретизируется и повышается в своём ранге. Пославшие его инстанции определены четко: Петербург и царь. Даётся намек на срочность дела и, возможно, разгневанность прибывшего ревизора. Но далее Гоголь не идёт. О том, что предпримет ревизор и что грозит чиновникам, ничего не сообщается.<\/p><p>«Второй любитель искусств» говорил, что немая сцена должна заставить современников верить в правительство, «как древние веровали в рок...». Это напоминает ядовитое замечание Вяземского: «В наших комедиях начальство часто занимает место рока (fatum) в древних трагедиях»<sup class=\"ref\">[8]<\/sup>. Поводом для такого замечания послужил финал фонвизинского «Недоросля», где устами положительного персонажа (Правдина) сообщается персонажам порочным (Простакову): «Именем правительства вам приказываю сей же час собрать людей и крестьян ваших для объявления им указа, что за бесчеловечие жены вашей, до которого попустило её ваше крайнее слабомыслие, повелевает мне правительство принять в опеку дом ваш и деревни».<\/p><p>Но в том-то и дело, что финал «Ревизора» не сообщает ни о каких конкретных мерах, о наказании в прямом юридически-административном смысле этого слова.<\/p>"}, {"group": "", "label": "Такого рода недоговоренность — характерное свойство…", "html": "<p>Такого рода недоговоренность — характерное свойство художественной мысли Гоголя. «Изобразите нам нашего честного, прямого человека»,— призывал Гоголь в «Петербургской сцене...» и сам не раз покушался на эту задачу. Но до второго тома «Мертвых душ» он изображал «нашего честного, прямого человека» (в современности) только на пороге — на пороге ли честного дела, подобно некоему «очень скромно одетому человеку» в «Театральном разъезде...», или даже на пороге сознательной жизни: «Она теперь как дитя,— думает Чичиков о губернаторской дочке... Из неё <em>всё можно сделать,<\/em> она может быть чудо, а может выйти дрянь, и выйдет дрянь!» На полуслове прервана Гоголем и мысль  в «Ревизоре». Она дана как намёк, как идея должного и желаемого, но не реального и осуществленного.<\/p><p>Но главное всё же не в этом. Мы уже говорили, что русскую комедию до Гоголя отличало не столько торжество справедливости в финале, сколько неоднородность двух миров: обличаемого и того, который подразумевался за сценой. Счастливая развязка вытекала из существования «большого мира». Её могло и не быть в пределах сценического действия (например, в «Ябеде» наказание порока неполное: Праволов схвачен и заключён в тюрьму; но чиновники ещё не осуждены), но всё равно она подразумевалась как возможность.<\/p><p>У Гоголя нет идеально подразумеваемого мира. Вмешательство высшей,   справедливой,   карающей   силы   не вытекает  из разнородности миров.  Оно  приходит извне, вдруг и разом настигает всех персонажей.<\/p><p>Присмотримся к очертанию немой сцены.<\/p><p>В «Замечаниях...» Гоголь обращает внимание на цельность и мгновенность действий персонажей в немой сцене. «Последнее произнесённое слово должно произвесть электрическое потрясение <em>на всех разом, вдруг.<\/em> Вся группа должна переменить положение в <em>один миг ока.<\/em> Звук изумленья должен вырваться у всех женщин <em>разом,<\/em> как будто из <em>одной груди.<\/em> От несоблюдения сих замечаний может исчезнуть весь эффект».<\/p><p>Заметим дальше, что круг действующих лиц расширяется в конце пьесы до предела. К Городничему собралось множество народа  — чрезвычайные события, увенчавшиеся «сватовством» Хлестакова,  подняли, наверно, со своих мест и таких, которых, используя выражение из «Мёртвых душ», давно уже «нельзя было выманить из дому...»<sup class=\"ref\">[9]<\/sup>. И вот всех их поразила страшная весть о прибытии настоящего ревизора.<\/p><p>Однако как ни велика группа персонажей в заключительных сценах, тут нет «купечества и гражданства». Реальная мотивировка этому проста: они не ровня Городничему. Собрались только высшие круги города. В графическом начертании немой сцены (которое до деталей продумано Гоголем) также есть «иерархический оттенок»: в середине Городничий, рядом с ним, справа, его семейство; затем по обеим сторонам — чиновники и почётные лица в городе; «прочие гости» — у самого края сцены и на заднем плане.<\/p>"}, {"group": "", "label": "Словом, немая сцена графически представляет верхушку…", "html": "<p>Словом, немая сцена графически представляет верхушку пирамиды «сборного города». Удар пришелся по её высшей точке и, теряя несколько в своей силе, распространился на более низкие «слои пирамиды». Поза каждого персонажа в немой сцене пластически передает степень потрясения, силу полученного удара. Тут множество оттенков — от застывшего «в виде столпа с распростертыми руками и закинутою назад головою» Городничего до прочих гостей, которые «остаются просто столбами». (Характер персонажа и поведение во время действия также отразились в его позе; естественно, например, что Бобчинский и Добчинский застыли с «устремившимися движениями рук <em>друг к другу,<\/em> разинутыми ртами и выпученными <em>друг на друга<\/em> глазами».)<\/p><p>Но вот на лице трёх дам, гостей, отразилось только «самое сатирическое выражение лица» по адресу «семейства Городничего». Каково-то вам теперь будет, голубчики? — словно говорит их поза. Вообще, среди гостей, стремящихся (в немой сцене) «заглянуть в лицо Городничего», наверняка находились и такие, которым лично бояться было нечего. Но и они застыли при страшном известии.<\/p><p>Тут мы подходим к важнейшей «краске» заключительной сцены, к тому, что она выражает окаменение, причём <em>всеобщее<\/em> окаменение. В «Отрывке из письма...» Гоголь писал: «...последняя сцена не будет иметь успеха до тех пор, пока не поймут, что это просто немая картина, что всё это должно представлять одну <em>окаменевшую группу,<\/em> что здесь оканчивается драма и сменяет её онемевшая мимика... что совершиться всё это должно в тех же условиях, каких требуют так называемые <em>живые картины»<\/em> (В последнем случае — курсив Гоголя).<\/p><p>Окаменение имело в поэтике Гоголя давнее, более или менее устойчивое значение. Так как мы будем специально говорить об этом применительно ко всему творчеству Гоголя (в главе VII), то сейчас ограничимся буквально одним-двумя примерами. В «Сорочинской ярмарке» при появлении в окне «страшной свиной рожи» «ужас оковал всех находившихся в хате. Кум с разинутым ртом превратился в камень». В «Ночи перед Рождеством», когда в мешке вместо ожидаемых паляницы, колбасы и т. д. обнаружился дьяк, «кумова жена, остолбенев, выпустила из руки ногу, за которую начала было тянуть дьяка из мешка».<\/p><p>В обоих случаях окаменение выражает особую, высшую форму страха, вызванного каким-то странным, непостижимым событием. В «Портрете» (редакция «Арабесок») Гоголь так определил это ощущение: «Какое-то дикое чувство, не страх, но то неизъяснимое ощущение, которое мы чувствуем при появлении <em>странности,<\/em> представляющей <em>беспорядок природы,<\/em> или, лучше сказать, какое-то <em>сумасшествие природы<\/em>...»<\/p><p>Итак, окаменение и страх (в её особой, высшей форме) связаны в художественном мышлении Гоголя. Это проливает свет на генезис немой сцены «Ревизора».<\/p><p>Вполне возможно, что немой сценой драматург хотел подвести к идее возмездия, торжества государственной справедливости. За это говорит не только авторский комментарий к финалу, но известная конкретизация самого образа настоящего ревизора. Однако выразил он эту идею средствами страха и окаменения.<\/p><p>Нет, немая сцена не дополнительная развязка, не привесок к комедии. Это последний, завершающий аккорд произведения. И очень характерно, что она завершает обе тенденции «Ревизора»: с одной стороны, стремление ко всеобщности и цельности, а с другой — элементы «миражности», «миражную интригу».<\/p>"}, {"group": "", "label": "В немой сцене всеобщность переживаний героев…", "html": "<p>В немой сцене всеобщность переживаний героев, цельность человеческой жизни получает пластическое выражение. Различна степень потрясения — она возрастает вместе с «виной» персонажей, то есть их положением на иерархической лестнице. Разнообразны их позы — они передают всевозможные оттенки характеров и личных свойств. Но единое чувство оковало всех. Это чувство — страх. Подобно тому как в ходе действия пьесы страх входил в самые различные переживания героев, так и теперь печать нового, высшего страха легла на физиономии и позы каждого персонажа, независимо от того, был ли он отягощен личной «виной», преступлением или же имел возможность смотреть «сатирически» на Городничего, то есть на дела и проступки другого.<\/p><p>Потому что при всей раздробленности и распадении людей в современной жизни человечество,— считает Гоголь,— объединено единой судьбой, единым «ликом времени».<\/p><p>Далее. От всеобщности потрясения персонажей Гоголь перекидывал мостик ко всеобщности же переживаний зрителей. «Театр ничуть не безделица и вовсе не пустая вещь, если примешь в соображенье то, что в нём может поместиться вдруг толпа из пяти, шести тысяч человек, и что вся эта толпа, ни в чём не сходная собою, разбирая по единицам, может вдруг потрястись <em>одним потрясеньем,<\/em> зарыдать <em>одними слезами<\/em> и засмеяться <em>одним всеобщим смехом»<\/em> («О театре, об одностороннем взгляде на театр и вообще об односторонности»). Всеобщность реакции есть особый знак экстраординарности переживания зрителей, соответствующий значительности того, что совершается на сцене. Вместе с тем это указание на то, что только <em>сообща<\/em> люди могут противостоять лихолетью, подобно тому как — на сценической площадке — все персонажи <em>вместе<\/em> подвержены его губительному воздействию.<\/p><p>И тут мы должны вновь обратить внимание на те строки, которые уже приводились в начале разбора «Ревизора» — на отзыв Гоголя о «Последнем дне Помпеи». Говоря о том, что картина Брюллова «выбирает сильные кризисы, чувствуемые целою массою», писатель поясняет: <em>«Эта вся группа, остановившаяся в минуту удара и выразившая тысячи разных чувств...<\/em>— всё это у него так мощно, так смело, так гармонически сведено в одно, как только могло это возникнуть в голове гения всеобщего». Но не так ли и немая сцена «Ревизора» запечатлела «всю группу» её героев, «остановившуюся в минуту удара»? Не является ли это окаменение (как, по Гоголю, и окаменение героев Брюллова — своеобразный вариант немой сцены) пластическим выражением «сильного кризиса», чувствуемого современным человечеством?<\/p><p>Гоголь чутко улавливал подземные толчки, сотрясавшие XIX век. Он ощущал алогизм, призрачность, «миражность» современной ему жизни, делавшей существование человечества неустойчивым, подверженным внезапным кризисам и катастрофам. И немая сцена оформила и сконцентрировала в себе эти ощущения.<\/p><p>Какая страшная ирония скрыта в немой сцене! Гоголь дал её в тот момент, когда общность людей, вызванная «ситуацией ревизора», грозила распасться. Последним усилием она должна была удержать эту общность — и удержала, но вместо людей в её власти оказались бездыханные трупы.<\/p>"}, {"group": "", "label": "Гоголь дал немую сцену как намек…", "html": "<p>Гоголь дал немую сцену как намек на торжество cпpaведливости, установление гармонии. А в результате ощущение дисгармонии, тревоги, страха от этой сцены многократно возрастало. В «Развязке Ревизора» один из персонажей констатирует: «Самое это появленье жандарма, который, точно какой-то палач, является в дверях, это <em>окамененье,<\/em> которое наводят на всех его слова, возвещающие о приезде настоящего ревизора, который должен всех их истребить, стереть с лица земли, уничтожить вконец — все <em>это как-то необъяснимо страшно!»<\/em><\/p><p>В литературе о «Ревизоре» часто ставится вопрос: что предпримет Городничий и другие с появлением нового ревизора? Говорится, что с приходом жандарма всё стало на свои места и вернулось к исходной позиции, что Городничий проведёт прибывшего ревизора, как он проводил их и раньше, и что всё останется неизменным.<\/p><p>В этих замечаниях верно то, что итог комедии Гоголя — не идеализация, а разоблачение основ общественной жизни и что, следовательно, новая ревизия (как и прежние) ничего бы не изменила. Но всё же художественная мысль Гоголя глубже. Нет сомнения, что Городничий обманул бы, если бы сохранил способность к обману. Но финал не отбрасывает героев к исходным позициям, а, проведя их через цепь потрясений, ввергает в новое душевное состояние. Слишком очевидно, что в финале они окончательно выбиты из колеи привычной жизни, поражены навечно, и длительность немой сцены: «почти полторы минуты», на которых настаивает Гоголь<sup class=\"ref\">[10]<\/sup>,— символично выражает эту окончательность. О персонажах комедии уже больше нечего сказать; они исчерпали себя в миражной жизни, и в тот момент, когда это становится предельно ясным, над всею застывшей, бездыханной группой падает занавес<sup class=\"ref\">[11]<\/sup>.<\/p>"}]};
+const $=s=>document.querySelector(s);
+const store={get(k,d){try{const v=localStorage.getItem(KEY+k);return v==null?d:JSON.parse(v)}catch(e){return d}},
+             set(k,v){try{localStorage.setItem(KEY+k,JSON.stringify(v))}catch(e){}}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const ICON={
+ l:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>',
+ r:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6l6 6-6 6"/></svg>',
+ chk:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
+ chev:'<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>',
+ search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>',
+ list:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 6h11M9 12h11M9 18h11M4 6h.01M4 12h.01M4 18h.01"/></svg>',
+ grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><rect x="13" y="13" width="7" height="7" rx="1.5"/></svg>'
+};
+/* theme */
+(function(){const t=store.get('theme',null);if(t)document.documentElement.dataset.theme=t;
+ $('#themeBtn').onclick=()=>{const dark=getComputedStyle(document.documentElement).getPropertyValue('--bg').trim()==='#151618';
+  const n=dark?'light':'dark';document.documentElement.dataset.theme=n;store.set('theme',n)};})();
+$('#menuBtn').onclick=()=>$('#app').classList.toggle('sbopen');
+const prog=p=>$('#prog').style.width=(p*100)+'%';
+
+/* ---------- slides ---------- */
+if(MODE==='slides'){
+  const P=D.pages; let cur=Math.min(store.get('pos',0),P.length-1); let seen=new Set(store.get('seen',[]));
+  const side=$('#side'); let h=''; let lastG=null;
+  const gcount={}; P.forEach(p=>{if(p.group)gcount[p.group]=(gcount[p.group]||0)+1});
+  P.forEach((p,i)=>{
+    const multi=p.group&&gcount[p.group]>1;
+    if(p.group!==lastG&&p.group&&(multi||/^\d$/.test(p.group))){
+      if(!(multi&&p.label===p.group)) h+=`<div class="grp${/^\d$/.test(p.group)?' num':''}">${esc(p.group)}</div>`;
+    }
+    lastG=p.group;
+    const sub=multi&&p.label!==p.group;
+    h+=`<a data-i="${i}" class="${sub?'sub':''}"><span class="n">${i+1}</span><span>${esc(p.label)}</span></a>`;
+  });
+  side.innerHTML=h;
+  side.onclick=e=>{const a=e.target.closest('a');if(a){go(+a.dataset.i);$('#app').classList.remove('sbopen')}};
+  function go(i){
+    if(i<0||i>=P.length)return; cur=i; seen.add(i); store.set('pos',i); store.set('seen',[...seen]);
+    const head=(i===0&&D.heading)?`${D.kicker?`<div class="kicker">${esc(D.kicker)}</div>`:''}<h1 class="doc-h">${esc(D.heading)}</h1>`:'';
+    $('#stage').innerHTML=`<article class="card slide">${head}<div class="prose">${P[i].html}</div></article>`;
+    $('#main').insertAdjacentHTML('beforeend','');
+    pager.querySelector('.cnt').textContent=`${i+1} / ${P.length}`;
+    pager.querySelector('.prev').disabled=i===0; pager.querySelector('.next').disabled=i===P.length-1;
+    side.querySelectorAll('a').forEach(a=>{const k=+a.dataset.i;a.classList.toggle('on',k===i);a.classList.toggle('seen',seen.has(k)&&k!==i)});
+    const on=side.querySelector('a.on'); if(on)on.scrollIntoView({block:'nearest'});
+    $('#main').scrollTo({top:0,behavior:'instant'}); prog((i+1)/P.length);
+  }
+  const pager=document.createElement('div'); pager.className='pager';
+  pager.innerHTML=`<div class="bar"><button class="prev" aria-label="←">${ICON.l}</button><span class="cnt"></span><button class="next" aria-label="→">${ICON.r}</button></div>`;
+  $('#main').appendChild(pager);
+  pager.querySelector('.prev').onclick=()=>go(cur-1); pager.querySelector('.next').onclick=()=>go(cur+1);
+  document.addEventListener('keydown',e=>{if(e.target.matches('input,textarea'))return;if(e.key==='ArrowRight')go(cur+1);if(e.key==='ArrowLeft')go(cur-1)});
+  go(cur);
+}
+
+/* ---------- terms ---------- */
+if(MODE==='terms'){
+  $('#app').classList.add('nosb'); $('#side').remove();
+  let on=new Set(store.get('on',[]));
+  $('#stage').innerHTML=`<article class="card slide"><h1 class="doc-h">${esc(D.heading)}</h1>
+   <p class="lead">${D.intro}</p>
+   <div class="meter"><div class="track"><div class="fill" id="fill"></div></div><div class="val" id="val"></div></div>
+   <ul class="terms">${D.terms.map((t,i)=>`<li><button class="term" data-i="${i}"><span class="box">${ICON.chk}</span><span>${esc(t)}</span></button></li>`).join('')}</ul>
+   <div class="callout">${D.outro}</div></article>`;
+  function upd(){document.querySelectorAll('.term').forEach(b=>b.classList.toggle('on',on.has(+b.dataset.i)));
+    const p=on.size/D.terms.length;$('#fill').style.width=p*100+'%';$('#val').textContent=`${on.size} / ${D.terms.length}`;prog(p);store.set('on',[...on])}
+  document.querySelectorAll('.term').forEach(b=>b.onclick=()=>{const i=+b.dataset.i;on.has(i)?on.delete(i):on.add(i);upd()});
+  upd();
+}
+
+/* ---------- essay ---------- */
+if(MODE==='essay'){
+  $('#app').classList.add('nosb'); $('#side').remove();
+  const drafts=store.get('drafts',{});
+  $('#stage').innerHTML=`<article class="card slide"><h1 class="doc-h">${esc(D.heading)}</h1>
+   <div class="callout" style="margin-bottom:28px">${D.intro}</div>
+   ${D.questions.map((q,i)=>`<div class="q" data-i="${i}"><button class="q-head">${D.numbered?`<span class="no">${i+1}</span>`:''}<span class="tx">${q}</span><span class="dot"></span><span class="chev">${ICON.chev}</span></button>
+     <div class="q-body"><textarea spellcheck="true" aria-label="${i+1}"></textarea></div></div>`).join('')}</article>`;
+  function upd(){let n=0;document.querySelectorAll('.q').forEach(q=>{const has=!!(drafts[q.dataset.i]||'').trim();q.classList.toggle('has',has);if(has)n++});prog(n/D.questions.length)}
+  document.querySelectorAll('.q').forEach(q=>{const i=q.dataset.i,ta=q.querySelector('textarea');ta.value=drafts[i]||'';
+    q.querySelector('.q-head').onclick=()=>{q.classList.toggle('open');if(q.classList.contains('open'))ta.focus()};
+    ta.oninput=()=>{drafts[i]=ta.value;store.set('drafts',drafts);upd()}});
+  upd();
+}
+
+/* ---------- glossary ---------- */
+if(MODE==='glossary'){
+  $('#app').classList.add('nosb'); $('#side').remove();
+  let view=store.get('view','list'), letter=null, q='', flipped=new Set();
+  const letters=[...new Set(D.entries.map(e=>e[0][0].toLowerCase()))];
+  $('#stage').innerHTML=`<article class="card slide"><div class="kicker">${esc(D.kicker)}</div><h1 class="doc-h">${esc(D.heading)}</h1>
+   <div class="gl-tools"><label class="search">${ICON.search}<input id="q" type="search" autocomplete="off"></label>
+   <div class="seg"><button data-v="list" aria-label="≡">${ICON.list}</button><button data-v="cards" aria-label="▦">${ICON.grid}</button></div></div>
+   <div class="abc">${letters.map(l=>`<button data-l="${l}">${l}</button>`).join('')}</div>
+   <div id="out"></div></article>`;
+  function draw(){
+    document.querySelectorAll('.seg button').forEach(b=>b.classList.toggle('on',b.dataset.v===view));
+    document.querySelectorAll('.abc button').forEach(b=>b.classList.toggle('on',b.dataset.l===letter));
+    const ql=q.trim().toLowerCase();
+    const list=D.entries.map((e,i)=>[e,i]).filter(([e])=>(!letter||e[0][0].toLowerCase()===letter)&&(!ql||(e[0]+' '+e[1]).toLowerCase().includes(ql)));
+    const out=$('#out');
+    if(!list.length){out.innerHTML='<div class="empty">—</div>';return}
+    if(view==='list') out.innerHTML=`<ul class="gl-list">${list.map(([e])=>`<li><div class="t">${esc(e[0])}</div><div class="d">${esc(e[1])}</div></li>`).join('')}</ul>`;
+    else{out.innerHTML=`<div class="gl-cards">${list.map(([e,i])=>`<button class="flip${flipped.has(i)?' on':''}" data-i="${i}"><div class="in"><div class="f">${esc(e[0])}</div><div class="b">${esc(e[1])}</div></div></button>`).join('')}</div>`;
+      out.querySelectorAll('.flip').forEach(c=>c.onclick=()=>{const i=+c.dataset.i;flipped.has(i)?flipped.delete(i):flipped.add(i);c.classList.toggle('on');prog(flipped.size/D.entries.length)})}
+  }
+  $('#q').oninput=e=>{q=e.target.value;draw()};
+  document.querySelectorAll('.seg button').forEach(b=>b.onclick=()=>{view=b.dataset.v;store.set('view',view);draw()});
+  document.querySelectorAll('.abc button').forEach(b=>b.onclick=()=>{letter=letter===b.dataset.l?null:b.dataset.l;draw()});
+  draw(); prog(0);
+}
+</script>
+</body>
+</html>
