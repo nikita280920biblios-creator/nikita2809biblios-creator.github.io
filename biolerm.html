@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>МИХАИЛ ЮРЬЕВИЧ ЛЕРМОНТОВ (1814—1841)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=PT+Serif:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#fffdfd; --soft:#f8eff0; --soft2:#f3e6e8; --line:#e9dadd;
+  --ink:#1f1b1c; --muted:#6b6264; --accent:#9b4458; --accent-d:#7d3446;
+  --sans:"IBM Plex Sans", "Helvetica Neue", Arial, sans-serif;
+  --serif:"PT Serif", Georgia, serif;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 17px/1.6 var(--serif);-webkit-font-smoothing:antialiased}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:8px 12px;z-index:50;font-family:var(--sans)}
+.skip:focus{left:8px;top:8px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+
+.app{height:100%;min-height:480px;max-height:900px;display:flex;flex-direction:column;max-width:980px;margin:0 auto;background:var(--bg)}
+
+/* header */
+.top{display:grid;grid-template-columns:1fr auto;align-items:center;gap:4px 12px;padding:14px 24px 0;font-family:var(--sans)}
+.brand{font:600 .95rem/1 var(--sans);color:var(--ink);letter-spacing:.01em}
+.count{font-size:.8rem;color:var(--muted)}
+.bar{grid-column:1/-1;height:3px;background:var(--soft2);margin:10px 0 0}
+.bar-fill{display:block;height:100%;background:var(--accent);transition:width .2s}
+
+/* scroll area */
+.scroll{position:relative;flex:1;overflow-y:auto;overflow-x:hidden;padding:24px 24px 32px;outline:none}
+.scroll:focus-visible{box-shadow:inset 0 0 0 2px var(--accent)}
+.sec{max-width:720px;margin:0 auto}
+.sec-h{font:600 clamp(1.5rem,4vw,2.1rem)/1.15 var(--sans);color:var(--ink);margin:4px 0 22px;padding-bottom:16px;border-bottom:1px solid var(--ink)}
+.sub{font:600 1.2rem/1.3 var(--sans);color:var(--ink);margin:32px 0 10px}
+p{margin:0 0 14px}
+.sec-h .nw{white-space:nowrap}
+.sec-h .nw + .nw{margin-left:.45em}
+
+/* figures */
+.fig{margin:22px auto;text-align:left}
+.fig.single{max-width:300px}
+.figrow{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:20px;align-items:end;margin:22px 0}
+.figrow .fig{margin:0}
+.zoom{display:block;width:100%;padding:0;border:0;background:none;cursor:zoom-in;position:relative}
+.zoom img{display:block;width:100%;height:auto}
+.zoom::after{content:"";position:absolute;right:8px;bottom:8px;width:28px;height:28px;border-radius:50%;background:rgba(255,255,255,.9) no-repeat center/14px
+  url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%231f1b1c' stroke-width='1.6'%3E%3Ccircle cx='7' cy='7' r='5'/%3E%3Cpath d='M11 11l4 4M7 4.5v5M4.5 7h5'/%3E%3C/svg%3E");
+  opacity:.85}
+.zoom:hover::after{opacity:1}
+figcaption,.figcap-row{font:400 .85rem/1.4 var(--sans);color:var(--muted);margin-top:8px;white-space:pre-line}
+.fig.poem{max-width:680px}
+.fig.poem img{border:1px solid var(--line)}
+.figrow + .figcap-row{margin-top:-10px}
+
+/* lists */
+.persons{list-style:none;padding:0;margin:0 0 14px;display:grid;gap:8px}
+.persons li{padding:10px 14px;background:var(--soft);border-left:3px solid var(--accent)}
+.traits{list-style:none;counter-reset:t;padding:0;margin:4px 0 14px;border-top:1px solid var(--line)}
+.traits li{counter-increment:t;position:relative;padding:12px 0 12px 44px;border-bottom:1px solid var(--line)}
+.traits li::before{content:counter(t);position:absolute;left:0;top:12px;font:600 .95rem/1.6 var(--sans);color:var(--accent)}
+
+/* folds */
+.folds{margin:8px 0 18px;border-top:1px solid var(--line)}
+.fold{border-bottom:1px solid var(--line)}
+.fold h4{margin:0}
+.fold-btn{all:unset;box-sizing:border-box;display:flex;width:100%;gap:12px;align-items:center;justify-content:space-between;padding:14px 4px;cursor:pointer;
+  font:500 1rem/1.35 var(--sans);color:var(--ink)}
+.fold-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+.fold-btn:hover .fold-t{color:var(--accent)}
+.fold-i{flex:none;width:14px;height:14px;position:relative}
+.fold-i::before,.fold-i::after{content:"";position:absolute;left:0;right:0;top:6px;height:2px;background:var(--accent)}
+.fold-i::after{transform:rotate(90deg);transition:transform .2s}
+.fold-btn[aria-expanded="true"] .fold-i::after{transform:rotate(0)}
+.fold-body{padding:0 4px 6px}
+
+/* flip cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin:8px 0 18px;perspective:1200px}
+.flip{all:unset;box-sizing:border-box;display:block;cursor:pointer}
+.flip:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.flip-in{display:grid;transition:transform .5s ease;transform-style:preserve-3d;height:100%}
+.flip[aria-pressed="true"] .flip-in{transform:rotateY(180deg)}
+.face{grid-area:1/1;backface-visibility:hidden;-webkit-backface-visibility:hidden;padding:18px;min-height:160px}
+.front{display:flex;flex-direction:column;justify-content:space-between;align-items:flex-start;text-align:left;background:var(--soft);
+  font:600 1.05rem/1.35 var(--sans);color:var(--ink)}
+.turn{align-self:flex-end;font:400 1.1rem/1 var(--sans);color:var(--accent)}
+.back{transform:rotateY(180deg);background:var(--bg);border:1px solid var(--ink);font-size:.92rem;line-height:1.5;text-align:left}
+
+/* tasks */
+.task{margin:30px 0 12px;padding:20px 22px 8px;background:var(--soft)}
+.task.home{background:var(--soft2)}
+.task-h{font:600 .85rem/1.3 var(--sans);letter-spacing:.08em;text-transform:uppercase;color:var(--accent-d);margin:0 0 12px}
+.abc{list-style:none;padding:0 0 0 16px;margin:0 0 14px;border-left:2px solid var(--line)}
+.abc li{margin:0 0 8px}
+.note{font-style:italic;color:var(--muted)}
+
+/* biography */
+.bio-head{margin:6px 0 18px}
+.bio-name{font:400 1rem/1.35 var(--sans);color:var(--muted);margin:0}
+.bio-name span{font:600 1.6rem/1.2 var(--sans);color:var(--ink)}
+.bio-name .yrs{font:400 1rem/1.5 var(--sans);color:var(--muted)}
+.bio-title{font:600 .9rem/1.4 var(--sans);letter-spacing:.06em;color:var(--accent-d);margin:12px 0 0}
+.years{position:sticky;top:-24px;z-index:2;display:flex;gap:6px;overflow-x:auto;padding:12px 0 10px;margin:0 0 10px;background:var(--bg);border-bottom:1px solid var(--line);scrollbar-width:thin}
+.years a{flex:none;font:500 .85rem/1 var(--sans);color:var(--ink);text-decoration:none;padding:7px 10px;border:1px solid var(--line)}
+.years a:hover{border-color:var(--ink)}
+.years a.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.timeline{list-style:none;margin:0;padding:0 0 0 22px;position:relative}
+.timeline::before{content:"";position:absolute;left:4px;top:6px;bottom:6px;width:1px;background:var(--line)}
+.tl{position:relative;scroll-margin-top:60px;outline:none}
+.tl.has-y{margin-top:22px}
+.tl.has-y::before{content:"";position:absolute;left:-22px;top:5px;width:9px;height:9px;border-radius:50%;background:var(--accent)}
+.tl-y{display:block;font:600 .95rem/1 var(--sans);color:var(--accent);margin:0 0 8px}
+.tl:focus .tl-y,.tl.flash .tl-y{text-decoration:underline;text-underline-offset:4px}
+.verse{margin:4px 0 16px;padding:4px 0 4px 18px;font-style:italic;border-left:2px solid var(--accent)}
+
+/* footer nav */
+.nav{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 24px 14px;border-top:1px solid var(--line);background:var(--bg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:0 18px;font:500 .9rem/1 var(--sans);text-decoration:none;
+  border:1px solid var(--ink);color:var(--ink);background:var(--bg)}
+.btn.next{background:var(--ink);color:#fff}
+.btn.next:hover{background:var(--accent-d);border-color:var(--accent-d)}
+.btn.prev:hover{background:var(--soft)}
+.btn.off{opacity:.3;cursor:default}
+.dots{list-style:none;display:flex;gap:8px;margin:0;padding:0}
+.dots a{display:block;width:8px;height:8px;border-radius:50%;background:var(--line)}
+.dots a.cur{background:var(--accent)}
+
+/* lightbox */
+.lb{position:fixed;inset:0;z-index:20;background:rgba(20,16,17,.92);display:flex;align-items:center;justify-content:center;padding:52px 14px 14px}
+.lb[hidden]{display:none}
+.lb-fig{margin:0;width:100%;height:100%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.lb-fig img{max-width:100%;max-height:calc(100% - 44px);object-fit:contain;background:#fff;cursor:zoom-out}
+.lb-fig figcaption{color:#eee;text-align:center}
+.lb-x{position:absolute;top:10px;right:12px;width:40px;height:40px;border:1px solid #fff;background:transparent;color:#fff;font-size:1.5rem;line-height:1;cursor:pointer}
+
+@media (max-width:520px){
+  body{font-size:16px}
+  .top{padding:12px 16px 0}
+  .scroll{padding:18px 16px 24px}
+  .years{top:-18px}
+  .nav{padding:8px 16px 12px}
+  .btn{padding:0 14px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.top{display:flex;padding:14px 24px 12px;border-bottom:1px solid var(--line)}
+.lead{font-size:1.08rem;color:var(--ink)}
+.cards.one{grid-template-columns:1fr}
+.cards.one .face{min-height:120px}
+ul.plain{padding-left:20px}
+.stages{list-style:none;padding:0;margin:4px 0 18px;display:grid;gap:10px}
+.stages li{padding:14px 16px;background:var(--soft);border-left:3px solid var(--accent)}
+.path{list-style:none;padding:0;margin:6px 0 20px;display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;counter-reset:none}
+.path li{position:relative;padding:14px 12px;border:1px solid var(--line);background:var(--bg);font:500 .95rem/1.35 var(--sans)}
+.path li::after{content:"";position:absolute;left:12px;right:12px;bottom:-1px;height:2px;background:var(--accent)}
+.pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin:6px 0 18px}
+.pair-i{padding:16px;background:var(--soft);font:500 1rem/1.45 var(--sans)}
+.pair-i + .pair-i{background:var(--soft2)}
+.poems{display:grid;grid-template-columns:1fr 1fr;gap:28px;margin-top:18px}
+.poem-col{min-width:0}
+.poem-col + .poem-col{border-left:1px solid var(--line);padding-left:28px}
+.poem-col .sub{margin-top:0}
+.verse-block{font:400 1rem/1.55 var(--serif)}
+.v{display:block}
+.v.gap{margin-top:.9em}
+.v.star{text-align:left;color:var(--accent)}
+.topic{font:600 1.1rem/1.4 var(--sans);margin:4px 0 14px}
+.hint{list-style:none;padding:0;margin:4px 0 8px}
+.hint li{padding:10px 0;border-bottom:1px dashed var(--line)}
+.hint li:last-child{border-bottom:0}
+@media (max-width:700px){
+  .poems{grid-template-columns:1fr}
+  .poem-col + .poem-col{border-left:0;padding-left:0;border-top:1px solid var(--line);padding-top:20px}
+}
+.rows{list-style:none;padding:0;margin:4px 0 16px;border-top:1px solid var(--line)}
+.rows li{padding:11px 0;border-bottom:1px solid var(--line)}
+
+</style>
+</head>
+<body>
+<a class="skip" href="#content">К содержанию</a>
+<div class="app">
+  <header class="top"><span class="brand">Романтизм</span></header>
+  <main id="content" class="scroll" tabindex="0">
+<article class="sec"><h2 class="sec-h">МИХАИЛ ЮРЬЕВИЧ ЛЕРМОНТОВ (1814—1841)</h2><nav class="years" aria-label="Лента времени"><a href="#y1814">1814</a><a href="#y1827">1827</a><a href="#y1831">1831</a><a href="#y1834">1834</a><a href="#y1837">1837</a><a href="#y1838">1838</a><a href="#y1840">1840</a><a href="#y1841">1841</a></nav><ol class="timeline"><li class="tl has-y" id=y1814 tabindex="-1"><span class="tl-y" aria-hidden="true">1814</span><p>Великому русскому поэту Михаилу Юрьевичу Лермонтову в день последней дуэли было двадцать шесть лет. Он родился в Москве, у Красных Ворот. Мать его, тихая и болезненная женщина, происходила из известного дворянского рода Арсеньевых, властолюбивая бабушка Елизавета Алексеевна — урожденная Столыпина. Отец, небогатый офицер, потомок приехавшего в Россию шотландского воина, служил воспитателем в кадетском корпусе. Брак родителей поэта был неудачен, и это тяжело отразилось на всей судьбе Лермонтова.</p></li><li class="tl has-y" id=y1827 tabindex="-1"><span class="tl-y" aria-hidden="true">1827</span><p>Он рос болезненным и нервным ребенком под присмотром бабушки (мать его умерла рано) в пензенском селе Тарханы, ездил с ней в Москву и на Кавказские минеральные воды, жил в живописном подмосковном имении Столыпиных Середникове, с удовольствием гостил в Кропотове, тульском имении униженного и изгнанного отца (этой разлуки мальчик не простил ни ему, ни бабушке), осенью 1827 года переехал в Москву и на следующий год был зачислен полупансионером (то есть бабушка каждый день привозила и увозила мальчика) в Московский университетский благородный пансион — закрытое учебное заведение, где поощрялись занятия русской словесностью и литературные опыты, устраивались публичные чтения и издавались рукописные журналы и сборники. Здесь он начал писать стихи для пансионского журнала «Улей», учился музыке, занимался рисованием и живописью, посещал московские театры. В 1829 году им начат «Демон». В 1830-м Лермонтов сдал экзамены и был принят в Московский университет. Здесь он очутился в среде передовой студенческой молодежи. Он много пишет и начинает печататься. Одинокий отец его приезжал к любящему сыну в Москву, был с ним на маскараде в Благородном собрании, но вскоре умер от чахотки в своем маленьком имении.</p></li><li class="tl has-y" id=y1831 tabindex="-1"><span class="tl-y" aria-hidden="true">1831</span><p>В 1831 году студент Лермонтов участвовал в демонстрации против консервативного профессора М.Я. Малова. В это же время он серьезно увлекся Н.Ф. Ивановой, дочерью московского драматурга. Вслед за этим последовала влюбленность в В.А. Лопухину. В 1832 году юноша написал «кавказскую» романтическую поэму «Измаил-бе́й» и знаменитое стихотворение «Парус». Он оставляет московский университет и переезжает с бабушкой в Петербург, где сдает экзамены в Школу гвардейских подпрапорщиков и кавалерийских юнкеров. Там он помещал свои поэмы и стихи в рукописном журнале, работал над «Демоном» и романом о Пугачевском бунте «Вадим», написал поэму «Хаджи Абрек». В манеже школы с поэтом произошел несчастный случай — норовистая лошадь разбила ему ногу, — и с тех пор Лермонтов хромал, как и его любимый поэт Байрон.</p></li><li class="tl has-y" id=y1834 tabindex="-1"><span class="tl-y" aria-hidden="true">1834</span><p>В 1834 году он произведен в корнеты лейб-гвардии Гусарского полка, тогда же началось его увлечение Е.А. Сушковой. В 1835 году им начата романтическая драма «Маскарад». В 1836 году написано стихотворение «Умирающий гладиатор», запрещена цензурой к постановке драма «Маскарад», начат роман «Княгиня Лиговская», тогда же, по всей видимости, написано стихотворение «Бородино», позднее опубликованное в пушкинском «Современнике». К этому времени относится и начало работы над поэмой «Тамбовская казначейша», продолжившей традиции «Евгения Онегина».</p></li><li class="tl has-y" id=y1837 tabindex="-1"><span class="tl-y" aria-hidden="true">1837</span><p>В 1837 году, на следующий день после гибели Пушкина, Лермонтов написал стихотворение «Смерть Поэта», которое сразу же распространилось по стране в десятках тысяч списков и сделало автора знаменитым. В связи с этим он был арестован и по высочайшему повелению из привилегированной гвардии переведен тем же чином (то есть понижен в чине) в армейский кавалерийский полк на Кавказ. Там поэт познакомился со ссыльными декабристами и с проходившим лечение Белинским, подружился с разжалованным в солдаты поэтом А.И. Одоевским. Кавказские впечатления отразились в его поэзии (поэмы «Демон» и «Мцыри») и живописи. Во время визита императора в Тифлис Лермонтов был прощен (странно, что за поэта одновременно хлопотали Жуковский и шеф жандармов А.Х. Бенкендорф) и возвращен в гвардию. Написаны восточная сказка «Ашик-Кериб» и близкая к исторической песне-думе и древнерусской былине поэма «Песня про царя Ивана Васильевича, молодого опричника и удалого купца Калашникова».</p></li><li class="tl has-y" id=y1838 tabindex="-1"><span class="tl-y" aria-hidden="true">1838</span><p>В начале 1838 года Лермонтов прибыл в Москву, а затем и в Петербург. Поэт очутился в кругу Карамзиных, сблизился с Жуковским и другими друзьями Пушкина, много писал и печатался, особенно в новом передовом журнале «Отечественные записки», был произведен в поручики, входил в состоящий из военной молодежи оппозиционный «Кружок шестнадцати». Литературная его известность росла. Была завершена последняя редакция «Демона», написаны кавказская поэма «Мцыри», стихотворения «Дума», «Поэт», «Молитва», «Русалка», «Три пальмы», повести «Бэла» и «Фаталист».</p></li><li class="tl has-y" id=y1840 tabindex="-1"><span class="tl-y" aria-hidden="true">1840</span><p>Поэт посещал вечера и балы петербургского высшего общества и имел там успех. Из-за своего острого языка он нажил себе много недоброжелателей. В феврале 1840 года столкновение Лермонтова с сыном французского посла Эрнестом де Барантом закончилось опасной дуэлью на саблях, легкой раной, арестом, суровым приговором о двухлетнем заключении в крепости и исключении навсегда из гвардии (царь смягчил это решение военного суда) и новой ссылкой в армейский пехотный полк, действовавший на опаснейшем участке на Кавказе. После очередных знаменательных прощаний в Петербурге и Москве (здесь он провел почти месяц и читал Гоголю и другим писателям «Мцыри») его ждали кровопролитные сражения и походы в Чечне, и в том числе описанный поэтом жесточайший бой на речке Валерик («Я к вам пишу случайно; право...», 1840). В Петербурге вышли отдельное издание романа «Герой нашего времени» и однотомник поэзии Лермонтова, имевшие большой успех и вызвавшие восторженные отклики Белинского.</p></li><li class="tl has-y" id=y1841 tabindex="-1"><span class="tl-y" aria-hidden="true">1841</span><p>В 1841 году отличившийся в сражениях поэт получил двухмесячный отпуск и прибыл в Петербург. Лермонтов был полон надежд и планов, думал об отставке, занятиях литературной деятельностью, издании собственного журнала: «Мы должны жить своею самостоятельною жизнью и внести свое самобытное в общечеловеческое». В этот краткий, необыкновенно плодотворный промежуток между ссылками поэт создает лучшие свои произведения. В «Отечественных записках» появилось его программное стихотворение «Родина».</p></li><li class="tl" tabindex="-1"><p>Белинский вспоминал о Лермонтове: «Пылкая молодость, жадная &lt;до&gt; впечатлений бытия, самый род жизни, — отвлекали его от мирных кабинетных занятий, от уединенной думы, столь любезной музам; но уже кипучая натура его начала устаиваться, в душе пробуждалась жажда труда и деятельности, а орлиный взгляд спокойнее стал вглядываться в глубь жизни». Однако надеждам и планам поэта не суждено было сбыться.</p></li><li class="tl" tabindex="-1"><p>Его снова выслали за «неприличные и дерзкие» появления на светских балах, снова друзья провожали поэта.</p></li><li class="tl" tabindex="-1"><p>В мае Лермонтов приехал на лечение в Пятигорск и 15 июля был убит на дуэли отставным кавалергардом Н.С. Мартыновым. 5 августа жандармский генерал Л.В. Дубельт, как обычно, подал императору оперативную сводку — «Таблицу главнейших в Империи происшествий», и Николай, нахмурившись, прочитал там сообщение «о дуэле»: «Находившиеся в Пятигорске для пользования минеральными водами отставной из Гребенского казачьего полка майор Мартынов и Тенгинского пехотного полка поручик Лермонтов 15 июля имели дуэль, и последний, будучи ранен пулею в бок, умер на месте».</p></li></ol></article>
+  </main>
+  <footer class="nav">
+    <a class="btn prev" href="zadanie-2.html" data-nav="prev"><span aria-hidden="true">← </span>Назад</a>
+    <a class="btn next" href="syuzhet-i-kompoziciya.html" data-nav="next">Далее<span aria-hidden="true"> →</span></a>
+  </footer>
+</div>
+<div class="lb" id="lb" role="dialog" aria-modal="true" aria-label="Увеличенное изображение" hidden>
+  <figure class="lb-fig"><img id="lb-img" alt=""><figcaption id="lb-cap"></figcaption></figure>
+  <button type="button" class="lb-x" id="lb-x" aria-label="Закрыть">×</button>
+</div>
+<script>
+(function(){
+  var app=document.querySelector('.app'), sc=document.getElementById('content');
+  // collapsible blocks
+  document.querySelectorAll('.fold-btn').forEach(function(b){
+    b.addEventListener('click',function(){
+      var open=b.getAttribute('aria-expanded')==='true';
+      b.setAttribute('aria-expanded',String(!open));
+      document.getElementById(b.getAttribute('aria-controls')).hidden=open;
+    });
+  });
+
+  // flip cards
+  document.querySelectorAll('.flip').forEach(function(c){
+    c.addEventListener('click',function(){
+      c.setAttribute('aria-pressed',c.getAttribute('aria-pressed')==='true'?'false':'true');
+    });
+  });
+
+  // timeline year chips
+  var chips=document.querySelectorAll('.years a');
+  chips.forEach(function(a){
+    a.addEventListener('click',function(ev){
+      ev.preventDefault();
+      var t=document.getElementById(a.getAttribute('href').slice(1));
+      if(!t) return;
+      sc.scrollTo({top:sc.scrollTop+t.getBoundingClientRect().top-sc.getBoundingClientRect().top-58,behavior:'smooth'});
+      t.focus({preventScroll:true});
+      t.classList.add('flash'); setTimeout(function(){t.classList.remove('flash')},1400);
+    });
+  });
+  if(chips.length){
+    var marks=[].map.call(chips,function(a){return document.getElementById(a.getAttribute('href').slice(1))});
+    sc.addEventListener('scroll',function(){
+      var top=sc.getBoundingClientRect().top+90, cur=-1;
+      marks.forEach(function(m,i){ if(m.getBoundingClientRect().top<=top) cur=i; });
+      chips.forEach(function(c,i){ c.classList.toggle('on',i===cur); });
+    },{passive:true});
+  }
+
+  // lightbox (inside the page, no popups)
+  var lb=document.getElementById('lb'), li=document.getElementById('lb-img'), lc=document.getElementById('lb-cap'),
+      lx=document.getElementById('lb-x'), last=null;
+  function openLb(btn){
+    last=btn; li.src=btn.querySelector('img').src; li.alt=btn.dataset.cap; lc.textContent=btn.dataset.cap;
+    lb.hidden=false; lx.focus();
+  }
+  function closeLb(){ lb.hidden=true; li.removeAttribute('src'); if(last) last.focus(); }
+  document.querySelectorAll('.zoom').forEach(function(b){ b.addEventListener('click',function(){openLb(b)}); });
+  lx.addEventListener('click',closeLb);
+  lb.addEventListener('click',function(ev){ if(ev.target!==lx) closeLb(); });
+
+  document.addEventListener('keydown',function(ev){
+    if(!lb.hidden){
+      if(ev.key==='Escape'){ev.preventDefault();closeLb();}
+      if(ev.key==='Tab'){ev.preventDefault();lx.focus();}
+      return;
+    }
+    if(ev.altKey||ev.ctrlKey||ev.metaKey) return;
+    var tag=(ev.target.tagName||'').toLowerCase();
+    if(tag==='input'||tag==='textarea') return;
+    if(ev.key==='ArrowRight'){ var n=document.querySelector('a[data-nav="next"]'); if(n) location.href=n.href; }
+    if(ev.key==='ArrowLeft'){ var p=document.querySelector('a[data-nav="prev"]'); if(p) location.href=p.href; }
+  });
+})();
+
+</script>
+</body>
+</html>
